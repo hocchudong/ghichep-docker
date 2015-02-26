@@ -13,10 +13,11 @@ Có các cách cài đặt sau đây:
 - Cài đặt từ script
 - Cài đặt từ file được cung cấp bởi Docker (1 file duy nhất)
 
-- Cài đặt cho Ubuntu 14.04, với lệnh dưới sẽ cài bản mới nhất (ở thời điểm tôi cài là docker 1.5)
-```
+Thực hiện cài đặt từ script trên Ubuntu 14.04. Với lệnh dưới sẽ cài bản mới nhất (ở thời điểm tôi cài là docker 1.5)
+```sh
 curl -sSL https://get.docker.com/ubuntu/ | sudo sh
 ```
+
 
 ### Tài liệu tham khảo
 [1] https://docs.docker.com/installation/ubuntulinux/
