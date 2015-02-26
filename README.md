@@ -1,7 +1,7 @@
 # docker-ghichep
 Những ghi chép về docker
 
-### Cập nhật
+### Lịch sử tài liệu
 26.02.2015: Tạo tài liệu
 
 ### Giới thiệu ngắn 
