@@ -18,7 +18,6 @@ Thực hiện cài đặt từ script trên Ubuntu 14.04. Với lệnh dưới s
 curl -sSL https://get.docker.com/ubuntu/ | sudo sh
 ```
 
-
 ### Tài liệu tham khảo
 [1] https://docs.docker.com/installation/ubuntulinux/
 
