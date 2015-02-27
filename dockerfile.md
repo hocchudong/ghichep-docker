@@ -19,7 +19,7 @@ FROM ubuntu14.04:lastest
 ```
 
 #### Với lệnh RUN
-- Dùng để chạy một lệnh nào đó khi build image, ví dụ về một Dockerfile
+- Dùng để chạy một lệnh nào đó khi build image, ví dụ về một `Dockerfile`
 ```sh
 FROM ubuntu
 RUN apt-get update
@@ -29,8 +29,9 @@ RUN apt-get install curl -y
 
 #### Với lệnh CMD
 - Lệnh CMD dùng để truyền một lệnh của Linux mỗi khi thực hiện khởi tạo một container từ image (image này được build từ `Dockerfile`)
-- Có 3 cách sử dụng lệnh CMD, ví dụ 
+- Có các cách (trong docs nói có 3 cách) sử dụng lệnh CMD, ví dụ 
 ```sh 
+#Cách 1
 FROM ubuntu
 RUN apt-get update
 RUN apt-get install curl -y
@@ -38,6 +39,7 @@ CMD ["curl", "ipinfo.io"]
 ```
 hoặc
 ```sh 
+#Cách 2
 FROM ubuntu
 RUN apt-get update
 RUN apt-get install wget -y
