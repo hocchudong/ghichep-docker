@@ -14,7 +14,7 @@ Có thể sử dụng Volume trong Docker trong những trường hợp sau
 mkdir /var/datahost
 
 # Bước 2: Khởi tạo một container và chỉ ra volume được gắn
-docker run -v /var/datahost -it ubuntu
+docker run -it -v /var/datahost ubuntu
 ```
 - Ở ví dụ trên ta đã thực hiện gắn một thư mục vào trong một container. Ta có thể kiểm tra bằng việc tạo ra dữ liệu trên host và kiểm tra ở container hoặc ngược lại.
 
