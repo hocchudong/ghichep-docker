@@ -7,6 +7,19 @@ Có thể sử dụng Volume trong Docker trong những trường hợp sau
 - Chia sẻ giữa container và container.
 - Chia sẻ giữa container và host.
 
+#### Sử dụng volume để gắn (mount) một thư mục nào đó trong host với container.
+- Ví dụ ta sẽ gắn một thư mục /var/datahost vào trong container.
+```sh
+# Bước 1: Tạo ra thư mục trên host
+mkdir /var/datahost
+
+# Bước 2: Khởi tạo một container và chỉ ra volume được gắn
+docker run -v /var/datahost -it ubuntu
+```
+- Ở ví dụ trên ta đã thực hiện gắn một thư mục vào trong một container. Ta có thể kiểm tra bằng việc tạo ra dữ liệu trên host và kiểm tra ở container hoặc ngược lại.
+
+
+
 #### Sử dụng volume để chia sẻ dữ liệu giữa host và container
 Trong tình huống này thư mục trên máy host (máy chứa container) sẽ được mount với một thư mục trên container, dữ liệu sinh ra trên thư mục được mount của container sẽ xuất hiện trên thư mục của host. 
 
