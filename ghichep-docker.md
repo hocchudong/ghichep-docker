@@ -77,6 +77,23 @@ root@u14-vagrant:~#
 	- `created`: Trạng thái của container đã được tạo.
 	- `running`: Trạng thái đang chạy.
 	- `pause` : Trạng thái đang tạm dừng.
+	- `restarting`: Trạng thái khởi động lại container.
+	- `exited`: Trạng thái này hiển thị sau trạng thái `stopped`, dùng để tách biệt với trạng thái đã được tạo nhưng chưa chạy lần nào.
+	- `destroyed`: Trạng thái đã bị xóa bỏ và không tồn tại trên hệ thống.
+
+- Có thể dùng lệnh `docker inspect ID_cua_Container` để xem trạng thái chi tiết của các container. Lệnh trên sẽ trả ra kết quả đầy đủ, nếu chỉ xem một vài thành phần thì sử dụng tùy chọn `-f`. Hãy quan sát 2 lệnh sau với màn hình của bạn nhé.
+
+```sh
+docker inspect 951bfd6d073f
+```
+	- Kết quả: https://gist.github.com/congto/4f943a6245c9f32cd1486aefd3d516f5
+
+
+```sh
+docker inspect -f {{.Config.Hostname}} 951bfd6d073f
+```
+	- 
+
 
 ## Các lệnh cơ bản với docker 
 
