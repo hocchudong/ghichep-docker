@@ -111,16 +111,221 @@
 		        },
 		```
 
+- Các status khác trong Docker: https://gist.github.com/congto/801ab5d28dfa15f13920aaa7a32bcce6
+
+
+## Vòng đời chính của Container từ khi sinh ra đến khi mất đi
+
+### Tạo container với tên là `web31`
+
+- Lệnh dưới sẽ tạo một container có tên là `web31`
+
+```sh
+docker create --name web31 trainning/webapp python app.py
+```
+
+- Kết quả:
+
+```sh
+root@u14-vagrant:~# docker create --name web31 training/webapp python app.py
+e6005cf723aa1b58886ded5221b7783d492851cdeafa985419671d9f56b07627
+root@u14-vagrant:~#
+```
+
+### Kiểm tra trạng thái của container `web31`
+
+```sh
+docker inspect --format='{{.State.Status}}' web31
+
+hoặc 
+
+docker inspect -f={{.State.Status}} web31
+```
+
+### Khởi động container
+
+```sh
+root@u14-vagrant:~# docker start web31
+web31
+```
+
+- Có thể kiểm tra lại trạng thái của container bằng lệnh `docker inspect -f={{.State.Status}} web31`. Lúc này trạng thái là `running`
+
+### Tạm dừng một container
+
+```sh 
+docker pause web31
+```
+
+- Kiểm tra lại trạng thái của container vừa tạm dừng bằng lệnh `docker inspect -f={{.State.Status}} web31`. Lúc này trạng thái là `paused`
+
+### Khởi động lại container sau khi pause (thực hiện unpause)
+
+```sh
+docker unpause web31
+```
+
+- Kiểm tra lại bằng lệnh `docker inspect -f={{.State.Status}} web31` sẽ thấy trạng thái là `running`
+
+### Đổi tên container
+
+```sh
+docker rename web31 newweb31
+```
+
+- Kiểm tra lại trạng thái container vừa đổi tên từ `web31` sang `newweb31`
+
+```sh
+docker inspect -f={{.State.Status}} newweb31
+```
+
+### Kiểm sử dụng lệnh top trong container
+
+```sh
+root@u14-vagrant:~# docker top newweb31
+UID                 PID                 PPID                C                   STIME               TTY                 TIME                CMD
+root                4568                4553                0                   10:25               ?                   00:00:00            python app.py
+```
+
+### Kiểm tra log trong container
+
+```sh
+root@u14-vagrant:~# docker logs newweb31
+ * Running on http://0.0.0.0:5000/ (Press CTRL+C to quit)
+```
+
+### Tạm dừng container
+
+```sh
+docker stop newweb31
+```
+
+- Kiểm tra trạng thái của container sau khi tạm dừng, lúc này sẽ thấy trạng thái là `exited`
+
+```sh
+root@u14-vagrant:~# docker inspect -f={{.State.Status}} newweb31
+exited
+```
+
+### Xóa container 
+
+```sh
+root@u14-vagrant:~# docker rm newweb31
+newweb31
+root@u14-vagrant:~#
+```
+
+- Kiểm tra lại trạng thái của container vừa xóa, lúc này sẽ có thông báo với nội dung không tìm thấy container. `Error: No such image, container or task: newweb31` .
+
+```sh
+root@u14-vagrant:~# docker inspect -f={{.State.Status}} newweb31
+
+Error: No such image, container or task: newweb31
+```
+
+#### Kết quả của toàn bộ các lệnh ở trên
+
+```sh
+root@u14-vagrant:~# docker create --name web31 training/webapp python app.py
+e6005cf723aa1b58886ded5221b7783d492851cdeafa985419671d9f56b07627
+root@u14-vagrant:~# docker inspect --format='{{.State.Status}}' web31
+created
+
+root@u14-vagrant:~# docker start web31
+web31
+root@u14-vagrant:~# docker inspect -f={{.State.Status}} web31
+running
+
+root@u14-vagrant:~# docker pause web31
+web31
+root@u14-vagrant:~# docker inspect -f={{.State.Status}} web31
+paused
+
+root@u14-vagrant:~# docker unpause web31
+web31
+root@u14-vagrant:~# docker inspect -f={{.State.Status}} web31
+running
+
+root@u14-vagrant:~# docker rename web31 newweb31
+root@u14-vagrant:~# docker inspect -f={{.State.Status}} newweb31
+running
+
+root@u14-vagrant:~# docker top newweb31
+UID                 PID                 PPID                C                   STIME               TTY                 TIME                CMD
+root                4568                4553                0                   10:25               ?                   00:00:00            python app.py
+root@u14-vagrant:~# docker logs newweb31
+ * Running on http://0.0.0.0:5000/ (Press CTRL+C to quit)
+
+
+root@u14-vagrant:~# docker stop newweb31
+
+newweb31
+
+root@u14-vagrant:~# docker inspect -f={{.State.Status}} newweb31
+exited
+
+root@u14-vagrant:~# docker rm newweb31
+newweb31
+root@u14-vagrant:~# docker inspect -f={{.State.Status}} newweb31
+
+Error: No such image, container or task: newweb31
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## Các lệnh cơ bản với docker 
 
 - Lệnh xem tất cả các container
 
-```sh
-docker ps -a
-```
+	```sh
+	docker ps -a
+	```
 
 - Lệnh xem các images 
 
-```sh
-docker images
-```
+	```sh
+	docker images
+	```
+
+- Lệnh xem chi tiết container, image ..
+
+	```sh
+	docker inspect ID_container
+	```
+
+	- Ví dụ: https://gist.github.com/congto/4f943a6245c9f32cd1486aefd3d516f5
+
+	- Sử dụng lệnh trên với tùy chọn -f 
+
+		```sh
+		docker inspect -f {{.Config.Hostname}} 951bfd6d073f
+		```
+
+- 
+
+
+
+
+
+
