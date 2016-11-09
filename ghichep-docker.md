@@ -1,6 +1,6 @@
 # Các ghi chép cần chú ý đối với docker
 
-## Cài đặt
+## 1. Cài đặt
 
 - Môi trường cài đặt: Ubuntu 14.04 64 bit
 - Các bước cài đặt
@@ -69,7 +69,7 @@
 	root@u14-vagrant:~#
 	```
 
-## Các trạng thái cơ bản đối với Container trong Docker
+## 2. Các trạng thái cơ bản đối với Container trong Docker
 
 - Tham khảo: https://docs.docker.com/engine/reference/api/images/event_state.png
 - Kết hợp với lệnh `docker ps -a` để xem trạng thái của các container
@@ -114,9 +114,13 @@
 - Các status khác trong Docker: https://gist.github.com/congto/801ab5d28dfa15f13920aaa7a32bcce6
 
 
-## Vòng đời chính của Container từ khi sinh ra đến khi mất đi
+## 3. Thực hành về vòng đời chính của Container từ khi sinh ra đến khi mất đi
 
-### Tạo container với tên là `web31`
+- Trong phần thực hành này sẽ hướng dẫn tạo một container với ứng dụng web server là Flask (một ứng dụng về website)
+
+### 3.1. Thực hành tạo container
+
+#### 3.1.1 Tạo container với tên là `web31`
 
 - Lệnh dưới sẽ tạo một container có tên là `web31`
 
@@ -132,7 +136,7 @@ e6005cf723aa1b58886ded5221b7783d492851cdeafa985419671d9f56b07627
 root@u14-vagrant:~#
 ```
 
-### Kiểm tra trạng thái của container `web31`
+#### 3.1.2. Kiểm tra trạng thái của container `web31`
 
 ```sh
 docker inspect --format='{{.State.Status}}' web31
@@ -142,7 +146,7 @@ hoặc
 docker inspect -f={{.State.Status}} web31
 ```
 
-### Khởi động container
+#### 3.1.3. Khởi động container
 
 ```sh
 root@u14-vagrant:~# docker start web31
@@ -151,7 +155,7 @@ web31
 
 - Có thể kiểm tra lại trạng thái của container bằng lệnh `docker inspect -f={{.State.Status}} web31`. Lúc này trạng thái là `running`
 
-### Tạm dừng một container
+#### 3.1.4. Tạm dừng một container
 
 ```sh 
 docker pause web31
@@ -159,7 +163,7 @@ docker pause web31
 
 - Kiểm tra lại trạng thái của container vừa tạm dừng bằng lệnh `docker inspect -f={{.State.Status}} web31`. Lúc này trạng thái là `paused`
 
-### Khởi động lại container sau khi pause (thực hiện unpause)
+#### 3.1.5. Khởi động lại container sau khi pause (thực hiện unpause)
 
 ```sh
 docker unpause web31
@@ -167,7 +171,7 @@ docker unpause web31
 
 - Kiểm tra lại bằng lệnh `docker inspect -f={{.State.Status}} web31` sẽ thấy trạng thái là `running`
 
-### Đổi tên container
+#### 3.1.6. Đổi tên container
 
 ```sh
 docker rename web31 newweb31
@@ -179,7 +183,7 @@ docker rename web31 newweb31
 docker inspect -f={{.State.Status}} newweb31
 ```
 
-### Kiểm sử dụng lệnh top trong container
+#### 3.1.7. Kiểm sử dụng lệnh top trong container
 
 ```sh
 root@u14-vagrant:~# docker top newweb31
@@ -187,14 +191,14 @@ UID                 PID                 PPID                C                   
 root                4568                4553                0                   10:25               ?                   00:00:00            python app.py
 ```
 
-### Kiểm tra log trong container
+#### 3.1.8. Kiểm tra log trong container
 
 ```sh
 root@u14-vagrant:~# docker logs newweb31
  * Running on http://0.0.0.0:5000/ (Press CTRL+C to quit)
 ```
 
-### Tạm dừng container
+#### 3.1.9. Tạm dừng container
 
 ```sh
 docker stop newweb31
@@ -207,7 +211,7 @@ root@u14-vagrant:~# docker inspect -f={{.State.Status}} newweb31
 exited
 ```
 
-### Xóa container 
+#### 3.1.10. Xóa container 
 
 ```sh
 root@u14-vagrant:~# docker rm newweb31
@@ -223,7 +227,7 @@ root@u14-vagrant:~# docker inspect -f={{.State.Status}} newweb31
 Error: No such image, container or task: newweb31
 ```
 
-#### Kết quả của toàn bộ các lệnh ở trên
+### 3.2. Kết quả của toàn bộ các lệnh ở trên
 
 ```sh
 root@u14-vagrant:~# docker create --name web31 training/webapp python app.py
@@ -327,5 +331,7 @@ Error: No such image, container or task: newweb31
 
 
 
+## Tham khảo: 
+[1] http://www.cnblogs.com/sammyliu/p/5875470.html
 
 
