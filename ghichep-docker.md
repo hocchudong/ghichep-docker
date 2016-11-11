@@ -183,7 +183,7 @@ docker rename web31 newweb31
 docker inspect -f={{.State.Status}} newweb31
 ```
 
-#### 3.1.7. Kiểm sử dụng lệnh top trong container
+#### 3.1.7. Sử dụng lệnh top trong container
 
 ```sh
 root@u14-vagrant:~# docker top newweb31
@@ -316,7 +316,7 @@ root@u14-vagrant:~# docker events
 
 - Minh họa: ![docker event](/images/docker1.png)
 
-Trong hình trên, bạn sẽ nhìn thấy vào lúc `11:26:04` docker sẽ gửi một signal=15. Tới thời điểm `11:26:24` , tức là sau 20 giây, docker sẽ gửi tiếp một signal=9 (SGINKILL)
+Trong hình trên, bạn sẽ nhìn thấy vào lúc `11:26:04` docker sẽ gửi một signal=15 (SIGTERM). Tới thời điểm `11:26:24` , tức là sau 20 giây, docker sẽ gửi tiếp một signal=9 (SGINKILL)
 
 
 
@@ -368,13 +368,11 @@ Trong hình trên, bạn sẽ nhìn thấy vào lúc `11:26:04` docker sẽ gử
 
 - Lệnh xem các sự kiện của container 
 
-```sh
-docker evetns
-```
+	```sh
+	docker evetns
+	```
 
 	- Lệnh dùng để xem các event xảy ra trong docker, cách thực hiện thì bạn có thể mở một tab mới và chạy `docker events`, tab khác thì thực hiện các lệnh trong docker.
-
-
 
 
 ## Tham khảo: 
