@@ -16,12 +16,13 @@
 
 ###1.1. Kiểm tra hoạt động của docker
 
+- Sử dụng lệnh `docker run hello-world` để kiểm tra hoạt động của docker trên host.
+
 	```sh
 	docker run hello-world
 	```
 
 - Lệnh trên sẽ gọi tới image tên là hello-world, đây là một image được lưu trên Docker Hub. Mục tiêu của image này là để kiểm tra hoạt động của docker được cài trên host đã ổn hay chưa.
-
 
 - Kết quả như sau chứng tỏ docker đã hoạt động ổn định
 
@@ -34,6 +35,8 @@
 	```
 
 ###1.2. Tìm kiếm immages từ Docker HUB
+
+- Sử dụng lệnh `docker search` để tìm kiếm các images trên Docker HUB
 
 	```sh
 	docker search ubuntu
