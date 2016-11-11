@@ -125,7 +125,7 @@
 - Lệnh dưới sẽ tạo một container có tên là `web31`
 
 ```sh
-docker create --name web31 trainning/webapp python app.py
+docker create --name web31 training/webapp python app.py
 ```
 
 - Kết quả:
@@ -276,7 +276,47 @@ Error: No such image, container or task: newweb31
 ```
 
 
+### 3.3 `docker stop` và `docker kill`
 
+- Khi câu lệnh `docker stop` được thực hiện, nó sẽ gửi tới hệ thống một tín hiệu để xử lý tiến trình có PID=1, tín hiệu đó là SIGTERM (có ID = 15 - tham khảo tại https://sites.google.com/site/embedded247/escourse/lap-trinh-voi-tien-trinh-process). 
+
+- Sau khi gửi tín hiệu SIGTERM xong, nó sẽ chờ container kết thức ứng dụng. Nếu thời gian chờ đợi container dừng ứng dụng vượt quá thời gian mặc định (mặc định là 10 giây - có thể điều chỉnh thời gian này)  thì docker sẽ tiếp tục gửi tín hiệu SIGKILL tới hệ thống. Lúc này ứng dụng sẽ bị hủy (cần lưu ý rằng SIGKILL sẽ gửi tín hiệu trực tiếp xuống kernel của hệ thống chứ không thông qua ứng dụng trong container)
+
+
+- Giả sử thực hiện lệnh dưới, thực hiện tắt container sau 20 giây
+
+```sh
+docker stop ten_container -t 30
+```
+
+- Sau đó mở một tab khác và gõ `docker events`, bạn sẽ nhìn thấy các thông tin như bên dưới.
+
+- Ví dụ: Thực hiện start một container, kiểm tra trạng thái và stop container đó với tùy chọn `-t 20`
+
+```sh
+root@u14-vagrant:~# docker start web31
+web31
+root@u14-vagrant:~# docker inspect -f={{.State.Status}} web31
+running
+root@u14-vagrant:~# docker stop web31 -t 20
+web31
+root@u14-vagrant:~#
+````
+
+- Mở một tab khác và quan sát kết quả của lệnh `docker events`
+
+```sh
+root@u14-vagrant:~# docker events
+2016-11-11T11:26:04.389558534+07:00 container kill 95ee9e2c3ec83e6ca1a9145af507f42c2e7d29cef153263f1b2ad63ae0241d14 (image=training/webapp, name=web31, signal=15)
+2016-11-11T11:26:24.397942170+07:00 container kill 95ee9e2c3ec83e6ca1a9145af507f42c2e7d29cef153263f1b2ad63ae0241d14 (image=training/webapp, name=web31, signal=9)
+2016-11-11T11:26:24.474089688+07:00 container die 95ee9e2c3ec83e6ca1a9145af507f42c2e7d29cef153263f1b2ad63ae0241d14 (exitCode=137, image=training/webapp, name=web31)
+2016-11-11T11:26:24.615183784+07:00 network disconnect 9e229d474aff61d687c0ccc1fea72f20ca37ca26695a733f42c6849a87fc72e6 (container=95ee9e2c3ec83e6ca1a9145af507f42c2e7d29cef153263f1b2ad63ae0241d14, name=bridge, type=bridge)
+2016-11-11T11:26:24.693993648+07:00 container stop 95ee9e2c3ec83e6ca1a9145af507f42c2e7d29cef153263f1b2ad63ae0241d14 (image=training/webapp, name=web31)
+```
+
+- Minh họa: ![docker event](/images/docker1.png)
+
+Trong hình trên, bạn sẽ nhìn thấy vào lúc `11:26:04` docker sẽ gửi một signal=15. Tới thời điểm `11:26:24` , tức là sau 20 giây, docker sẽ gửi tiếp một signal=9 (SGINKILL)
 
 
 
@@ -326,7 +366,13 @@ Error: No such image, container or task: newweb31
 		docker inspect -f {{.Config.Hostname}} 951bfd6d073f
 		```
 
-- 
+- Lệnh xem các sự kiện của container 
+
+```sh
+docker evetns
+```
+
+	- Lệnh dùng để xem các event xảy ra trong docker, cách thực hiện thì bạn có thể mở một tab mới và chạy `docker events`, tab khác thì thực hiện các lệnh trong docker.
 
 
 
