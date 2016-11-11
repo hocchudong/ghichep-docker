@@ -329,9 +329,9 @@ Trong hình trên, bạn sẽ nhìn thấy vào lúc `11:26:04` docker sẽ gử
 
 ### 3.5. DOCKER RUN
 
-### Các thành phần cơ bản trong docker
+##4. Các thành phần cơ bản trong docker
 
-[!Các thành phần trong docker](/images/docker2.jpg)
+[!Các thành phần trong docker](/images/docker2.png)
 
 Trong Docker có 03 thành phần chính:
 
