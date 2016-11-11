@@ -1,9 +1,11 @@
 # Các ghi chép cần chú ý đối với docker
 
-# Ghi chú:
+# Ghi chú, từ mới
 
 - Docker là một ứng dụng
-- Container là một thể hiện của docker (gần bằng với các máy ảo)
+- Docker image: là mẫu (template) dùng để tạo ra các container.
+- Container là một thể hiện của docker (gần bằng với các máy ảo). Docker container được chạy từ docker image
+
 
 ## 1. Cài đặt
 
@@ -391,6 +393,49 @@ Trong Docker có 03 thành phần chính:
 	```
 
 	- Lệnh dùng để xem các event xảy ra trong docker, cách thực hiện thì bạn có thể mở một tab mới và chạy `docker events`, tab khác thì thực hiện các lệnh trong docker.
+
+- Lệnh `docker info` dùng để xem các thông tin về docker được cài trên host.
+
+```sh
+root@u14-vagrant:~# docker info
+Containers: 4
+ Running: 0
+ Paused: 0
+ Stopped: 4
+Images: 3
+Server Version: 1.12.3
+Storage Driver: aufs
+ Root Dir: /var/lib/docker/aufs
+ Backing Filesystem: extfs
+ Dirs: 27
+ Dirperm1 Supported: true
+Logging Driver: json-file
+Cgroup Driver: cgroupfs
+Plugins:
+ Volume: local
+ Network: host bridge overlay null
+Swarm: inactive
+Runtimes: runc
+Default Runtime: runc
+Security Options: apparmor
+Kernel Version: 3.19.0-25-generic
+Operating System: Ubuntu 14.04.5 LTS
+OSType: linux
+Architecture: x86_64
+CPUs: 4
+Total Memory: 7.781 GiB
+Name: u14-vagrant
+ID: PCQB:PFMR:7FRY:FI4G:4HI3:CCIR:TRNO:XN47:4CK3:LBFJ:ZH7F:YNI5
+Docker Root Dir: /var/lib/docker
+Debug Mode (client): false
+Debug Mode (server): false
+Registry: https://index.docker.io/v1/
+WARNING: No swap limit support
+Insecure Registries:
+ 127.0.0.0/8
+root@u14-vagrant:~#
+
+```
 
 
 ## Tham khảo: 
