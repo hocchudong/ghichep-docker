@@ -1,5 +1,10 @@
 # Các ghi chép cần chú ý đối với docker
 
+# Ghi chú:
+
+- Docker là một ứng dụng
+- Container là một thể hiện của docker (gần bằng với các máy ảo)
+
 ## 1. Cài đặt
 
 - Môi trường cài đặt: Ubuntu 14.04 64 bit
@@ -320,8 +325,21 @@ Trong hình trên, bạn sẽ nhìn thấy vào lúc `11:26:04` docker sẽ gử
 
 
 
+### 3.4. Copy dữ liệu từ host vào container và ngược lại.
 
+### 3.5. DOCKER RUN
 
+### Các thành phần cơ bản trong docker
+
+[!Các thành phần trong docker](/images/docker2.jpg)
+
+Trong Docker có 03 thành phần chính:
+
+1. `Client`: Thành phần phía người dùng : Người dùng sử dụng các công cụ dòng lệnh (CLI, API ...) được cung cấp bởi Docker để: `build`, upload images, thực hiện các câu lệnh để khởi tạo và quản lý các container
+
+2. `Docker host`: Có nhiệm cụ download image từ Docker Registry và khởi động container khi có yêu cầu của người dùng.
+
+3. `Docker Registry`: Là kho lưu trữ các image của docker, là nơi upload và download các image này.
 
 
 
