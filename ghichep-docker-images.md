@@ -42,6 +42,14 @@
 	docker search ubuntu
 	```
 
+- Hoặc tìm chính xác phiên bản
+
+	```sh
+	docker search ubuntu:14.04
+	```
+
+
+
 - Lệnh này sẽ thực hiện tìm kiếm images có tên là `ubuntu` từ internet, kết quả sẽ trả về các images có tên là `ubuntu`
 
 	```sh
@@ -80,6 +88,41 @@
 	- Cột `DESCRIPTION`: Mô tả ngắn gọn của images 
 	- Cột `OFFICIAL`: Là images chính thức do công ty Docker cung cấp. Trạng thái là OK.
 
+
+- Kết quả của lệnh `docker search ubuntu:14.04`
+
+	```sh
+	root@u14-vagrant:~# docker search ubuntu:14.04
+	NAME                                                DESCRIPTION                                     STARS     OFFICIAL   AUTOMATED
+	saltstack/ubuntu-14.04-minimal                                                                      7                    [OK]
+	saltstack/ubuntu-14.04                                                                              5                    [OK]
+	simphonyproject/ubuntu-14.04-remote                 Ubuntu 14.04 with Remote Access Support (l...   1                    [OK]
+	fernandoacorreia/ubuntu-14.04-oracle-java-1.7       Docker image with Ubuntu 14.04 and Oracle ...   1                    [OK]
+	linuxmalaysia/docker-ubuntu-14.04-harden            Docker Ubuntu harden for security with SSH...   1                    [OK]
+	widerplan/ubuntu-14.04                              Basic Ubuntu 14.04 builds with a few utili...   1                    [OK]
+	breezeight/test-kitchen-ubuntu-14.04                Ubunti 14.04 with chef omnibus installed        1                    [OK]
+	stevendgonzales/ubuntu-14.04-salt-minion            Ubuntu 14.04 with Salt-MInion                   0                    [OK]
+	technopreneural/docker-ubuntu-14.04-bind9           Run DNS server using bind9 on Ubuntu 14.04      0                    [OK]
+	technopreneural/docker-ubuntu-14.04-apache2         Apache2 on Ubuntu 14.04                         0                    [OK]
+	syseleven/ubuntu-14.04-puppet3                      ubuntu-14.04-puppet3                            0                    [OK]
+	technopreneural/docker-ubuntu-14.04-ruby            Ruby environment on Ubuntu 14.04                0                    [OK]
+	thenewvu/ubuntu-14.04                               Ubuntu 14.04 + Nearby package repos             0                    [OK]
+	simphonyproject/ubuntu-14.04-webapp                 Ubuntu 14.04 with backend framework suppor...   0                    [OK]
+	libero18/ubuntu-14.04                                                                               0                    [OK]
+	technopreneural/docker-ubuntu-14.04-php5            PHP5 environment on Ubuntu 14.04                0                    [OK]
+	salttest/ubuntu-14.04                                                                               0                    [OK]
+	technopreneural/docker-ubuntu-14.04-apt-cacher-ng   Run apt-cacher-ng on Ubuntu 14.04               0                    [OK]
+	technopreneural/docker-ubuntu-14.04-mysql           MySQL on Ubuntu 14.04                           0                    [OK]
+	seresearch/opendavinci-ubuntu-14.04                 Docker image with all Ubuntu 14.04 depende...   0                    [OK]
+	zanox/kitchen-ubuntu-14.04                          Docker image for kitchen with ubuntu 14.04      0                    [OK]
+	edentsai/ubuntu-14.04-openssh                       Official Ubuntu 14.04 LTS and OpenSSH serv...   0                    [OK]
+	mba811/ubuntu-14.04                                 镜像ubuntu:14.04的容器                               0                    [OK]
+	technopreneural/docker-ubuntu-14.04-puppetserver    Run puppetserver on Ubuntu 14.04                0                    [OK]
+	simphonyproject/ubuntu-14.04-vncapp                 Ubuntu-14.04 with VNC application framework     0                    [OK]
+	root@u14-vagrant:~#
+
+	```
+
 - Sau khi xác định được images muốn sử dụng, bạn sử dụng tiếp lệnh `docker pull` để kéo images từ internet về host cài docker của bạn. 
 
 ###1.3. Tải images từ Docker Hub về host
@@ -98,6 +141,8 @@
 
 ###1.4. Kiểm tra các images tồn tại trên host.
 
+- Sử dụng lệnh `docker images` để kiểm tra danh sách các images
+
 	```sh
 	docker images
 	```
@@ -115,7 +160,7 @@
 
 ###1.5 Tạo container từ images 
 
-- Trong các tài liệu thường hay sử dụng lệnh `docker run hello-world` để chạy một container, sau khi chạy xong container này nó sẽ thoát. Tuy nhiên, đa số chúng ta lại cần làm việc với container (thao tác nhiều hơn). 
+- Trong các tài liệu thường hay sử dụng lệnh `docker run hello-world` để chạy một container, sau khi chạy xong container này nó sẽ thoát. Tuy nhiên, đa số chúng ta lại cần tương tác nhiều hơn nữa với container (thao tác nhiều hơn). 
 
 - Để chạy container và tương tác với container ta sử dụng tùy chọn `-it` trong lệnh `docker run`. Ví dụ:
 
@@ -149,10 +194,21 @@
 
 - Trong ví dụ trên, lệnh `docker run -it ubuntu` sẽ tạo một container từ image có tên là `ubuntu` và tương tác luôn với nó. Lệnh `cat /etc/*release` sẽ hiển thị phiên bản container ở trên. Số `4a7b498636b6` là ID của container 
 
-- Có thể mở tab khác và sử dụng lệnh `docker events` để xem các thông tin về việc tạo container trong ví dụ trên
+- Có thể mở tab khác và sử dụng lệnh `docker events` để xem các thông tin về việc tạo container trong ví dụ trên (tab này cần được mở và chạy lệnh `docker events` trước khi thực hiện tạo container)
 
 	```sh
 	016-11-11T15:28:07.918591204+07:00 container start 4a7b498636b618728c7b00307708a0382bc0e6d7b28bba5534a91dfa30c46074 (image=ubuntu, name=goofy_hypatia)
 	2016-11-11T15:28:07.921514758+07:00 container resize 4a7b498636b618728c7b00307708a0382bc0e6d7b28bba5534a91dfa30c46074 (height=32, image=ubuntu, name=goofy_hypatia, width=146)
 	```
+
+
+- Để thoát nhưng vẫn đảm bảo container được hoạt động, sử dụng tổ hợp phím `CTL + p`, sau đó `CTL + q`. Còn nếu thoát và dừng container thì sử dụng `CTL + c`
+- Sử dụng lệnh `docker attach ID_Container` để truy cập vào container sử dụng.
+
+	```sh
+	root@u14-vagrant:~# docker attach 4a7b498636b6
+	root@4a7b498636b6:/#
+	root@4a7b498636b6:/#
+	```
+
 
