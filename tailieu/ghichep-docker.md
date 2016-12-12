@@ -78,7 +78,7 @@
 
 ## 2. Các trạng thái cơ bản đối với Container trong Docker
 
-- Tham khảo: https://docs.docker.com/engine/reference/api/images/event_state.png
+- Tham khảo: https://docs.docker.com/engine/reference/api../hinhanh/event_state.png
 - Kết hợp với lệnh `docker ps -a` để xem trạng thái của các container
 - Danh sách các trạng thái cơ bản: 
 	- `created`: Trạng thái của container đã được tạo.
@@ -321,7 +321,7 @@ root@u14-vagrant:~# docker events
 2016-11-11T11:26:24.693993648+07:00 container stop 95ee9e2c3ec83e6ca1a9145af507f42c2e7d29cef153263f1b2ad63ae0241d14 (image=training/webapp, name=web31)
 ```
 
-- Minh họa: ![docker event](/images/docker1.png)
+- Minh họa: ![docker event](../hinhanh/docker1.png)
 
 Trong hình trên, bạn sẽ nhìn thấy vào lúc `11:26:04` docker sẽ gửi một signal=15 (SIGTERM). Tới thời điểm `11:26:24` , tức là sau 20 giây, docker sẽ gửi tiếp một signal=9 (SGINKILL)
 
@@ -333,7 +333,7 @@ Trong hình trên, bạn sẽ nhìn thấy vào lúc `11:26:04` docker sẽ gử
 
 ##4. Các thành phần cơ bản trong docker
 
-![Các thành phần trong docker](/images/docker2.png)
+![Các thành phần trong docker](../hinhanh/docker2.png)
 
 Trong Docker có 03 thành phần chính:
 
