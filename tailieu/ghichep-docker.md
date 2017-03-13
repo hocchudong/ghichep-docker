@@ -343,18 +343,11 @@ Trong Docker có 03 thành phần chính:
 
 3. `Docker Registry`: Là kho lưu trữ các image của docker, là nơi upload và download các image này.
 
-
-
-
-
-
-
-
-
-
-
-
-
+**Các đối tượng chính:**
+- Images: image được sử dụng để đóng gói ứng dụng và các thành phần phụ thuộc của ứng dụng. Image có thể được lưu trữ ở local hoặc trên một registry. Registry là một dịch vụ giúp tổ chức và cung cấp các kho chứa các image.
+- Container: container là một running instance của một Docker Images. Nếu thấy quá khó hiểu bạn có thể liên tưởng nó với một virtual machine về mặt chức năng.
+- Network: Cung cấp một private network mà chỉ tồn tại giữa container và host. Bắt đầu từ phiên bản 1.09 thì private network có thể mở rộng trên multi-host.
+- Volume: volume được thiết kể để lưu trữ các dữ liệu độc lập với vòng đời của container.
 
 
 
