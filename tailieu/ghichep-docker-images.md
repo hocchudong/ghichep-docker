@@ -238,7 +238,7 @@ The push refers to a repository [cosy294/test]
 
 - Để Pull một image từ Docker Hub: `docker pull {image_name}`
 
-#5. Create and use Docker Registry: Local Images Repo.
+#3. Create and use Docker Registry: Local Images Repo.
 - Tạo môi trường chứa image. Docker đã hỗ trợ chúng ta cài đặt các môi trường này duy nhất trong 1 container. Rất là đơn giản, chúng ta chạy lệnh sau.
 ```sh
 docker run -d -p 5000:5000 --name registry registry:2
