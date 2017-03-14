@@ -2,7 +2,8 @@
 Những ghi chép về docker
 
 ### Lịch sử tài liệu
-26.02.2015: Tạo tài liệu
+- 26.02.2015: Tạo tài liệu
+- 3/2017: LinhLT - member **HocChuDong**, contribute vào tài liệu. 
 
 ### Giới thiệu ngắn 
 - Tôi bắt đầu tìm hiểu Docker từ 06/2014. 

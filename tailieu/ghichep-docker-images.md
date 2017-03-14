@@ -7,10 +7,17 @@
 	- Cách 1: Tạo một container, chạy các câu lệnh cần thiết và sử dụng lệnh `docker commit` để tạo ra image mới. Cách này thường không được khuyến cáo.
 	- Cách 2: Viết một `Dockerfile` và thực thi nó để tạo ra một images. Thường mọi người dùng cách này để tạo ra image.
 
-- Khi một container được tạo từ đầu, nó sẽ kéo các image (pull) từ `Docker Hub` (Docker registry) về và thực tạo container từ image đó. 
+- Khi một container được tạo từ đầu, nó sẽ kéo các image (pull) từ `Docker Hub` (Docker registry mặc định) về và thực tạo container từ image đó. 
 - Tất cả mọi người đều có thể tạo ra các images.
 - Docker hub có thành phần docker registry - được vận hành với công ty Docker, nơi đây chứa các images mà người dùng chia sẻ.
+- Các image là dạng file-chỉ-đọc (read only file). Khi tạo một container mới, trong mỗi container sẽ tạo thêm một lớp có-thể-ghi được gọi là container-layer. Các thay đổi trên container như thêm, sửa, xóa file... sẽ được ghi trên lớp này. Do vậy, từ một image ban đầu, ta có thể tạo ra nhiều máy con mà chỉ tốn rất ít dung lượng ổ đĩa.
+- Docker cung cấp 3 công cụ phân tán giúp chúng ta lưu trữ và quản lý các Docker image. Để tự dựng một private registry và lưu trữ các private image chúng ta có thể sử dụng một trong các công cụ sau:
+  - Docker Registry: một open source image distribution tool giúp lưu trữ và quản lý image
+  - Docker Trusted Registry: một công cụ trả phí, nó khác với Docker Registry là có giao diện quản lý và cung cấp một số tính năng bảo mật (nghe bảo thế)
+  - Docker Hub: đây là một dịch vụ khi mà bạn không muốn tự quản lý registry. Cung cấp public và private image repository. Mặc định Docker Client sẽ sử dụng Docker Hub nếu không có registry nào được cấu hình. Trên này có rất nhiều các image offcial của các phần mềm như nginx, mongodb, mysql, jenkins,..
 
+- Quy tắt đặt tên images: `[REPOSITORY[:TAG]]`
+  - Trong đó, TAG là phiên bản của images. Mặc định, khi không khai báo tag thì docker sẽ hiểu tag là `latest`
 
 ##1. Một số lệnh làm việc với images
 
@@ -211,4 +218,41 @@
 	root@4a7b498636b6:/#
 	```
 
+##2. Push - Pull images using Docker Hub.
+- Để push 1 image vừa tạo lên hub để chia sẻ với mọi người, thì ta cần tạo 1 tài khoản docker hub và login vào bằng câu lệnh
+```sh
+docker login
+Login with your Docker ID to push and pull images from Docker Hub. If you don't have a Docker ID, head over to https://hub.docker.com to create one.
+Username:cosy294
+Password:
+Login Succeeded
+```
+- Sau khi login thành công ta tiến hành push image lên hub
+```sh
+$ docker push cosy294/test
+The push refers to a repository [cosy294/test]
+255c5f0caf9a: Image successfully pushed
+```
+  Trong đó: cosy294/test là tên images.
+- Lưu ý: Nếu bạn muốn push images lên docker hub thì tên images phải có dạng: `cosy294/test`, trong đó **cosy294** là id dockerhub và **test** là tên repo.
 
+- Để Pull một image từ Docker Hub: `docker pull {image_name}`
+
+#3. Create and use Docker Registry: Local Images Repo.
+- Tạo môi trường chứa image. Docker đã hỗ trợ chúng ta cài đặt các môi trường này duy nhất trong 1 container. Rất là đơn giản, chúng ta chạy lệnh sau.
+```sh
+docker run -d -p 5000:5000 --name registry registry:2
+```
+- Khi đó, port 5000 sẽ được listen. Mọi thao tác pull, push image sẽ được thực hiện trên port này.
+
+- Cấu hình docker để pull, push image từ registry vừa tạo: vi `/etc/default/docker`
+
+```sh
+DOCKER_OPTS="--insecure-registry 172.16.69.239:5000"
+```
+- Trong đó, `172.16.69.239` là địa chỉ ip máy chứa registry tạo ở trên.
+- Sau khi cấu hình xong, ta khởi động lại docker
+```sh
+service docker restart
+```
+- Các thao tác pull và push image tương tự ở như là pull, push ở docker hub.
