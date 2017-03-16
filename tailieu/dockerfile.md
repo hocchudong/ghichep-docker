@@ -1,4 +1,4 @@
-#1. Ghi chép về Dockerfile
+# 1. Ghi chép về Dockerfile
 - Dockerfile có thể hình dung như một script dùng để build các image trong container.
 - Dockerfile bao gồm các câu lệnh liên tiếp nhau được thực hiện tự động trên một image gốc để tạo ra một image mới. Dockerfile giúp đơn giản hóa tiến trình từ lúc bắt đầu đến khi kết thúc.
 - Trong `Dockerfile` có các câu lệnh chính sau:
@@ -9,14 +9,14 @@ CMD
 ....còn nữa
 ```
 
-#2. Dockerfile Systax
+# 2. Dockerfile Systax
 
 ```sh
 # Comment
 INSTRUCTION arguments
 ```
 - Các INSTRUCTION là các chỉ thị, được docker quy định. Khi khai báo, các bạn phải viết chữ in hoa.
-- Các arguments là đoạn nôi dung mà chỉ thị sẽ làm gì.
+- Các arguments là đoạn nội dung mà chỉ thị sẽ làm gì.
 - Ví dụ:
 ```sh
 # Comment
@@ -24,8 +24,8 @@ RUN echo 'we are running some # of cool things'
 ```
 - Chúng ta sẽ đi tìm hiểu các INSTRUCTION
 
-#3. Dockerfile Commands
-##3.1 FROM
+# 3. Dockerfile Commands
+## 3.1 FROM
 - Dùng để chỉ ra image được build từ đâu (từ image gốc nào)
 ```sh
 FROM ubuntu
@@ -35,7 +35,7 @@ hoặc có thể chỉ rõ tag của image gốc
 FROM ubuntu14.04:lastest
 ```
 
-##3.2 RUN
+## 3.2 RUN
 - Dùng để chạy một lệnh nào đó khi build image, ví dụ về một `Dockerfile`
 ```sh
 FROM ubuntu
@@ -44,7 +44,7 @@ RUN apt-get install curl -y
 ```
 
 
-##3.3 CMD
+## 3.3 CMD
 - Lệnh CMD dùng để truyền một lệnh của Linux mỗi khi thực hiện khởi tạo một container từ image (image này được build từ `Dockerfile`)
 - Có các cách (trong docs nói có 3 cách) sử dụng lệnh CMD, ví dụ 
 ```sh 
@@ -63,7 +63,7 @@ RUN apt-get install wget -y
 CMD curl ifconfig.io
 ```
 
-##3.4 LABEL
+## 3.4 LABEL
 ```sh
 LABEL <key>=<value> <key>=<value> <key>=<value> ...
 ```
@@ -89,7 +89,7 @@ that label-values can span multiple lines."
     "other": "value3"
 },
 
-##3.5 MAINTAINER
+## 3.5 MAINTAINER
 ```sh
 MAINTAINER <name>
 ```
@@ -100,7 +100,7 @@ Hoặc bạn có thể sử dụng
 LABEL maintainer "SvenDowideit@home.org.au"
 ```
 
-##3.6 EXPOSE
+## 3.6 EXPOSE
 ```sh
 EXPOSE <port> [<port>...]
 ```
@@ -108,14 +108,14 @@ EXPOSE <port> [<port>...]
 để khai báo, chứ ko có chức năng nat port từ máy host vào container. Muốn nat port, thì phải sử dụng cờ -p (nat một vài port) hoặc -P (nat tất
 cả các port được khai báo trong EXPOSE) trong quá trình khởi tạo contrainer.
 
-##3.7 ENV
+## 3.7 ENV
 ```sh
 ENV <key> <value>
 ENV <key>=<value> ...
 ```
 - Khai báo cáo biến giá trị môi trường. Khi run container từ image, các biến môi trường này vẫn có hiệu lực.
 
-##3.8 ADD
+## 3.8 ADD
 ```sh
 ADD has two forms:
 ADD <src>... <dest>
@@ -134,7 +134,7 @@ Note: If your URL files are protected using authentication, you will need to use
   - If <dest> does not end with a trailing slash, it will be considered a regular file and the contents of <src> will be written at <dest>.
   - If <dest> doesn’t exist, it is created along with all missing directories in its path.
 
-##3.9 COPY
+## 3.9 COPY
 ```sh
 COPY <src>... <dest>
 COPY ["<src>",... "<dest>"] (this form is required for paths containing whitespace)
@@ -142,7 +142,7 @@ COPY ["<src>",... "<dest>"] (this form is required for paths containing whitespa
 - Chỉ thị COPY, copy file, thư mục (src) và thêm chúng vào filesystem của container (dest).
 - Các lưu ý tương tự chỉ thị ADD.
 
-##3.10 ENTRYPOINT
+## 3.10 ENTRYPOINT
 ```sh
 ENTRYPOINT ["executable", "param1", "param2"] (exec form, preferred)
 ENTRYPOINT command param1 param2 (shell form)
@@ -152,7 +152,7 @@ Hai cái CMD và ENTRYPOINT có tác dụng tương tự nhau. Nếu một Docke
 Lý do người ta dùng ENTRYPOINT nhằm chuẩn bị các điều kiện setup như tạo user, mkdir, change owner... cần thiết để chạy service trong container. 
 
 
-##3.11 VOLUME
+## 3.11 VOLUME
 ```sh
 VOLUME ["/data"]
 ```
@@ -164,32 +164,32 @@ root@adk:/var/lib/docker/volumes# docker inspect sad_euclid | grep /var/lib/dock
 ```
 
 
-##3.12 USER
+## 3.12 USER
 ```sh
 USER daemon
 ```
 - Set username hoặc UID để chạy các lệnh RUN, CMD, ENTRYPOINT trong dockerfiles.
 
-##3.13 WORKDIR
+## 3.13 WORKDIR
 ```sh
 WORKDIR /path/to/workdir
 ```
 - Chỉ thị WORKDIR dùng để đặt thư mục đang làm việc cho các chỉ thị khác như: RUN, CMD, ENTRYPOINT, COPY, ADD,...
 
-##3.14 ARG
+## 3.14 ARG
 ```sh
 ARG <name>[=<default value>]
 ```
 - Chỉ thị ARG dùng để định nghĩa các giá trị của biến được dùng trong quá trình build image (lệnh `docker build` --build-arg <varname>=<value>). 
 - biến ARG sẽ không bền vững như khi sử dụng ENV.
 
-##3.15 STOPSIGNAL
+## 3.15 STOPSIGNAL
 ```sh
 STOPSIGNAL signal
 ```
 - Gửi tín hiệu để container tắt đúng cách.
 
-##3.16 SHELL
+## 3.16 SHELL
 ```sh
 SHELL ["executable", "parameters"]
 ```
@@ -216,7 +216,7 @@ SHELL ["cmd", "/S"", "/C"]
 RUN echo hello
 ```
 
-##3.17 ONBUILD
+## 3.17 ONBUILD
 ```sh
 ONBUILD [INSTRUCTION]
 ```
