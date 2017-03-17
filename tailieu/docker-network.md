@@ -173,7 +173,7 @@ PING redis1 (172.18.0.3): 56 data bytes
 64 bytes from 172.18.0.3: icmp_seq=0 ttl=64 time=0.168 ms
 ```
 
-#Reference
+# Reference
 - http://www.dasblinkenlichten.com/docker-networking-101-host-mode/
 - https://viblo.asia/euclid/posts/XqakEmmbkWK
 - https://docs.docker.com/engine/userguide/networking/#the-dockergwbridge-network

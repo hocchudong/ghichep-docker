@@ -89,6 +89,12 @@ CONTAINER ID        IMAGE               COMMAND                  CREATED        
 - dockerfile dùng để build các image.
 - docker-compose dùng để build và run các container.
 - docker-compose viết theo cú pháp **YAML**, các lệnh khai báo trong docker-compose gần tương tự với thao tác chạy container `docker run`.
+- docker-compose cung chấp chức năng `Horizontally scaled`, cho phép ta tạo ra nhiều container giống nhau một cách nhanh chóng. Bằng cách sử dụng lệnh
+```sh
+docker-compose scale name_service=5
+```
+
+Trong đó, **name_service** là tên services cần tạo container. **5** là số container sẽ được tạo ra.
 
 # References
 - https://viblo.asia/euclid/posts/DXOkRZYwkdZ
