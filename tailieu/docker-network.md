@@ -1,4 +1,5 @@
-#Network trong Docker.
+# Network trong Docker.
+
 ![](https://camo.githubusercontent.com/d2c856d1986260ace4a29c8478e17bba09dacc13/687474703a2f2f692e696d6775722e636f6d2f614e534a3639792e706e67)
 
 Khi chúng ta cài đặt Docker, những thiết lập sau sẽ được thực hiện:
@@ -7,7 +8,7 @@ Khi chúng ta cài đặt Docker, những thiết lập sau sẽ được thực
 
 Sau đó, khi chúng ta khởi động một container (với bridge network), một veth (Virtual Ethernet) sẽ được tạo ra nối 1 đầu với docker0 và một đầu sẽ được nối với interface eth0 trên container.
 
-#1. Default network
+# 1. Default network
 Mặc định khi cài đặt xong, Docker sẽ tạo ra 3 card mạng mặc định là:
 - bridge
 - host
@@ -29,10 +30,10 @@ root@adk:/#
 
 Mặc định khi tạo container mà ta không chỉ định dùng network nào, thì docker sẽ dùng dải bridge.
 
-##1.1 None network
+## 1.1 None network
 Các container thiết lập network này sẽ không được cấu hình mạng. 
 
-##1.2 Bridge
+## 1.2 Bridge
 Docker sẽ tạo ra một switch ảo. Khi container được tạo ra, interface của container sẽ gắn vào switch ảo này và kết nối với interface của host.
 
 ```sh
@@ -72,10 +73,10 @@ root@adk:~# docker network inspect bridge
 root@adk:~# 
 ```
 
-##1.3 Host
+## 1.3 Host
 Containers sẽ dùng mạng trực tiếp của máy host. Network configuration bên trong container đồng nhất với host.
 
-##2. User-defined networks
+## 2. User-defined networks
 Ngoài việc sử dụng các network mặc định do docker cung cấp. Ta có thể tự định nghĩa ra các dải network phù hợp
 với công việc của mình.
 
@@ -97,7 +98,7 @@ Trong đó:
 
 Container mà bạn chạy trên network này đều phải thuộc về cùng một Docker host. Mỗi container trong network có thể communicate với các containers khác trong cùng network.
 
-##3. An overlay network with Docker Engine swarm mode
+## 3. An overlay network with Docker Engine swarm mode
 - Overlay network là mạng có thể kết nối nhiều container trên các **Docker Engine** lại với nhau, trong môi trường cluster.
 - Swarm tạo ra overlay network chỉ available với các nodes bên trong swarm. Khi bạn tạo ra một service sử dụng overlay network, manager node sẽ tự động kế thừa overlay network tới các nodes chạy các service tasks.
 
