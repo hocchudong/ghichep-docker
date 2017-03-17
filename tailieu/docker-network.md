@@ -119,7 +119,65 @@ $ $ docker service create --replicas 2 --network my-multi-host-network --name my
 716thylsndqma81j6kkkb5aus
 ```
 
-#Ref
+# 4. "Nói chuyện" giữa các container với nhau.
+
+- Trên cùng một host, các container chỉ cần dùng bridge network để nói chuyện được với nhau.
+- Nhưng có một trở ngại là IP của các container được cấp động nên nếu sử dụng IP thì không tiện chút nào. 
+- Cách duy nhất giải quyết là dùng name, vừa thân thiện lại có thể map động nên khi IP thay đổi cũng không lo mất kết nối giữa các dịch vụ chạy trên các container khác nhau.
+- Phương thức thực hiện của docker lại hơi khác nhau trong hai trường hợp: sử dụng default bridge network và sử dụng user-defined bridge network. MÌnh sẽ đi lần lượt từng trường hợp.
+
+## 4.1 Trường hợp sử dụng default bridge network để kết nối các container
+- Giả sử có mô hình: `web - redis - db`
+- ở đây từ container web phải connect được đến redis và đến db. Đặt tên cho từng container. Sau đó link theo 
+tên, phải đảm bảo container được link phải tồn tại. Do đó phải run theo thư tứ db -> redis -> web
+
+```sh
+docker run -itd --name=db -e MYSQL_ROOT_PASSWORD=pass mysql:latest
+docker run -itd --name=redis redis:latest
+docker run -itd --name=web --link=redis --link=db nginx:latest
+```
+
+- Kiểm tra: 
+```sh
+docker exec -it web sh
+# ping redis
+PING redis (172.17.0.3): 56 data bytes
+64 bytes from 172.17.0.3: icmp_seq=0 ttl=64 time=0.245 ms
+...
+# ping db
+PING db (172.17.0.2): 56 data bytes
+64 bytes from 172.17.0.2: icmp_seq=0 ttl=64 time=0.126 ms
+...
+```
+
+## 4.2 Trường hợp sử dụng user-defined bridge network để kết nối các container
+
+- Bạn không cần thực hiện thao tác link qua link lại giữa các container nữa.
+
+```sh
+docker network create my-net
+docker network ls
+NETWORK ID          NAME                DRIVER
+716f591e185a        bridge              bridge              
+4b0041303d6d        host                host                
+7239bb9e0255        my-net              bridge              
+016cf6ec1791        none                null
+
+docker run -itd --name=web1 --net my-net nginx:latest
+docker run -itd --net my-net --name=redis1 redis:latest
+docker run -itd --name=db1 --net my-net -e MYSQL_ROOT_PASSWORD=pass mysql:latest
+
+docker exec -it web1 sh
+# ping db1
+PING db1 (172.18.0.4): 56 data bytes
+64 bytes from 172.18.0.4: icmp_seq=0 ttl=64 time=0.161 ms
+# ping redis1
+PING redis1 (172.18.0.3): 56 data bytes
+64 bytes from 172.18.0.3: icmp_seq=0 ttl=64 time=0.168 ms
+```
+
+#Reference
 - http://www.dasblinkenlichten.com/docker-networking-101-host-mode/
 - https://viblo.asia/euclid/posts/XqakEmmbkWK
 - https://docs.docker.com/engine/userguide/networking/#the-dockergwbridge-network
+- https://kipalog.com/posts/Cach-lien-ket-cac-container-lai-voi-nhau-trong-docker

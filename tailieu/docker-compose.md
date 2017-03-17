@@ -85,7 +85,7 @@ CONTAINER ID        IMAGE               COMMAND                  CREATED        
 68460ffee3c4        mysql:5.7           "docker-entrypoint..."   7 minutes ago       Up 7 minutes        3306/tcp                 test_db_1
 ```
 
-#3. Một vài chú ý:
+# 3. Một vài chú ý:
 - dockerfile dùng để build các image.
 - docker-compose dùng để build và run các container.
 - docker-compose viết theo cú pháp **YAML**, các lệnh khai báo trong docker-compose gần tương tự với thao tác chạy container `docker run`.
