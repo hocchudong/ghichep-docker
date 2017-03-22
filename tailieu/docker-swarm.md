@@ -109,6 +109,24 @@ services:
   - **mode: replicated**: kết hợp với **replicas: 3** Nó có nghĩa là tạo ra 3 container.
   - Nếu **mode** là **global** thì mỗi node sẽ chỉ tạo ra 1 container.
 
+- Enable Experimental: Tạo file `/etc/docker/daemon.json`
+```sh
+{
+    "experimental": true
+}
+```
+
+- Khởi động lại docker
+```sh
+service docker restart
+```
+
+- Kiểm tra tính năng experimental đã bật hay chưa
+```sh
+$ docker version -f '{{.Server.Experimental}}'
+true
+```
+
 - Lệnh deploy
 ```sh
 docker deploy --compose-file docker-compose.yml linhlt
