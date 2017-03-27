@@ -49,6 +49,40 @@ root@compute3:~#
 docker run -it -v $(pwd)/bindthis:/var/www/html/webapp:ro ubuntu bash
 ```
 
+#### Sử dụng volume để chia sẽ dữ liệu giữa các container
+- Tạo container chứa volume 
+```sh
+docker create -v /linhlt --name volumecontainer ubuntu
+```
+
+- Tạo container khác sử dụng container `volumecontainer` làm volume. Khi đó, mọi sự thay đổi trên container mới sẽ được cập nhật trong container `volumecontainer`:
+```sh
+docker run -t -i --volumes-from volumecontainer ubuntu /bin/bash
+```
+
+Trong đó, tùy chọn `--volumes-from` chỉ ra tên của container sẽ được map volume.
+
+#### Backup và Restore volume.
+- Backup:
+
+```sh
+$ docker run --rm --volumes-from volumecontainer -v $(pwd):/backup ubuntu tar cvf /backup/backup.tar /linhlt
+```
+
+- Lệnh này sẽ backup thư mục volume là `/linhlt` trong container `volumecontainer` và nén lại dưới dạng file `backup.tar`.
+
+- Restore:
+```sh
+docker run -v /linhlt --name data-container ubuntu /bin/bash
+```
+
+=> Tạo volume /linhlt trên container `data-container`.
+
+```sh
+$ docker run --rm --volumes-from data-container -v $(pwd):/backup ubuntu bash -c "cd /linhlt && tar -zxvf /backup/backup.tar"
+```
+
+=> Tạo container thực hiện nhiệm vụ giải nén file `backup.tar` vào thư mục `/linhlt`. Container này có liên kết với container `data-container` ở trên.
 
 ### Các chú ý về volume trong Docker
 - Đường dẫn trong cờ hiệu `-v` phải là đường dẫn tuyệt đối, thường dùng `$(pwd)/ten_duong_dan` để chỉ đúng đường dẫn.
