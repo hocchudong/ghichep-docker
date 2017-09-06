@@ -1,7 +1,7 @@
 # Hướng dẫn cài đặt Docker
 ## Cài đặt docker engine
 ### Cài bản stable mới nhất
-- Các os áp dụng: CentOS 7.3 64bit, Ubuntu 14.04 64bit, Ubuntu 16.04 64bit
+- Các OS áp dụng: CentOS 7.3 64bit, Ubuntu 14.04 64bit, Ubuntu 16.04 64bit
 - Đăng nhập với quyên `root` và thực hiện lệnh dưới để cài đặt. Đảm bảo máy có kết nối internet.
 	```sh
 	su - 
