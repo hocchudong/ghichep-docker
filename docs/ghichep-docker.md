@@ -13,6 +13,20 @@
 ## Thành phần của docker engine
 ![Các thành phần trong docker engine](/images/engine-components-flow.png)
 
-## Mô hình kiến trúc của docker engine 
-![Mô hình kiến trúc của docker engine](/images/docker2.png)
+## Các thành phần trong docker engine 
+- Kiến trúc mức high level
+![Mô hình kiến trúc của mức high level docker engine](/images/docker2.png)
 
+## So sánh kiến trúc của LXC với Docker
+- Từ bản 1.10 trở đi, docker sử dụng thư viện riêng để giao tiếp với kernel của Linux (trước đó sử dụng LXC)
+![So sánh kiến trúc của LXC với docker](/images/linux-vs-docker-comparison-architecture-docker-lxc.png)
+
+![So sánh kiến trúc của LXC với docker 2](/images/linux-vs-docker-comparison-architecture-docker-lxc_2.png)
+
+
+
+## Tham khảo
+
+1. https://sreeninet.wordpress.com/2015/02/02/containers-docker-lxc-and-rocket/
+
+2. https://robinsystems.com/blog/containers-deep-dive-lxc-vs-docker-comparison/
