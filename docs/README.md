@@ -1,6 +1,8 @@
-# Thông tin tài liệu
+## Mục lục tài liệu
 
-#### Tổng quan về docker: https://github.com/hocchudong/ghichep-docker/blob/master/tailieu/ghichep-docker.md
+### Lý thuyết 
+
+[Tổng quan về docker](/docs/ghichep-docker.md)
 
 #### Các lệnh hay sử dụng trong docker: https://github.com/hocchudong/ghichep-docker/blob/master/tailieu/lenh-docker.md
 
