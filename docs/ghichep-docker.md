@@ -23,7 +23,19 @@
 
 ![So sánh kiến trúc của LXC với docker 2](/images/linux-vs-docker-comparison-architecture-docker-lxc_2.png)
 
+## Trạng thái và chu trình của một container nói chung
+- Sơ đồ thể hiện các trạng thái có thể có của container
+![Trạng thái của container](/images/docker-state.jpg)
 
+## Network trong Docker engine (docker native - docker chưa sử dụng giải pháp network hỗ trợ khác)
+
+- Chiều inbound và outbound khi các container sử dụng trong container
+![docker-network-native-outbound](/images/docker-native-network4.jpg)
+
+![docker-network-native-inbound](/images/docker-native-network5.jpg)
+
+
+- Minh họa kết nối của các container trong docker
 
 ## Tham khảo
 
