@@ -32,12 +32,12 @@
 
 
 - Mô hình network trong container 
-![container-networking-model1](/docs/Container_Networking_Model1.png)
+![container-networking-model1](/images/Container_Networking_Model1.png)
 
-![container-networking-model2](/docs/Container_Networking_Model2.png)
+![container-networking-model2](/images/Container_Networking_Model2.png)
 
 - Các loại driver network trong container
-![container-networking-model3](/docs/docker-native-model2.jpg)
+![container-networking-model3](/images/docker-native-model2.jpg)
 
 ### Đối với native driver network trong container
 - Chiều outbound khi các container sử dụng trong container
