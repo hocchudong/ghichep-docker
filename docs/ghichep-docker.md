@@ -13,8 +13,8 @@
 ## Thành phần của docker engine
 ![Các thành phần trong docker engine](/images/engine-components-flow.png)
 
-## Các thành phần trong docker engine 
-- Kiến trúc mức high level
+## Mô hình của docker
+- Mô hình mức high level
 ![Mô hình kiến trúc của mức high level docker engine](/images/docker2.png)
 
 ## So sánh kiến trúc của LXC với Docker
