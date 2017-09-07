@@ -2,7 +2,7 @@
 
 ### Lý thuyết 
 
-[Tổng quan về docker](/docs/ghichep-docker.md)
+[Các ghi chép cần chú ý về docker](/docs/ghichep-docker.md)
 
 [Các lệnh hay sử dụng trong docker](/docs/lenh-docker.md)
 

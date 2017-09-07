@@ -27,15 +27,33 @@
 - Sơ đồ thể hiện các trạng thái có thể có của container
 ![Trạng thái của container](/images/docker-state.jpg)
 
-## Network trong Docker engine (docker native - docker chưa sử dụng giải pháp network hỗ trợ khác)
+## Network trong Docker engine 
+- Network trong container có giải pháp sẵn có và giải pháp tích hợp với các nền tảng khác.
 
-- Chiều inbound và outbound khi các container sử dụng trong container
+
+- Mô hình network trong container 
+![container-networking-model1](/docs/Container_Networking_Model1.png)
+
+![container-networking-model2](/docs/Container_Networking_Model2.png)
+
+- Các loại driver network trong container
+![container-networking-model3](/docs/docker-native-model2.jpg)
+
+### Đối với native driver network trong container
+- Chiều outbound khi các container sử dụng trong container
 ![docker-network-native-outbound](/images/docker-native-network4.jpg)
 
+Chiều inbound khi các container sử dụng trong container
 ![docker-network-native-inbound](/images/docker-native-network5.jpg)
 
 
-- Minh họa kết nối của các container trong docker
+- Minh họa kết nối của các container trong docker native network
+![docker-network1](/images/docker-native-network1.jpg)
+
+![docker-network2](/images/docker-native-network2.jpg)
+
+![docker-network3](/images/docker-native-network3.jpg)
+
 
 ## Tham khảo
 
