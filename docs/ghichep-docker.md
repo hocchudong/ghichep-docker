@@ -30,7 +30,6 @@
 ## Network trong Docker engine 
 - Network trong container có giải pháp sẵn có và giải pháp tích hợp với các nền tảng khác.
 
-
 - Mô hình network trong container 
 ![container-networking-model1](/images/Container_Networking_Model1.png)
 
