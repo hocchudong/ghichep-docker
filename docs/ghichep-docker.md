@@ -17,6 +17,9 @@
 - Mô hình mức high level
 ![Mô hình kiến trúc của mức high level docker engine](/images/docker2.png)
 
+## Workflow cơ bản của docker 
+![Workflow cơ bản của docker](/images/docker-stages.png)
+
 ## So sánh kiến trúc của LXC với Docker
 - Từ bản 1.10 trở đi, docker sử dụng thư viện riêng để giao tiếp với kernel của Linux (trước đó sử dụng LXC)
 ![So sánh kiến trúc của LXC với docker](/images/linux-vs-docker-comparison-architecture-docker-lxc.png)
