@@ -19,9 +19,9 @@
 - Quy tắt đặt tên images: `[REPOSITORY[:TAG]]`
   - Trong đó, TAG là phiên bản của images. Mặc định, khi không khai báo tag thì docker sẽ hiểu tag là `latest`
 
-##1. Một số lệnh làm việc với images
+## 1. Một số lệnh làm việc với images
 
-###1.1. Kiểm tra hoạt động của docker
+### 1.1. Kiểm tra hoạt động của docker
 
 - Sử dụng lệnh `docker run hello-world` để kiểm tra hoạt động của docker trên host.
 
@@ -41,7 +41,7 @@
 	....
 	```
 
-###1.2. Tìm kiếm immages từ Docker HUB
+### 1.2. Tìm kiếm immages từ Docker HUB
 
 - Sử dụng lệnh `docker search` để tìm kiếm các images trên Docker HUB
 
@@ -132,7 +132,7 @@
 
 - Sau khi xác định được images muốn sử dụng, bạn sử dụng tiếp lệnh `docker pull` để kéo images từ internet về host cài docker của bạn. 
 
-###1.3. Tải images từ Docker Hub về host
+### 1.3. Tải images từ Docker Hub về host
 
 - Ví dụ tải images có tên là `ubuntu` về host
 
@@ -146,7 +146,7 @@
 
 - Để tạo một container từ image `ubuntu`, sử dụng lệnh `docker run ubuntu`
 
-###1.4. Kiểm tra các images tồn tại trên host.
+### 1.4. Kiểm tra các images tồn tại trên host.
 
 - Sử dụng lệnh `docker images` để kiểm tra danh sách các images
 
@@ -165,7 +165,7 @@
 	root@u14-vagrant:~#
 	```
 
-###1.5 Tạo container từ images 
+### 1.5 Tạo container từ images 
 
 - Trong các tài liệu thường hay sử dụng lệnh `docker run hello-world` để chạy một container, sau khi chạy xong container này nó sẽ thoát. Tuy nhiên, đa số chúng ta lại cần tương tác nhiều hơn nữa với container (thao tác nhiều hơn). 
 
@@ -218,7 +218,7 @@
 	root@4a7b498636b6:/#
 	```
 
-##2. Push - Pull images using Docker Hub.
+## 2. Push - Pull images using Docker Hub.
 - Để push 1 image vừa tạo lên hub để chia sẻ với mọi người, thì ta cần tạo 1 tài khoản docker hub và login vào bằng câu lệnh
 ```sh
 docker login
@@ -238,7 +238,7 @@ The push refers to a repository [cosy294/test]
 
 - Để Pull một image từ Docker Hub: `docker pull {image_name}`
 
-#3. Create and use Docker Registry: Local Images Repo.
+# 3. Create and use Docker Registry: Local Images Repo.
 - Tạo môi trường chứa image. Docker đã hỗ trợ chúng ta cài đặt các môi trường này duy nhất trong 1 container. Rất là đơn giản, chúng ta chạy lệnh sau.
 ```sh
 docker run -d -p 5000:5000 --name registry registry:2
