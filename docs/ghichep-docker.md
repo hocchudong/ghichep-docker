@@ -18,7 +18,10 @@
 ![Mô hình kiến trúc của mức high level docker engine](/images/docker2.png)
 
 ## Workflow cơ bản của docker 
-![Workflow cơ bản của docker](/images/docker-stages.png)
+
+- Workflow làm việc của docker 
+<img src="/images/docker-stages.png" alt="center" width="775" height="457"> 
+
 
 ## So sánh kiến trúc của LXC với Docker
 - Từ bản 1.10 trở đi, docker sử dụng thư viện riêng để giao tiếp với kernel của Linux (trước đó sử dụng LXC)
@@ -36,6 +39,7 @@
 - Mô hình network trong container 
 ![container-networking-model1](/images/Container_Networking_Model1.png)
 
+- Giao tiếp giữa docker engine - libnetwork - driver
 ![container-networking-model2](/images/Container_Networking_Model2.png)
 
 - Các loại driver network trong container
