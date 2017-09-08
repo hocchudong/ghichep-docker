@@ -50,7 +50,7 @@ Chiều inbound khi các container sử dụng trong container
 
 
 - Minh họa kết nối của các container trong docker native network
-![docker-network1](/images/docker-native-network1.jpg = 360x465)
+![docker-network1](/images/docker-native-network1.jpg){:height="50%" width="50%"}
 
 ![docker-network2](/images/docker-native-network2.jpg)
 
