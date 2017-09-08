@@ -20,7 +20,7 @@
 ## Workflow cơ bản của docker 
 
 - Workflow làm việc của docker 
-<img src="/images/docker-stages.png" alt="center" width="775" height="457"> 
+<img src="/images/docker-stages.png" align="center" width="775" height="457"> 
 
 
 ## So sánh kiến trúc của LXC với Docker
