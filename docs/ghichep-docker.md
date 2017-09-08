@@ -20,7 +20,7 @@
 ## Workflow cơ bản của docker 
 
 - Workflow làm việc của docker 
-<img src="/images/docker-stages.png" align="center" width="775" height="457"> 
+<img src="/images/docker-stages.png" align="middle" width="775" height="457"> 
 
 
 ## So sánh kiến trúc của LXC với Docker
@@ -57,9 +57,9 @@ Chiều inbound khi các container sử dụng trong container
 
 
 - Minh họa kết nối của các container trong docker native network
-<img src="/images/docker-native-network1.jpg" alt="alt text" width="360" height="465"> 
-<img src="/images/docker-native-network2.jpg" alt="alt text" width="360" height="465">
-<img src="/images/docker-native-network3.jpg" alt="alt text" width="360" height="465">
+<img src="/images/docker-native-network1.jpg" align="middle" width="360" height="465"> 
+<img src="/images/docker-native-network2.jpg" align="middle" width="360" height="465">
+<img src="/images/docker-native-network3.jpg" align="middle" width="360" height="465">
 
 ## Tham khảo
 
