@@ -56,9 +56,14 @@ Chiều inbound khi các container sử dụng trong container
 ![docker-network-native-inbound](/images/docker-native-network5.jpg)
 
 
-- Minh họa kết nối của các container trong docker native network
+#### Minh họa kết nối của các container trong docker native network
+- Khi kết nối với card mạng docker0 (card mạng được sinh ra sau khi cài docker engine)
 <img src="/images/docker-native-network1.jpg" align="middle" width="360" height="465"> 
+
+- Khi kết nối với card mạng tạo thêm dành cho container và chỉ có kết nối nội bộ
 <img src="/images/docker-native-network2.jpg" align="middle" width="360" height="465">
+
+- Khi kết hợp giữa card mạng docker0 và card kết nối nội bộ các container 
 <img src="/images/docker-native-network3.jpg" align="middle" width="360" height="465">
 
 ## Tham khảo
