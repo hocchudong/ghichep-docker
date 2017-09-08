@@ -37,12 +37,15 @@
 - Network trong container có giải pháp sẵn có và giải pháp tích hợp với các nền tảng khác.
 
 - Mô hình network trong container 
+
 ![container-networking-model1](/images/Container_Networking_Model1.png)
 
 - Giao tiếp giữa docker engine - libnetwork - driver
+
 ![container-networking-model2](/images/Container_Networking_Model2.png)
 
 - Các loại driver network trong container
+
 ![container-networking-model3](/images/docker-native-model2.jpg)
 
 ### Đối với native driver network trong container
