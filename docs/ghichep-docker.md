@@ -21,7 +21,7 @@
 - Tạo file `/etc/apt/sources.list.d/docker.list`
 
 	```sh
-	cat " deb https://apt.dockerproject.org/repo ubuntu-trusty main" > /etc/apt/sources.list.d/docker.list
+	echo "deb https://apt.dockerproject.org/repo ubuntu-trusty main" > /etc/apt/sources.list.d/docker.list
 	```
 
 - Chạy các lệnh dưới để tiếp tục cài đặt Docker
@@ -30,10 +30,10 @@
 	sudo apt-get update
 	sudo apt-get purge lxc-docker
 	apt-cache policy docker-engine
-	apt-get upgrade
+	apt-get upgrade -y
 
-	sudo apt-get install linux-image-extra-$(uname -r) linux-image-extra-virtual
-	sudo apt-get install docker-engine
+	sudo apt-get install linux-image-extra-$(uname -r) linux-image-extra-virtual -y
+	sudo apt-get install docker-engine -y
 	```
 
 - Kiểm tra phiên bản `docker` sau khi cài đặt.
@@ -308,7 +308,7 @@ running
 root@u14-vagrant:~# docker stop web31 -t 20
 web31
 root@u14-vagrant:~#
-````
+```
 
 - Mở một tab khác và quan sát kết quả của lệnh `docker events`
 
