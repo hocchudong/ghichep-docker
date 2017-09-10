@@ -32,10 +32,7 @@
 
 ### Demo Docker
 
-[Demo - Sử dụng docker để cài drupal]
+[Demo - Sử dụng docker để tạo các container](/docs/docker-demo.md)
 
-[Demo - Sử dụng docker để cài zabbix]
-
-[Demo - Sử dụng docker để cài Rabbitmq]
 
 
