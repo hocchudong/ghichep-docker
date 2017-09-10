@@ -8,7 +8,7 @@
 - Ngoài docker, có nhiều công cụ khác nhau có thể tạo ra các container ví dụ như: LXC, rkt
 - Có 02 phiên bản chính của docker: 
 	- Phiên bản thương mại: Enterprise Edition - Docker EE 
-	- Phiên bản miễn phí:  Community Edition - Docker CE
+	- Phiên bản miễn phí: Community Edition - Docker CE
 
 ## Thành phần của docker engine
 ![Các thành phần trong docker engine](/images/engine-components-flow.png)
