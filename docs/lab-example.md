@@ -1,8 +1,10 @@
-﻿# LAB1: 
+﻿# LAB1: Cài đặt docker
 
+tham khảo tại [link](https://github.com/congto/ghichep-docker/blob/master/docs/docker-thuchanh-caidat.md)
 
-# LAB2:
+# LAB2: Kiểm tra hoạt động của docker
 
+tham khảo tại [link](https://github.com/congto/ghichep-docker/blob/master/docs/docker-thuchanh-caidat.md)
 
 # LAB3: Tạo một container
 
@@ -11,7 +13,7 @@ Sử dụng lệnh `docker run` để tạo một docker từ image có sẵn. C
 $ docker run [options] [image] [command] [args]
 ```
 
-Trong đó, nếu có nhiều image thì chỉ định image cho docker với repository:tag. Nếu không chỉ định thì mặc định sẽ lấy tag là `lastest`
+Trong đó, nếu có nhiều image thì chỉ định image cho docker với repository:tag. Nếu không chỉ định thì mặc định sẽ lấy tag là `latest`
 
 Ví dụ:
 ```sh
@@ -114,4 +116,64 @@ docker run -d --name drupal_example \
 docker inspect -f "{{ .HostConfig.Links }}" drupal_example
 ```
 
-# LAB7: 
+# LAB7: export/save/load container
+
+```sh
+mkdir -p ~/Docker-presentation
+
+docker pull nimmis/alpine-apache
+docker run -d --name apache_example \
+           nimmis/alpine-apache
+
+// Create a file inside the container.
+// See https://github.com/nimmis/docker-alpine-apache for details.
+docker exec -ti apache_example \
+            /bin/sh -c 'mkdir /test && echo "This is it." >> /test/test.txt'
+
+// Test it. You should see message: "This is it."
+docker exec apache_example cat /test/test.txt
+
+// Commit the change.
+docker commit apache_export_example myapache:latest
+
+// Create a new container with the new image.
+docker run -d --name myapache_example myapache
+
+// You should see the new folder/file inside the myapache_example container.
+docker exec myapache_example cat /test/test.txt
+
+// Export the container as image
+cd ~/Docker-presentation
+docker export myapache_example > myapache_example.tar
+
+// Import a new image from the exported files
+cd ~/Docker-presentation
+docker import myapache_example.tar myapache:new
+
+// Save a new image as tar
+docker save -o ~/Docker-presentation/myapache_image.tar myapache:new
+
+// Load an image from tar file
+docker load < myapache_image.tar
+```
+
+# LAB8: upload image lên repository
+
+```sh
+mkdir -p ~/upload && cd ~/upload
+git clone git@github.com:theodorosploumis/docker-presentation.git
+cd docker-presentation
+
+docker pull nimmis/alpine-apache
+docker build -t tplcom/docker-presentation .
+
+// Test it
+docker run -itd --name docker_presentation \
+           -p 8480:80 \
+           tplcom/docker-presentation
+
+// Open http://localhost:8480, you should see this presentation
+
+// Push it on the hub.docker.com
+docker push tplcom/docker-presentation
+```
