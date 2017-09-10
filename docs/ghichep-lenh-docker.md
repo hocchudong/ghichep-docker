@@ -2,7 +2,7 @@
 
 ## Các lệnh khởi đầu
 
-| STT | Lệnh         | Ý nghĩa  | Ví dụ                                  |
+| STT | Lệnh | Ý nghĩa  | Ví dụ              |
 |-----|------------|--------------|------------------------------------------------|
 | 1 | docker pull `ten_image` | Tải image có tên là http từ docker hub | `docker  pull httpd` |
 | 2	| docker run  -d `ten_image`| Tạo container chạy ngầm               | `docker -d  pull httpd` |
