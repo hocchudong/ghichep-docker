@@ -7,6 +7,7 @@
 - Thực hiện lệnh dưới để cài đặt wordpress
 
 -Bước 1: Tạo 1 container để chạy môi trường mysql
+
 	```sh
 	docker run --name demo_mysql \
 			   -e MYSQL_ROOT_PASSWORD=root \
@@ -38,34 +39,34 @@
 
 - Bước 1: Tạo một container chạy DB cho zabbix
 
-```sh
-docker run \
-    -d \
-    --name zabbix-db \
-    --env="MARIADB_USER=zabbix" \
-    --env="MARIADB_PASS=my_password" \
-    monitoringartist/zabbix-db-mariadb
-```
+	```sh
+	docker run \
+		-d \
+		--name zabbix-db \
+		--env="MARIADB_USER=zabbix" \
+		--env="MARIADB_PASS=my_password" \
+		monitoringartist/zabbix-db-mariadb
+	```
 
 - Bước 2: Tạo một container chạy zabbix và liên kết với container có tên là `zabbix-db` vừa tạo ở bên trên
 
-```sh
-docker run \
-    -d \
-    --name zabbix \
-    -p 81:80 \
-    -p 10051:10051 \
-    -v /etc/localtime:/etc/localtime:ro \
-    --link zabbix-db:zabbix.db \
-    --env="ZS_DBHost=zabbix.db" \
-    --env="ZS_DBUser=zabbix" \
-    --env="ZS_DBPassword=my_password" \
-    --env="XXL_zapix=true" \
-    --env="XXL_grapher=true" \
-    monitoringartist/zabbix-xxl:latest
-```
+	```sh
+	docker run \
+		-d \
+		--name zabbix \
+		-p 81:80 \
+		-p 10051:10051 \
+		-v /etc/localtime:/etc/localtime:ro \
+		--link zabbix-db:zabbix.db \
+		--env="ZS_DBHost=zabbix.db" \
+		--env="ZS_DBUser=zabbix" \
+		--env="ZS_DBPassword=my_password" \
+		--env="XXL_zapix=true" \
+		--env="XXL_grapher=true" \
+		monitoringartist/zabbix-xxl:latest
+	```
 
-- Bước 3: Truy cập vào web với địa chỉ `http://ip_cua_host:81/
+- Bước 3: Truy cập vào web với địa chỉ `http://ip_cua_host:81/`. Tài đăng nhập bằng tài khoản `Admin` (Lưu ý ký tự A cần được viết hoa) và mật khẩu là `zabbix`. 
 
 
 ## Demo docker - rabbitmq
@@ -80,4 +81,6 @@ docker run \
   - `--hostname my-rabbit` : tên bên trong container
   - `--name some-rabbit` : Tên của container (có thể quan sát bằng lệnh `docker ps`)
   - `-p 8081:15672` : mapping port 8081 của host với port 15672 của container. Port 15672 là port trang quản trị mặc định của rabbitmq
+  
+Bước 3: đăng nhập vào trang quản trị của rabbitmq bằng địa chỉ `http://ip_cua_host:8081/`. Tài khoản là `guest`, mật khẩu là `guest`
   
