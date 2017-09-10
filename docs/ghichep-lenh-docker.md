@@ -7,6 +7,7 @@
 | 1 | docker pull `ten_image` | Tải image có tên là http từ docker hub | `docker  pull httpd` |
 | 2	| docker search  -d `ten_image`| Tìm kiếm các images | `docker search wordpress` |
 | 3 | docker images| Liệt kê các images đã tải về, lệnh này không có đối số truyền vào | docker images | 
+| 4 | docker rmi  -f `ten_image`| Xóa image đã tải với tùy chọn `-f` | docker rmi  -f httpd | 
 
 
 ## Các lệnh làm việc chính với container image
