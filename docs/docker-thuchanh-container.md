@@ -16,6 +16,7 @@ docker run [image_name]
 ```
 
 Ví dụ:
+
 ![docker_run](../images/docker_run.png)
 
 Đặt tên cho một container khi khởi tạo, thêm tham số `--name`
@@ -28,7 +29,7 @@ Tạo một docker và sử dụng terminal của docker
 docker run -it ubuntu /bin/bash
 ```
 
-*Note*: Chỉ sử dụng tham số `-it` thì khi thoát terminal của docker bằng `exit`, docker sẽ bị dừng.
+**Note**: Chỉ sử dụng tham số `-it` thì khi thoát terminal của docker bằng `exit`, docker sẽ bị dừng.
 
 Chỉ định chạy một docker dưới nền như một deamon. 
 ```sh
