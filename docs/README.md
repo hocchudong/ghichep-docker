@@ -1,17 +1,40 @@
-# Thông tin tài liệu
+## Mục lục tài liệu
 
-#### Tổng quan về docker: https://github.com/hocchudong/ghichep-docker/blob/master/tailieu/ghichep-docker.md
+### Lý thuyết 
 
-#### Các lệnh hay sử dụng trong docker: https://github.com/hocchudong/ghichep-docker/blob/master/tailieu/lenh-docker.md
+[Các ghi chép cần chú ý về docker](/docs/ghichep-docker.md)
 
-#### Volume trong docker: https://github.com/hocchudong/ghichep-docker/blob/master/tailieu/volume.md
+[Các lệnh hay sử dụng trong docker](/docs/lenh-docker.md)
 
-#### Network trong docker: https://github.com/hocchudong/ghichep-docker/blob/master/tailieu/docker-network.md
+[Docker image](/docs/ghichep-docker-images.md)
 
-#### Docker image: https://github.com/hocchudong/ghichep-docker/blob/master/tailieu/ghichep-docker-images.md
+[Viết dockerfile để build image](/docs/dockerfile.md)
 
-#### Viết dockerfile để build image: https://github.com/hocchudong/ghichep-docker/blob/master/tailieu/dockerfile.md
+[Volume trong docker](/docs/volume.md)
 
-#### Viết docker-compose để khởi chạy multi container: https://github.com/hocchudong/ghichep-docker/blob/master/tailieu/docker-compose.md
+[Network trong docker](/docs/docker-network.md)
 
-#### Docker swarm - tạo, quản lý cluster trong Docker. https://github.com/hocchudong/ghichep-docker/blob/master/tailieu/docker-swarm.md
+[Viết docker-compose để khởi chạy multi container](/docs/docker-compose.md)
+
+[Docker swarm - tạo, quản lý cluster trong Docker](/docs/docker-swarm.md)
+
+### Thực hành
+
+[Cài đặt docker engine cơ bản](/docs/docker-thuchanh-caidat.md)
+
+[Thao tác với images]
+
+[Thao tác với container]
+
+[Thực hành với dockerfile]
+
+[Thực hành với docker volume]
+
+[Thực hành với docker hub (docker registry) ]
+
+### Demo Docker
+
+[Demo - Sử dụng docker để tạo các container](/docs/docker-demo.md)
+
+
+
