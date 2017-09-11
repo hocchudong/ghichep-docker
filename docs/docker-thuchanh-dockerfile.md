@@ -1,6 +1,6 @@
 # Thực hành dockerfile
 
-Dockerfile giúp bạn rất nhiều trong quá trình làm việc với docker. Docker có cấu trúc thành các phần rõ ràng.
+Dockerfile giúp bạn rất nhiều trong quá trình làm việc với docker. Dockerfile có cấu trúc thành các phần rõ ràng.
 
 Đầu tiên cần chỉ định image gốc được sử dụng trong quá trình tạo image mới bằng dockerfile
 ```sh
@@ -22,6 +22,13 @@ Chỉ định một số cấu hình biến môi trường để apache chạy t
 ENV APACHE_RUN_USER www-data
 ENV APACHE_RUN_GROUP www-data
 ENV APACHE_LOG_DIR /var/log/apache2
+ENV APACHE_PID_FILE /var/run/apache2.pid
+ENV APACHE_RUN_DIR /var/run/apache2
+ENV APACHE_LOCK_DIR /var/lock/apache2
+ENV APACHE_SERVERADMIN admin@localhost
+ENV APACHE_SERVERNAME localhost
+ENV APACHE_SERVERALIAS docker.localhost
+ENV APACHE_DOCUMENTROOT /var/www
 ```
 
 Cung cấp cổng mà dịch vụ apache trong container kết nối ra ngoài:

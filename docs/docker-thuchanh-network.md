@@ -5,9 +5,9 @@ Liệt kê các network đang có của host
 docker network ls
 ```
 
-Thông tin chi tiết về một network
+Thông tin chi tiết về một network mặc định bridge
 ```sh
-docker network inspect [network_id/network_name]
+docker network inspect bridge
 ```
 
 Tạo một bridge network với subnet chỉ định
