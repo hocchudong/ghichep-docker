@@ -45,6 +45,11 @@ Thoát ra khỏi một container khi đang sử dụng terminal bằng cách:
 - Gõ `exit`
 - Nhấn tổ hợp phím `Ctl+P` và `Ctl+Q`
 
+Xem thông tin chi tiết về một container bằng lệnh
+```sh
+docker inspect [container_ID/container_name]
+```
+
 Xóa một container ở trạng thái `Exited`
 ```sh
 docker rm [container_ID/container_name]
@@ -58,4 +63,14 @@ docker rm -f [container_ID/container_name]
 Commit một container thành image
 ```sh
 docker commit [container_ID/container_name] [image_name]:latest
+```
+
+Khởi động/dừng một container
+```sh
+docker restart/start/stop [container_ID/container_name]
+```
+
+Cách tra cứu cú pháp các command:
+```sh
+docker [command] --help
 ```
