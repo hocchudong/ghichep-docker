@@ -64,3 +64,13 @@ Trên host, thực hiện lệnh sau để tạo ra một image tên là `apache
 ```sh
 bash dockerfile.sh
 ```
+
+Kiểm tra image vừa tạo
+```sh
+docker images
+```
+
+Tạo container từ image mới tạo bởi dockerfile
+```sh
+docker run -it apache_test /bin/bash
+```
