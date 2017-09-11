@@ -7,6 +7,7 @@
 - Thực hiện lệnh dưới để cài đặt wordpress
 
 -Bước 1: Tạo 1 container để chạy môi trường mysql
+
   ```sh
 	docker run --name demo_mysql \
 			   -e MYSQL_ROOT_PASSWORD=root \
@@ -17,6 +18,7 @@
 	```
 
 - Bước 2: Tạo một container chạy wordpress và liên kết với container có tên là `demo_mysql`
+
 	```sh
 	docker run --name demo_wordpress --link demo_mysql:mysql -p 8080:80 -d wordpress
 	```
@@ -37,6 +39,7 @@
 - Thực hiện các bước sau đây để tạo docker chạy zabbix
 
 - Bước 1: Tạo một container chạy DB cho zabbix
+
 	```sh
 	docker run \
 		-d \
@@ -47,6 +50,7 @@
 	```
 
 - Bước 2: Tạo một container chạy zabbix và liên kết với container có tên là `zabbix-db` vừa tạo ở bên trên
+
 	```sh
 	docker run \
 		-d \
@@ -68,6 +72,7 @@
 
 ## Demo docker - rabbitmq
 - Thực hiện lệnh dưới để cài đặt rabbitmq
+
 	```sh
 	docker run -d --hostname my-rabbit --name some-rabbit -p 8081:15672 rabbitmq:3-management
 	```
