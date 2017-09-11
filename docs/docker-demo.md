@@ -84,4 +84,5 @@
   - `-p 8081:15672` : mapping port 8081 của host với port 15672 của container. Port 15672 là port trang quản trị mặc định của rabbitmq
   
 Bước 3: đăng nhập vào trang quản trị của rabbitmq bằng địa chỉ `http://ip_cua_host:8081/`. Tài khoản là `guest`, mật khẩu là `guest`
+
   
