@@ -20,7 +20,7 @@
 - Sysad, Developer nên dùng được Docker.
 
 ### Các thành viên đóng góp
-- Tô Thành Công 
-- Nguyễn Công Đức
-- Lê Thanh Lĩnh
+- Tô Thành Công.
+- Nguyễn Công Đức.
+- Lê Thanh Lĩnh.
 - Nguyễn Trọng Tấn.
