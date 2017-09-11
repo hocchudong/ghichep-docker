@@ -22,6 +22,8 @@
 
 [Cài đặt docker engine cơ bản](/docs/docker-thuchanh-caidat.md)
 
+[Thao tác với images]
+
 [Thao tác với container]
 
 [Thực hành với dockerfile]
@@ -32,10 +34,7 @@
 
 ### Demo Docker
 
-[Demo - Sử dụng docker để cài drupal]
+[Demo - Sử dụng docker để tạo các container](/docs/docker-demo.md)
 
-[Demo - Sử dụng docker để cài zabbix]
-
-[Demo - Sử dụng docker để cài Rabbitmq]
 
 
