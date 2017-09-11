@@ -68,6 +68,9 @@
 
 ## Demo docker - rabbitmq
 - Thực hiện lệnh dưới để cài đặt rabbitmq
+
+### Lab1: Cài đặt rabbitmq stand alone 
+
 - Bước 1: Thực hiện lệnh dưới để cài đặt rabbitmq có kèm theo trang quản trị.
 	```sh
 	docker run -d --hostname my-rabbit --name some-rabbit -p 8081:15672 rabbitmq:3-management

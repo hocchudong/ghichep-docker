@@ -22,6 +22,8 @@
 
 [Cài đặt docker engine cơ bản](/docs/docker-thuchanh-caidat.md)
 
+[Thao tác với images]
+
 [Thao tác với container]
 
 [Thực hành với dockerfile]
