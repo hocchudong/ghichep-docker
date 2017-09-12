@@ -44,7 +44,7 @@ docker rmi httpd
 docker tag httpd httpd:1.0
 ```
 
-- `httpd` là image đang có. `httpd:1.0` là tên mới của image, `1.0` là phiên bản của image, nếu không điền thì được mặc định là `latest`
+- `httpd` là image đang có. `httpd:1.0` là tên mới của image có phiên bản `1.0`, nếu không điền thì được mặc định là `latest`
 - có thể chỉ định thêm `repository` sẽ upload image, tôi sử dụng `repository` là `tannt`: `docker tag httpd tannt/httpd:1.0`
 
 Cách tra cứu cú pháp các command về image:
