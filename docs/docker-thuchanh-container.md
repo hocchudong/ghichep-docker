@@ -69,10 +69,13 @@ docker rm -f ubuntu_test1
 
 - Lệnh xóa tất cả các container trên host: `docker rm -f $(docker ps -aq)`
 
-Commit một container thành image
+Commit một container thành image:
 ```sh
 docker commit ubuntu_test1 tannt/ubuntu:latest
 ```
+
+- `ubuntu_test1` là tên của container có trên host
+- `tannt/ubuntu:latest` là chỉ định tên của image (kèm repository) là `tannt/ubuntu` có phiên bản `latest` 
 
 Khởi động/dừng một container
 ```sh
