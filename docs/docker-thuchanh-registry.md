@@ -38,7 +38,7 @@ docker tag [image_name] [username_hub]/[image_name]:[tag]
 
 Ví dụ:
 ```sh
-docker tag mariadb tannt/mariadb:1.0
+docker tag apache_test tannt/apache_test:1.0
 ```
 
 Nếu bạn không gắn `tag` thì mặc định là `latest`. Bây giờ bạn push lên docker hub của bạn
@@ -48,7 +48,12 @@ docker push [username_hub]/[image_name]:[tag]
 
 Ví dụ:
 ```sh
-docker push tannt/mariadb:1.0
+docker push tannt/apache_test:1.0
 ```
 
 **Note**: trong trường hợp image_name chưa có trên docker hub thì lúc bạn push lên, sẽ tự tạo ra một repository mới
+
+Khi một người dùng muốn sử dụng image vừa được bạn tải lên, sẽ sử dụng lệnh `pull`:
+```sh
+docker pull tannt/apache_test:1.0
+```

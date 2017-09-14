@@ -30,6 +30,8 @@
 
 [Thực hành với docker volume](/docs/docker-thuchanh-volume.md)
 
+[Thực hành với docker network](/docs/docker-thuchanh-network.md)
+
 [Thực hành với docker hub (docker registry)](/docs/docker-thuchanh-registry.md)
 
 ### Demo Docker
