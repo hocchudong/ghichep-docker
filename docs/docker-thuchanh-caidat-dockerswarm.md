@@ -131,3 +131,18 @@ sudo systemctl start network
 sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/sysconfig/selinux
 sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config
 ```
+
+## Cài đăt docker engine và cấu hình docker swarm
+
+### Cài đặt docker trên 03 node
+
+- Cài đặt docker engine và chuẩn bị để sẵn sàng cấu hình docker swarm trên cả 03 node.
+
+```sh
+su - 
+
+curl -sSL https://get.docker.com/ | sudo sh
+```
+
+
+
