@@ -324,7 +324,7 @@ systemctl restart docker
     Successfully tagged web_server:latest
     ```
   
-- Tạo container từ image ở trên với số lượng bản sao là 03.
+- Tạo container từ image ở trên với số lượng bản sao là 03. Lúc này đứng trên node master thực hiện các lệnh dưới.
 
   ```sh
   docker service create --name swarm_cluster --replicas=3 -p 80:80 web_server:latest 
@@ -410,7 +410,7 @@ systemctl restart docker
 
   ```
 
-- Có thể kiểm tra các container trên từng node bằng lệnh `docker ps`, kết quả như bên dưới
+- Có thể kiểm tra các container trên từng node bằng lệnh `docker ps`, kết quả là thực hiện kiểm tra trên `worker1` và `worker2`
 
     ```sh
     [root@worker1node ~]# docker ps
@@ -424,11 +424,12 @@ systemctl restart docker
     143f360db9ca        web_server:latest   "/usr/sbin/httpd -D …"   3 minutes ago       Up 3 minutes        80/tcp              swarm_cluster.2.trm5frr8hqaw1z14m18fm3g3c
     ```
     
-- Thử thay đổi số lượng container bằng lệnh. Lúc này container sẽ được tăng lên.
+- Thử thay đổi số lượng container bằng lệnh. Lúc này container sẽ được tăng lên. 
 
   ```sh
   docker service scale swarm_cluster=4
   ```
   
+  - Kiểm tra lại bằng lệnh `docker service ps swarm_cluster`
   - Khi tắt thử các container trên một trong các node, sẽ có container mới được sinh ra để đảm bảo số container đúng với thiết lập.
   
