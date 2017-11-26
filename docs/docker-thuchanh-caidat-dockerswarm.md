@@ -1,6 +1,6 @@
 # Hướng dẫn cài đặt Docker Swarm
 ## Môi trường LAB
-- 03 node cài CentOS7
+- 03 node cài CentOS7: 01 node master và 02 node worker
 ### Mô hình
 
 ### Phân hoạch IP
@@ -21,7 +21,7 @@ hostnamectl set-hostname masternode
 ```sh
 
 echo "Setup IP  eth0"
-nmcli c modify eth0 ipv4.addresses 10.10.20.221/24
+nmcli c modify eth0 ipv4.addresses 10.10.10.221/24
 nmcli c modify eth0 ipv4.method manual
 nmcli con mod eth0 connection.autoconnect yes
 
@@ -62,7 +62,7 @@ hostnamectl set-hostname worker1node
 
 ```sh
 echo "Setup IP  eth0"
-nmcli c modify eth0 ipv4.addresses 10.10.20.222/24
+nmcli c modify eth0 ipv4.addresses 10.10.10.222/24
 nmcli c modify eth0 ipv4.method manual
 nmcli con mod eth0 connection.autoconnect yes
 
@@ -104,7 +104,7 @@ hostnamectl set-hostname worker2node
 
 ```sh
 echo "Setup IP  eth0"
-nmcli c modify eth0 ipv4.addresses 10.10.20.223/24
+nmcli c modify eth0 ipv4.addresses 10.10.10.223/24
 nmcli c modify eth0 ipv4.method manual
 nmcli con mod eth0 connection.autoconnect yes
 
