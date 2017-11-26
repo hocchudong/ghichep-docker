@@ -324,25 +324,26 @@ systemctl restart docker
     Successfully tagged web_server:latest
     ```
   
-- Tạo container từ image ở trên với số lượng bản sao là 02.
+- Tạo container từ image ở trên với số lượng bản sao là 03.
 
   ```sh
-  docker service create --name swarm_cluster --replicas=2 -p 80:80 web_server:latest 
+  docker service create --name swarm_cluster --replicas=3 -p 80:80 web_server:latest 
   ```
 
   - Kết quả như sau:
     
     ```sh
-    [root@masternode ~]# docker service create --name swarm_cluster --replicas=2 -p 80:80 web_server:latest
+    [root@masternode ~]# docker service create --name swarm_cluster --replicas=3 -p 80:80 web_server:latest
     image web_server:latest could not be accessed on a registry to record
     its digest. Each node will access web_server:latest independently,
     possibly leading to different nodes running different
     versions of the image.
 
-    6ygnj41a2z5ulocq0m6p897e6
-    overall progress: 2 out of 2 tasks
-    1/2: running   [==================================================>]
-    2/2: running   [==================================================>]
+    uccie2ympqo426qhmh63tnfc9
+    overall progress: 3 out of 3 tasks
+    1/3: running   [==================================================>]
+    2/3: running   [==================================================>]
+    3/3: running   [==================================================>]
     verify: Service converged
     ```
 
@@ -351,7 +352,8 @@ systemctl restart docker
   ```sh
   [root@masternode ~]# docker service ls
   ID                  NAME                MODE                REPLICAS            IMAGE               PORTS
-  6ygnj41a2z5u        swarm_cluster       replicated          2/2                 web_server:latest   *:80->80/tcp
+  uccie2ympqo4        swarm_cluster       replicated          3/3                 web_server:latest   *:80->80/tcp
+  [root@masternode ~]#
   ```
 
 - Kiểm tra sâu hơn bên trong của cluster 
@@ -364,47 +366,69 @@ systemctl restart docker
   
     ```sh
     [root@masternode ~]# docker service inspect swarm_cluster --pretty
+    [root@masternode ~]#   docker service inspect swarm_cluster --pretty
 
-    ID:             6ygnj41a2z5ulocq0m6p897e6
+    ID:             uccie2ympqo426qhmh63tnfc9
     Name:           swarm_cluster
     Service Mode:   Replicated
-    Replicas:      2
+     Replicas:      3
     Placement:
     UpdateConfig:
-    Parallelism:   1
-    On failure:    pause
-    Monitoring Period: 5s
-    Max failure ratio: 0
-    Update order:      stop-first
+     Parallelism:   1
+     On failure:    pause
+     Monitoring Period: 5s
+     Max failure ratio: 0
+     Update order:      stop-first
     RollbackConfig:
-    Parallelism:   1
-    On failure:    pause
-    Monitoring Period: 5s
-    Max failure ratio: 0
-    Rollback order:    stop-first
+     Parallelism:   1
+     On failure:    pause
+     Monitoring Period: 5s
+     Max failure ratio: 0
+     Rollback order:    stop-first
     ContainerSpec:
-    Image:         web_server:latest
+     Image:         web_server:latest
     Resources:
     Endpoint Mode:  vip
     Ports:
-    PublishedPort = 80
-    Protocol = tcp
-    TargetPort = 80
-    PublishMode = ingress
+     PublishedPort = 80
+      Protocol = tcp
+      TargetPort = 80
+      PublishMode = ingress
+    [root@masternode ~]#
+
     ```
 
-- Kiểm tra trạng thái của các service bằng lệnh `docker service ps swarm_cluster`,kết quả như bên dưới.
+- Kiểm tra trạng thái của các service bằng lệnh `docker service ps swarm_cluster`, các container sẽ nằm đều trên các node,kết quả như bên dưới.
 
   ```sh
   [root@masternode ~]# docker service ps swarm_cluster
-  ID                  NAME                  IMAGE               NODE                DESIRED STATE       CURRENT STATE             ERROR                              PORTS
-  qr3sk06m5j6p        swarm_cluster.1       web_server:latest   masternode          Running             Running 14 minutes ago
-  ernkqk5fnsoe        swarm_cluster.2       web_server:latest   masternode          Running             Running 13 minutes ago
-  t0zyoiiyvbqm         \_ swarm_cluster.2   web_server:latest   worker2node         Shutdown            Rejected 14 minutes ago   "No such image: web_server:lat…"
-  zhvl18ca2dgs         \_ swarm_cluster.2   web_server:latest   worker2node         Shutdown            Rejected 14 minutes ago   "No such image: web_server:lat…"
-  pe25zymjbk87         \_ swarm_cluster.2   web_server:latest   worker1node         Shutdown            Rejected 14 minutes ago   "No such image: web_server:lat…"
-  odyy3eryolgf         \_ swarm_cluster.2   web_server:latest   worker1node         Shutdown            Rejected 14 minutes ago   "No such image: web_server:lat…"
+  ID                  NAME                IMAGE               NODE                DESIRED STATE       CURRENT STATE                ERROR               PORTS
+  op3x52jzqmir        swarm_cluster.1     web_server:latest   worker1node         Running             Running about a minute ago
+  trm5frr8hqaw        swarm_cluster.2     web_server:latest   worker2node         Running             Running about a minute ago
+  6tf95kywbjjm        swarm_cluster.3     web_server:latest   masternode          Running             Running about a minute ago
   [root@masternode ~]#
+
   ```
 
--
+- Có thể kiểm tra các container trên từng node bằng lệnh `docker ps`, kết quả như bên dưới
+
+    ```sh
+    [root@worker1node ~]# docker ps
+    CONTAINER ID        IMAGE               COMMAND                  CREATED              STATUS              PORTS               NAMES
+    a136bedc42b7        web_server:latest   "/usr/sbin/httpd -D …"   About a minute ago   Up About a minute   80/tcp              swarm_cluster.1.op3x52jzqmir3o0dawz7hn4tn
+    ```
+    
+    ```sh
+    [root@worker2node ~]# docker ps
+    CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS               NAMES
+    143f360db9ca        web_server:latest   "/usr/sbin/httpd -D …"   3 minutes ago       Up 3 minutes        80/tcp              swarm_cluster.2.trm5frr8hqaw1z14m18fm3g3c
+    ```
+    
+- Thử thay đổi số lượng container bằng lệnh. Lúc này container sẽ được tăng lên.
+
+  ```sh
+  docker service scale swarm_cluster=4
+  ```
+  
+  - Khi tắt thử các container trên một trong các node, sẽ có container mới được sinh ra để đảm bảo số container đúng với thiết lập.
+  
