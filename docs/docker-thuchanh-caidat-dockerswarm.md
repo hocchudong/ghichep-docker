@@ -242,24 +242,52 @@ systemctl restart docker
     
 ### Kiểm tra hoạt động của cụm docker swarm vừa dựng.
 
-- Đứng trên node master, tạo 1 file `Dockerfile` với nội dung bên dưới.
-- Cách 1 dùng `vi` để soạn dockerfile với nội dung dưới và đặt ngay `/root/`, đặt tên là `/root/Dockerfile`
+- Tạo file `Dockerfile` với nội dung bên dưới trên tất cả các node. Ở đây tôi sẽ tạo ra một images chạy web server, lưu ý, tôi sẽ tạo các nội dung các web server khác nhau với 03 node để khi kiểm tra sẽ thấy các kết quả của container trên từng node.
 
-```sh
-cat <<EOF> /root/Dockerfile
-FROM centos
-MAINTAINER hocchudong <admin@hocchudong.com>
-RUN yum -y install httpd
-RUN echo "Hello DockerFile" > /var/www/html/index.html
-EXPOSE 80
-CMD ["-D", "FOREGROUND"]
-ENTRYPOINT ["/usr/sbin/httpd"]
-EOF
-```
+- Trên node master
 
-- Cách 2: Tải file (cách này cung cấp link sau)
+  ```sh
+  cat <<EOF> /root/Dockerfile
+  FROM centos
+  MAINTAINER hocchudong <admin@hocchudong.com>
+  RUN yum -y install httpd
+  RUN echo "Node master Hello DockerFile" > /var/www/html/index.html
+  EXPOSE 80
+  CMD ["-D", "FOREGROUND"]
+  ENTRYPOINT ["/usr/sbin/httpd"]
+  EOF
+  ```
 
-- Thực hiện build image với dockerfile vừa tạo ở trên (lưu ý dấu . nhé, lúc này đang đứng tại thư mục `root`)
+- Trên node worker1
+
+  ```sh
+  cat <<EOF> /root/Dockerfile
+  FROM centos
+  MAINTAINER hocchudong <admin@hocchudong.com>
+  RUN yum -y install httpd
+  RUN echo "Node worker1 Hello DockerFile" > /var/www/html/index.html
+  EXPOSE 80
+  CMD ["-D", "FOREGROUND"]
+  ENTRYPOINT ["/usr/sbin/httpd"]
+  EOF
+  ```
+  
+- Trên node worker2
+
+  ```sh
+  cat <<EOF> /root/Dockerfile
+  FROM centos
+  MAINTAINER hocchudong <admin@hocchudong.com>
+  RUN yum -y install httpd
+  RUN echo "Node worker2 Hello DockerFile" > /var/www/html/index.html
+  EXPOSE 80
+  CMD ["-D", "FOREGROUND"]
+  ENTRYPOINT ["/usr/sbin/httpd"]
+  EOF
+  ```
+
+  
+- Thực hiện build image với dockerfile vừa tạo ở trên trên cả 03 node (lưu ý dấu . nhé, lúc này đang đứng tại thư mục `root`)
 
   ```sh
   docker build -t web_server:latest . 
@@ -298,9 +326,9 @@ EOF
   
 - Tạo container từ image ở trên với số lượng bản sao là 02.
 
-```sh
-docker service create --name swarm_cluster --replicas=2 -p 80:80 web_server:latest 
-```
+  ```sh
+  docker service create --name swarm_cluster --replicas=2 -p 80:80 web_server:latest 
+  ```
 
   - Kết quả như sau:
     
@@ -318,4 +346,65 @@ docker service create --name swarm_cluster --replicas=2 -p 80:80 web_server:late
     verify: Service converged
     ```
 
+- Kiểm tra lại kết quả bằng lệnh `docker service ls` 
 
+  ```sh
+  [root@masternode ~]# docker service ls
+  ID                  NAME                MODE                REPLICAS            IMAGE               PORTS
+  6ygnj41a2z5u        swarm_cluster       replicated          2/2                 web_server:latest   *:80->80/tcp
+  ```
+
+- Kiểm tra sâu hơn bên trong của cluster 
+
+  ```sh
+  docker service inspect swarm_cluster --pretty 
+  ```
+  
+  - Kết quả
+  
+    ```sh
+    [root@masternode ~]# docker service inspect swarm_cluster --pretty
+
+    ID:             6ygnj41a2z5ulocq0m6p897e6
+    Name:           swarm_cluster
+    Service Mode:   Replicated
+    Replicas:      2
+    Placement:
+    UpdateConfig:
+    Parallelism:   1
+    On failure:    pause
+    Monitoring Period: 5s
+    Max failure ratio: 0
+    Update order:      stop-first
+    RollbackConfig:
+    Parallelism:   1
+    On failure:    pause
+    Monitoring Period: 5s
+    Max failure ratio: 0
+    Rollback order:    stop-first
+    ContainerSpec:
+    Image:         web_server:latest
+    Resources:
+    Endpoint Mode:  vip
+    Ports:
+    PublishedPort = 80
+    Protocol = tcp
+    TargetPort = 80
+    PublishMode = ingress
+    ```
+
+- Kiểm tra trạng thái của các service bằng lệnh `docker service ps swarm_cluster`,kết quả như bên dưới.
+
+  ```sh
+  [root@masternode ~]# docker service ps swarm_cluster
+  ID                  NAME                  IMAGE               NODE                DESIRED STATE       CURRENT STATE             ERROR                              PORTS
+  qr3sk06m5j6p        swarm_cluster.1       web_server:latest   masternode          Running             Running 14 minutes ago
+  ernkqk5fnsoe        swarm_cluster.2       web_server:latest   masternode          Running             Running 13 minutes ago
+  t0zyoiiyvbqm         \_ swarm_cluster.2   web_server:latest   worker2node         Shutdown            Rejected 14 minutes ago   "No such image: web_server:lat…"
+  zhvl18ca2dgs         \_ swarm_cluster.2   web_server:latest   worker2node         Shutdown            Rejected 14 minutes ago   "No such image: web_server:lat…"
+  pe25zymjbk87         \_ swarm_cluster.2   web_server:latest   worker1node         Shutdown            Rejected 14 minutes ago   "No such image: web_server:lat…"
+  odyy3eryolgf         \_ swarm_cluster.2   web_server:latest   worker1node         Shutdown            Rejected 14 minutes ago   "No such image: web_server:lat…"
+  [root@masternode ~]#
+  ```
+
+-
