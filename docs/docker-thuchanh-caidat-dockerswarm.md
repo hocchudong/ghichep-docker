@@ -239,3 +239,83 @@ systemctl restart docker
     kesl0xhuj9w6yl84og4x2sd3y     worker2node         Ready               Active
     [root@masternode ~]#
     ```
+    
+### Kiểm tra hoạt động của cụm docker swarm vừa dựng.
+
+- Đứng trên node master, tạo 1 file `Dockerfile` với nội dung bên dưới.
+- Cách 1 dùng `vi` để soạn dockerfile với nội dung dưới và đặt ngay `/root/`, đặt tên là `/root/Dockerfile`
+
+```sh
+cat <<EOF> /root/Dockerfile
+FROM centos
+MAINTAINER hocchudong <admin@hocchudong.com>
+RUN yum -y install httpd
+RUN echo "Hello DockerFile" > /var/www/html/index.html
+EXPOSE 80
+CMD ["-D", "FOREGROUND"]
+ENTRYPOINT ["/usr/sbin/httpd"]
+EOF
+```
+
+- Cách 2: Tải file (cách này cung cấp link sau)
+
+- Thực hiện build image với dockerfile vừa tạo ở trên (lưu ý dấu . nhé, lúc này đang đứng tại thư mục `root`)
+
+  ```sh
+  docker build -t web_server:latest . 
+  ```
+  
+- Kiểm tra images sau khi build xong dockerfile ở trên
+
+  ```sh
+  docker images
+  ```
+  - Kết quả:
+  
+    ```sh
+    Complete!
+    Removing intermediate container ac34ac2bf2bf
+     ---> 1f52eba3ee41
+    Step 4/7 : RUN echo "Hello DockerFile" > /var/www/html/index.html
+     ---> Running in 1100a7cddd06
+    Removing intermediate container 1100a7cddd06
+     ---> cdd86cafcdc8
+    Step 5/7 : EXPOSE 80
+     ---> Running in 262d31a60118
+    Removing intermediate container 262d31a60118
+     ---> d0ecbae79e34
+    Step 6/7 : CMD ["-D", "FOREGROUND"]
+     ---> Running in e9af0ad1d386
+    Removing intermediate container e9af0ad1d386
+     ---> 5a9e18361f4d
+    Step 7/7 : ENTRYPOINT ["/usr/sbin/httpd"]
+     ---> Running in c95a17b69cb6
+    Removing intermediate container c95a17b69cb6
+     ---> bbc76a4873a4
+    Successfully built bbc76a4873a4
+    Successfully tagged web_server:latest
+    ```
+  
+- Tạo container từ image ở trên với số lượng bản sao là 02.
+
+```sh
+docker service create --name swarm_cluster --replicas=2 -p 80:80 web_server:latest 
+```
+
+  - Kết quả như sau:
+    
+    ```sh
+    [root@masternode ~]# docker service create --name swarm_cluster --replicas=2 -p 80:80 web_server:latest
+    image web_server:latest could not be accessed on a registry to record
+    its digest. Each node will access web_server:latest independently,
+    possibly leading to different nodes running different
+    versions of the image.
+
+    6ygnj41a2z5ulocq0m6p897e6
+    overall progress: 2 out of 2 tasks
+    1/2: running   [==================================================>]
+    2/2: running   [==================================================>]
+    verify: Service converged
+    ```
+
+
