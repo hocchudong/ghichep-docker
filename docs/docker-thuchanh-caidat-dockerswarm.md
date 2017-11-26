@@ -188,32 +188,54 @@ systemctl restart docker
 ### Cấu hình docker swarm
 - Đứng trên node master thực hiện lệnh dưới để thiết lập docker swarm
 
-```sh
-docker swarm init --advertise-addr eth1
-```
+    ```sh
+    docker swarm init --advertise-addr eth1
+    ```
 - Trong đó:
   - Nếu có nhiều NICs thì cần chỉ định thêm tùy chọn `--advertise-addr` để chỉ ra tên của interfaces mà docker swarm sẽ dùng, các node worker sẽ dùng IP này để join vào cluster.
 
-- Kết quả của lệnh trên như bên dưới, lưu ý dòng thông báo trong kết quả nhé. Dòng này để sử dụng trên các node worker.
+  - Kết quả của lệnh trên như bên dưới, lưu ý dòng thông báo trong kết quả nhé. Dòng này để sử dụng trên các node worker.
 
-```sh
-[root@masternode ~]# docker swarm init --advertise-addr eth1
-Swarm initialized: current node (yio0waboc34i8xqh86zt2rdat) is now a manager.
+      ```sh
+      [root@masternode ~]# docker swarm init --advertise-addr eth1
+      Swarm initialized: current node (yio0waboc34i8xqh86zt2rdat) is now a manager.
 
-To add a worker to this swarm, run the following command:
+      To add a worker to this swarm, run the following command:
 
-    docker swarm join --token SWMTKN-1-1w88l3qp3q5312lvf6nvkscuky03f99iwd4u6wighokzy4xomf-1io10gmxni8pmdajsof1gqy41 172.16.68.221:2377
+          docker swarm join --token SWMTKN-1-1w88l3qp3q5312lvf6nvkscuky03f99iwd4u6wighokzy4xomf-1io10gmxni8pmdajsof1gqy41 172.16.68.221:2377
 
-To add a manager to this swarm, run 'docker swarm join-token manager' and follow the instructions.
+      To add a manager to this swarm, run 'docker swarm join-token manager' and follow the instructions.
 
-[root@masternode ~]#
-```
+      [root@masternode ~]#
+      ```
 
   
 - Đứng trên node `worker1` và `worker2` để join vào node master. Thực hiện cả trên 02 node worker còn lại.
 
-```sh
-docker swarm join --token SWMTKN-1-1w88l3qp3q5312lvf6nvkscuky03f99iwd4u6wighokzy4xomf-1io10gmxni8pmdajsof1gqy41 172.16.68.221:2377
-```
+    ```sh
+    docker swarm join --token SWMTKN-1-1w88l3qp3q5312lvf6nvkscuky03f99iwd4u6wighokzy4xomf-1io10gmxni8pmdajsof1gqy41 172.16.68.221:2377
+    ```
 
+- Kết quả sẽ có thông báo như sau: 
 
+  ```sh
+  [root@worker1node ~]# docker swarm join --token SWMTKN-1-1w88l3qp3q5312lvf6nvkscuky03f99iwd4u6wighokzy4xomf-1io10gmxni8pmdajsof1gqy41 172.16.68.221:2377
+  This node joined a swarm as a worker.
+  ```
+  
+- Đứng trên node master thực hiện lệnh `docker node ls` để kiểm tra xem các node worker đã join hay chưa. Nếu chưa ổn thì kiểm tra kỹ lại các bước ở trên.
+
+  ```sh
+  docker node ls
+  ```
+  
+  - Kết quả
+
+    ```sh
+    [root@masternode ~]# docker node ls
+    ID                            HOSTNAME            STATUS              AVAILABILITY        MANAGER STATUS
+    yio0waboc34i8xqh86zt2rdat *   masternode          Ready               Active              Leader
+    oh19lt8vnic067jep1ro8nw3r     worker1node         Ready               Active
+    kesl0xhuj9w6yl84og4x2sd3y     worker2node         Ready               Active
+    [root@masternode ~]#
+    ```
