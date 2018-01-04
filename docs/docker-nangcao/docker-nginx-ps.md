@@ -64,9 +64,9 @@ ____
 
         - Thêm file cấu hình tới container có tên là `docker-nginx-ps` bằng cách thực hiện như sau:
 
-                wget https://raw.githubusercontent.com/BoTranVan/ghichep-docker/master/files/proxy_server.conf
+                wget https://pastebin.com/raw/bLxmrEsQ
 
-                docker cp proxy_server.conf docker-nginx-ps:/etc/nginx/conf.d/proxy_server.conf
+                docker cp bLxmrEsQ docker-nginx-ps:/etc/nginx/conf.d/proxy_server.conf
 
         - Lần lượt khởi chạy container để kiểm tra kết quả. Lưu ý, container `docker-nginx-ps` phải được khởi chạy sau cùng.
 
