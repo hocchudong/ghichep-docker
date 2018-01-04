@@ -79,9 +79,12 @@ ____
 
             docker start docker-nginx-ps
 
+____
+
+
     - Sau đây là cách thực hiện cấu hình cho mô hình thứ hai - Mô hình chỉ sử dụng 2 containers
 
-    > ![docker-container-model-nginx](../../images/docker-host-model-nginx.png)
+        > ![docker-container-model-nginx](../../images/docker-host-model-nginx.png)
 
     - Đầu tiên, ta cần phải tạo ra 2 container:
 
