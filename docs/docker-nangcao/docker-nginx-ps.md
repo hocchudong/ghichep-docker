@@ -82,66 +82,66 @@ ____
 ____
 
 
-    - Sau đây là cách thực hiện cấu hình cho mô hình thứ hai - Mô hình chỉ sử dụng 2 containers
+- Sau đây là cách thực hiện cấu hình cho mô hình thứ hai - Mô hình chỉ sử dụng 2 containers
 
-        > ![docker-container-model-nginx](../../images/docker-host-model-nginx.png)
+    > ![docker-container-model-nginx](../../images/docker-host-model-nginx.png)
 
-    - Đầu tiên, ta cần phải tạo ra 2 container:
+- Đầu tiên, ta cần phải tạo ra 2 container:
 
-            docker create --name docker-nginx-api nginx
+        docker create --name docker-nginx-api nginx
 
-            docker create --name docker-nginx-web nginx
+        docker create --name docker-nginx-web nginx
 
-    - Tiếp theo, ta cần thay đổi nội dung file `index.html` để dễ dàng trong việc kiểm tra kết quả khi truy cập. Sử dụng các câu lệnh sau:
+- Tiếp theo, ta cần thay đổi nội dung file `index.html` để dễ dàng trong việc kiểm tra kết quả khi truy cập. Sử dụng các câu lệnh sau:
 
-            echo "docker-nginx-api" > index.html && docker cp index.html docker-nginx-api:/usr/share/nginx/html/index.html
+        echo "docker-nginx-api" > index.html && docker cp index.html docker-nginx-api:/usr/share/nginx/html/index.html
 
-            echo "docker-nginx-web" > index.html && docker cp index.html docker-nginx-web:/usr/share/nginx/html/index.html
+        echo "docker-nginx-web" > index.html && docker cp index.html docker-nginx-web:/usr/share/nginx/html/index.html
 
-    - Tiếp theo cài đặt NGINX lên trên Docker host:
-        - Thêm nginx repository bằng việc tạo một file */etc/yum.repos.d/nginx.repo* bằng câu lệnh sau:
+- Tiếp theo cài đặt NGINX lên trên Docker host:
+    - Thêm nginx repository bằng việc tạo một file */etc/yum.repos.d/nginx.repo* bằng câu lệnh sau:
 
-                sudo vi /etc/yum.repos.d/nginx.repo
+            sudo vi /etc/yum.repos.d/nginx.repo
 
-            sau đó thêm nội dung này vào file:
+        sau đó thêm nội dung này vào file:
 
-                [nginx]
-                name=nginx repo
-                baseurl=http://nginx.org/packages/mainline/centos/7/$basearch/
-                gpgcheck=0
-                enabled=1
+            [nginx]
+            name=nginx repo
+            baseurl=http://nginx.org/packages/mainline/centos/7/$basearch/
+            gpgcheck=0
+            enabled=1
 
-        - Update lại hệ thống:
+    - Update lại hệ thống:
 
-               sudo yum update
+           sudo yum update
 
-        - Cài đặt nginx sử dụng câu lệnh:
+    - Cài đặt nginx sử dụng câu lệnh:
 
-              sudo yum install nginx -y
+          sudo yum install nginx -y
 
-    - Thêm file cấu hình NGINX bằng cách thực hiện như sau:
+- Thêm file cấu hình NGINX bằng cách thực hiện như sau:
 
-            wget https://pastebin.com/raw/bLxmrEsQ
+        wget https://pastebin.com/raw/bLxmrEsQ
 
-            cp bLxmrEsQ /etc/nginx/conf.d/proxy_server.conf
+        cp bLxmrEsQ /etc/nginx/conf.d/proxy_server.conf
 
-    - Thiết lập trỏ host cho container bằng việc thêm chúng vào file `/etc/hosts` với nội dung tương tự như sau:
+- Thiết lập trỏ host cho container bằng việc thêm chúng vào file `/etc/hosts` với nội dung tương tự như sau:
 
-            ip-container-web docker-nginx-web
-            ip-container-api docker-nginx-api
+        ip-container-web docker-nginx-web
+        ip-container-api docker-nginx-api
 
-        trong đó: ip-container-web, ip-container-api lần lượt là địa chỉ IP của 2 container docker-nginx-web và docker-nginx-web (Sử dụng câu lệnh `docker inspect` để lấy địa chỉ IP).
+    trong đó: ip-container-web, ip-container-api lần lượt là địa chỉ IP của 2 container docker-nginx-web và docker-nginx-web (Sử dụng câu lệnh `docker inspect` để lấy địa chỉ IP).
 
-    - Khởi động NGINX với câu lệnh:
+- Khởi động NGINX với câu lệnh:
 
-            systemctl start nginx
-            
-            systemctl enable nginx
+        systemctl start nginx
+        
+        systemctl enable nginx
 
-    - Open port để client có thể truy cập:
+- Open port để client có thể truy cập:
 
-            firewall-cmd --add-port=80/tcp --permanent
-            firewall-cmd --reload
+        firewall-cmd --add-port=80/tcp --permanent
+        firewall-cmd --reload
 
 - ### <a name="test">4. Kiểm tra kết quả</a>
 
