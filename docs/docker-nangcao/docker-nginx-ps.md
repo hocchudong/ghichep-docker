@@ -17,7 +17,7 @@ ____
 
 - ### <a name="issue">1. Mục đích thực hiện cấu hình</a>
 
-    - Cấu hình để đáp ứng cho nhu cầu gửi các truy cập theo domain tới các container tương ứng.
+    - Nhằm giải quyết vấn đề khi ta có duy nhất một địa chỉ IP public và nhiều website có nhu cầu dùng chung địa chỉ IP public mà ta có. Việc truy cập tới các website đòi hỏi truy cập qua các domain khác nhau.
     
     - Việc cấu hình áp dụng tính năng Virtual Domain và Reverse Proxy của NGINX.
 
@@ -35,7 +35,7 @@ ____
 
     và
 
-    > ![docker-container-model-nginx](../../images/docker-container-model-nginx.png)
+    > ![docker-container-model-nginx](../../images/docker-host-model-nginx.png)
 
     Yêu cầu:
     - Cần có 2 Docker container Web
@@ -44,6 +44,9 @@ ____
 
 - ### <a name="config">3. Cách thực hiện cấu hình</a>
     - Dưới đây là cách thực hiện cấu hình cho mô hình thứ nhất - Mô hình sử dụng 3 containers
+
+    > ![docker-container-model-nginx](../../images/docker-container-model-nginx.png)
+
         - Đầu tiên, ta cần phải tạo ra 3 container:
 
                 docker create --name docker-nginx-api nginx
@@ -77,6 +80,9 @@ ____
                 docker start docker-nginx-ps
 
     - Sau đây là cách thực hiện cấu hình cho mô hình thứ hai - Mô hình chỉ sử dụng 2 containers
+
+    > ![docker-container-model-nginx](../../images/docker-host-model-nginx.png)
+
         - Đầu tiên, ta cần phải tạo ra 2 container:
 
                 docker create --name docker-nginx-api nginx
