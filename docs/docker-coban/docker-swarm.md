@@ -1,226 +1,263 @@
-# Docker swarm
-Docker swarm là một công cụ giúp chúng ta tạo ra một clustering Docker. Nó giúp chúng ta gom nhiều Docker Engine lại với nhau và ta có thể "nhìn" nó như duy nhất một virtual Docker Engine. 
+# 6. Tạo và quản lý cluster swarm trong Docker
 
-- Trong phiên bản v1.12.0, Docker Swarm là một tính năng được tích hợp sẵn trong Docker Engine.
+____
 
-Trong phần này, tôi sẽ tạo ra 1 cụm cluster gồm 1 manager và 2 worker chạy dịch vụ web-server.
-- node manager sẽ là node quản lý cluster.
-- node worker là các node chạy dịch vụ. Nếu mà node worker die thì node manager sẽ run container trên chính nó.
+# Mục lục
 
-# 1. Mô hình.
 
-- manager: 172.16.69.228
-- worker1: 172.16.69.218
-- worker2: 172.16.69.214
+- [6.1 Các yêu cầu cần có để thực hiện](#requirement)
+- [6.2 Tạo ra Swarm Docker](#swarm-init)
+- [6.3 Thêm Docker node tới Docker Swarm](#add-nodde)
+- [6.4 Triển khai một dịch vụ](#deploy-service)
+- [6.5 Inspect service](#inspect-service)
+- [6.6 Scale service](#scale-service)
+- [6.7 Drain node](#drain-node)
+- [6.8 Định tuyến trong Docker Swarm](#routing-mesh)
+- [Các nội dung khác](#content-others)
 
-# 2. Cài đặt.
-- Lưu ý, tất cả được thực hiện dưới quyền root.
+____
 
-## 2.1 Cài đặt docker engine trên tất cả các node.
-```sh
-curl -sSL https://get.docker.io | bash
-```
+# <a name="content">Nội dung</a>
 
-## 2.2 Trên node manager, tạo cluster
+- ### <a name="requirement">6.1 Các yêu cầu cần có để thực hiện</a>
 
-```sh
-docker@manager:~$ docker swarm init --advertise-addr 172.16.69.228
+    - Việc thực hiện cấu hình sử dụng ít nhất 3 node lần lượt đáp ứng yêu cầu theo bảng sau:
 
-Swarm initialized: current node (a35hhzdzf4g95w0op85tqlow1) is now a manager.
+        | STT | Hostname |   IP Address  |   OS   |
+        | --- | -------- | ------------- | ------ |
+        |  1  | docker01 | 172.16.69.249 | CentOS |
+        |  2  | docker02 | 172.16.69.250 | CentOS |
+        |  3  | dockers  | 172.16.69.251 | CentOS |
 
-To add a worker to this swarm, run the following command:
+    - Các node đã được cài đặt Docker Engine phiên bản mới nhất hiện tại (1.12 trở đi).
 
-    docker swarm join \
-    --token SWMTKN-1-0kc72gpnhhqnykw56ujwusdtfu5v0thpnmicynktvi8y6lhluc-1kvl428ru2oxx3zgn566gtkmw \
-    172.16.69.228:2377
+    - Trên các node có cần được publish các port như sau:
 
-To add a manager to this swarm, run 'docker swarm join-token manager' and follow the instructions.
-```
+        | STT | Port | Protocols |            Chức năng                  |
+        | --- | ---- | --------- | --------------------------------------|
+        |  1  | 2377 |    tcp    | for cluster management communications |
+        |  2  | 7946 |  tcp/udp  | for communication among nodes         |
+        |  3  | 4789 |    tcp    | for overlay network traffic           |
+        
+    - Để thực hiện pushlish các port trên CentOS ta có thể chạy các câu lệnh sau:
 
-- Nếu bạn muốn add thêm các node manager khác, chạy lệnh sau trên node manager:
-```sh
-docker@manager:~$ docker swarm join-token manager
-To add a manager to this swarm, run the following command:
-docker swarm join \
- — token SWMTKN-1–5mgyf6ehuc5pfbmar00njd3oxv8nmjhteejaald3yzbef7osl1–8xo0cmd6bryjrsh6w7op4enos \
- 172.16.69.228:2377
-```
+            firewall-cmd --add-port=2377/tcp --permanent
+            firewall-cmd --add-port=7946/tcp --permanent
+            firewall-cmd --add-port=7946/udp --permanent
+            firewall-cmd --add-port=4789/tcp --permanent
 
-=> Sau khi chạy lệnh, ta chỉ cần copy dòng lệnh ở output trên vào chạy ở node manager muốn thêm.
+            firewall-cmd --reload
+        
 
-## 2.3 Join worker vào cluster vừa tạo.
-- Trên worker1: 
-```sh
-root@worker1:~# docker swarm join \
->     --token SWMTKN-1-0kc72gpnhhqnykw56ujwusdtfu5v0thpnmicynktvi8y6lhluc-1kvl428ru2oxx3zgn566gtkmw \
->     172.16.69.228:2377
-This node joined a swarm as a worker.
-```
+- ### <a name="swarm-init">6.2 Tạo ra Swarm Docker</a>
 
-- Tương tự, trên worker2
-```sh
-root@worker2:~# docker swarm join \
->     --token SWMTKN-1-0kc72gpnhhqnykw56ujwusdtfu5v0thpnmicynktvi8y6lhluc-1kvl428ru2oxx3zgn566gtkmw \
->     172.16.69.228:2377
-This node joined a swarm as a worker.
-```
+    - Thực hiện chạy câu lệnh sau trên node `dockers` để khởi tạo Swarm:
 
-- Các bạn chú ý, giá trị token là giá trị lúc tạo manager node.
+            docker swarm init --advertise-addr 172.16.69.251
 
-- Nếu các bạn quên giá trị token, chạy lệnh sau trên node manager để lấy token.
-```sh
-root@manager:/opt/swarm# docker swarm join-token worker
-To add a worker to this swarm, run the following command:
+        kết quả
 
-    docker swarm join \
-    --token SWMTKN-1-0kc72gpnhhqnykw56ujwusdtfu5v0thpnmicynktvi8y6lhluc-1kvl428ru2oxx3zgn566gtkmw \
-    172.16.69.228:2377
-```
+            Swarm initialized: current node (dxn1zf6l61qsb1josjja83ngz) is now a manager.
 
-# 3. Kết quả.
-- Kiểm tra các node:
-```sh
-docker@manager:~$ docker node ls
+            To add a worker to this swarm, run the following command:
 
-ID                           HOSTNAME  STATUS  AVAILABILITY  MANAGER STATUS
-kuiombcp396m6tkyln30yr8vp *  adk       Ready   Active        Leader
-mss8z9cbfbp15s6hapaoyfail    adk       Ready   Active        
-vh7ezyxntkuys6lwnwz4rwc0g    adk       Ready   Active        
-```
+                docker swarm join \
+                --token SWMTKN-1-49nj1cmql0jkz5s954yi3oex3nedyz0fb0xx14ie39trti4wxv-8vxv8rssmk743ojnwacrr2e7c \
+                172.16.69.251:2377
 
-# 4. Run service
-- Trong phần này, tôi sẽ kết hợp docker-compose cùng docker swarm để deploy web-server như ban đầu đã nói.
+            To add a manager to this swarm, run 'docker swarm join-token manager' and follow the instructions.
 
-## 4.1 Docker-Compose
+    - Kiểm tra thông tin về Docker Swarm, ta có thể sử dụng câu lệnh:
 
-```sh
-version: '3'
-services:
-   web:
-     image: cosy294/swarm:1.0
-     ports:
-       - "9000:80"
-     deploy:
-       mode: replicated
-       replicas: 3
-```
+            docker info
 
-- Các bạn chú ý phần deploy:
-  - **mode: replicated**: kết hợp với **replicas: 3** Nó có nghĩa là tạo ra 3 container.
-  - Nếu **mode** là **global** thì mỗi node sẽ chỉ tạo ra 1 container.
+        kết quả sẽ hiển thị tương tự như sau:
 
-- Enable Experimental: Tạo file `/etc/docker/daemon.json`
-```sh
-{
-    "experimental": true
-}
-```
+            Containers: 2
+            Running: 0
+            Paused: 0
+            Stopped: 2
+              ......
+            Swarm: active
+              NodeID: dxn1zf6l61qsb1josjja83ngz
+              Is Manager: true
+              Managers: 1
+              Nodes: 1
+              ......
 
-- Khởi động lại docker
-```sh
-service docker restart
-```
+        hoặc
 
-- Kiểm tra tính năng experimental đã bật hay chưa
-```sh
-$ docker version -f '{{.Server.Experimental}}'
-true
-```
+            docker node ls
 
-- Lệnh deploy
-```sh
-docker deploy --compose-file docker-compose.yml linhlt
-```
+        kết quả sẽ hiển thị tương tự như sau:
 
-- Kết quả:
-```sh
-root@manager:/opt/swarm# docker service ls
-ID            NAME        MODE        REPLICAS  IMAGE
-piny444k1b8q  linhlt_web  replicated  3/3       cosy294/swarm:1.0
-```
+            ID                           HOSTNAME  STATUS  AVAILABILITY  MANAGER STATUS
+            dxn1zf6l61qsb1josjja83ngz *  dockers  Ready   Active        Leader
 
-```sh
-root@manager:/opt/swarm# docker service ps linhlt_web
-ID            NAME              IMAGE              NODE  DESIRED STATE  CURRENT STATE              ERROR  PORTS
-nx2id4wolgbj  linhlt_web.1      cosy294/swarm:1.0  adk   Running        Running about an hour ago         
-tkhoybpc86j2  linhlt_web.2      cosy294/swarm:1.0  adk   Running        Running 25 minutes ago            
-xyrn0rkkj2t4  linhlt_web.3      cosy294/swarm:1.0  adk   Running        Running about an hour ago         
-```
+        Dấu ` * ` trong phần ID thể hiện rằng bạn đang kết nối tại node đó.
 
-## 4.2 Tính năng scale.
-Docker hỗ trợ tính năng scale, có thể thay đổi số container của cluster một cách nhanh chóng bằng câu lệnh sau:
-```sh
-docker service scale name_service=5
-```
 
-- Trong đó, name_service là tên của service.
-- Tùy theo số container hiện tại của service mà docker có thể tăng hoặc giảm cho đúng với số lượng khai báo ở lệnh trên.
+- ### <a name="add-nodde">6.3 Thêm Docker node tới Docker Swarm</a>
 
-## 5.Thử nghiệm
-### 5.1 Thử nghiệm 1: Cách các container xử lý request.
-Trong image `cosy294/swarm:1.0`, tôi có cung cấp 1 file `hostname.php` với ý nghĩa là xuất ra hostname của container đang chạy service.
-- Tôi viết một đoạn scripts như sau:
-```sh
-#!/bin/bash
-for (( i = 1; $i <=12; i++ )); do
-  echo $i >> kq.txt
-  curl http://172.16.69.228:9000/hostname.php >> kq.txt
-  echo -e "\n" >> kq.txt
-  sleep 15
-done
-```
+    - Thực hiện chạy câu lệnh theo chỉ dẫn khi ta chạy câu lệnh khởi tạo Swarm trên node `dockers` lần lượt trên cả hai node `docker01` và `docker02`. Ví dụ:
 
-=> Đoạn scripts này có ý nghĩa là sẽ lấy giá trị hostname trong 12 request.
+            Swarm initialized: current node (dxn1zf6l61qsb1josjja83ngz) is now a manager.
 
-- Tôi nhận được kết quả:
-```sh
-root@adk:/opt/swarm# cat kq.txt 
-1
-642a2a4ae3b8
+            To add a worker to this swarm, run the following command:
 
-2
-826de3323cb3
+                docker swarm join \
+                --token SWMTKN-1-49nj1cmql0jkz5s954yi3oex3nedyz0fb0xx14ie39trti4wxv-8vxv8rssmk743ojnwacrr2e7c \
+                172.16.69.251:2377
 
-3
-e36ce7cf9383
+            To add a manager to this swarm, run 'docker swarm join-token manager' and follow the instructions.
 
-4
-642a2a4ae3b8
+        thì ta chạy câu lệnh như sau:
 
-5
-e36ce7cf9383
+            docker swarm join \
+            --token SWMTKN-1-49nj1cmql0jkz5s954yi3oex3nedyz0fb0xx14ie39trti4wxv-8vxv8rssmk743ojnwacrr2e7c \
+            172.16.69.251:2377
 
-6
-826de3323cb3
+        hoặc nếu như không thể xem lại kết quả thì ta có thể chạy câu lệnh sau và làm theo hướng dẫn tại kết quả của câu lệnh:
 
-7
-642a2a4ae3b8
+            docker swarm join-token manager
 
-8
-e36ce7cf9383
+        kết quả sẽ hiển thị tương tự trên cả hai node như sau:
 
-9
-642a2a4ae3b8
+            This node joined a swarm as a worker.
 
-10
-e36ce7cf9383
+    - Để kiểm tra kết quả, ta sử dụng câu lệnh sau trên node `dockers`:
 
-11
-826de3323cb3
+            docker node ls
 
-12
-642a2a4ae3b8
-```
+        kết quả sẽ hiển thị tương tự như sau:
 
-- Các giá trị trên là giá trị của các hostname của container xử lý request.
-- **Rút ra được kết luận:** Các container sẽ **luân phiên** tiếp nhận và xử lý các request đến từ người dùng.
+            ID                           HOSTNAME  STATUS  AVAILABILITY  MANAGER STATUS
+            03g1y59jwfg7cf99w4lt0f662    docker02   Ready   Active
+            9j68exjopxe7wfl6yuxml7a7j    docker01   Ready   Active
+            dxn1zf6l61qsb1josjja83ngz *  dockers    Ready   Active        Leader
 
-### 5.2 Thử nghiệm 2: Stop docker container.
-- Khi tôi shutdown một container trong node worker1, thì ngay lập tức 1 container mới được tạo ra để đảm bảo 
-số container là 3.
 
-- Khi tôi stop services docker ở worker1, thì ngay lập tức các container mới sẽ được ta ở các node khác để đảm bảo số container là 3.
+- ### <a name="deploy-service">6.4 Triển khai một dịch vụ</a>
 
-# Reference
+    - Để deploy một dịch vụ, ta thực hiện sử dụng câu lệnh sau trên node `dockers`:
+
+            docker service create \
+            --name docker-nginx \
+            --publish published=8080,target=80 \
+            --replicas 1 \
+            nginx
+
+        trong đó:
+
+            | Chỉ dẫn | Mô tả |
+            | ------------- | ------------- |
+            | docker service create | Câu lệnh để tạo ra một service |
+            | --name | flag khai báo tên của service. Ở đây là docker-nginx |
+            | --replicas | flag khai báo số lượng mong muốn của service chạy là 1 |
+            | --publish | flag khai báo publish port |
+
+    - Để kiểm tra kết quả, ta sử dụng câu lệnh sau trên node `dockers`:
+
+            docker service ls
+
+        kết quả hiển thị tương tự như sau:
+
+            ID                  NAME                MODE                REPLICAS            IMAGE               PORTS
+            dktyt4ml5qq7        docker-nginx        replicated          1/1                 nginx:latest        *:8080->80/tcp
+
+        
+- ### <a name="inspect-service">6.5 Inspect service</a>
+
+    - Để biết chi tiết về service `docker-nginx`. Ta sử dụng câu lệnh sau trên node `dockers`:
+
+            docker service inspect --pretty docker-nginx
+
+        flag `--pretty` có tác dụng phân tích cú pháp JSON thành dạng dễ quan sát hơn. Kết quả sẽ hiển thị tương tự như sau:
+
+            ID:             dktyt4ml5qq7hdags8iyjkp3n
+            Name:           docker-nginx
+            Service Mode:   Replicated
+             Replicas:      1
+            Placement:
+            UpdateConfig:
+             Parallelism:   1
+             On failure:    pause
+             Monitoring Period: 5s
+             Max failure ratio: 0
+             Update order:      stop-first
+            RollbackConfig:
+             Parallelism:   1
+             On failure:    pause
+             Monitoring Period: 5s
+             Max failure ratio: 0
+             Rollback order:    stop-first
+            ContainerSpec:
+             Image:         nginx:latest@sha256:285b49d42c703fdf257d1e2422765c4ba9d3e37768d6ea83d7fe2043dad6e63d
+            Resources:
+            Endpoint Mode:  vip
+            Ports:
+             PublishedPort = 8080
+              Protocol = tcp
+              TargetPort = 80
+              PublishMode = ingress
+
+        hoặc câu lệnh `docker service ps docker-nginx` cũng trên node `dockers`. Kết quả sẽ hiển thị tương tự như sau:
+
+            ID            NAME            IMAGE         NODE      DESIRED STATE  CURRENT STATE          ERROR  PORTS
+            1zmpj3x713sw  docker-nginx.1  nginx:latest  docker02  Running        Running 4 minutes ago      
+
+
+- ### <a name="scale-service">6.6 Scale service</a>
+
+    - Để scale service, ta thực hiện sử dụng câu lệnh sau trên node `dockers`:
+
+            docker service scale docker-nginx=2
+
+        trong đó: 2 là số lượng sẽ được scale. Kết quả ta sẽ có 2 container `docker-nginx.1` và `docker-nginx.2`.
+
+    - Ta có thể kiểm tra kết quả bằng cách sử dụng câu lệnh:
+
+            docker service ls
+
+        kết quả hiển thị tương tự như sau:
+
+            ID                  NAME                MODE                REPLICAS            IMAGE               PORTS
+            dktyt4ml5qq7        docker-nginx        replicated          2/2                 nginx:latest        *:8080->80/tcp
+
+
+- ### <a name="drain-node">6.7 Drain node</a>
+
+    - Trong Docker Swarm, các worker có thể được gán chỉ định là `ACTIVE` khi muốn node đó có thể nhận tasks hoặc `DRAIN` khi muốn node đó dừng chạy các task và thôi nhận tasks mới (được sử dụng khi có kế hoạch bảo trì node.)
+
+    - Để thực hiện chỉ định một node là `DRAIN`. Ta sử dụng câu lệnh trên node `manager` có cú pháp như sau:
+
+            docker node update --availability drain <NODE-ID>
+
+        ví dụ:
+
+            docker node update --availability drain dockers01
+
+    - Để kiểm tra kết quả, ta có thể sử dụng câu lệnh sau trên manager node:
+
+            docker service ps docker-nginx
+
+        trong đó `docker-nginx` là tên của service
+
+- ### <a name="routing-mesh">6.8 Định tuyến trong Docker Swarm</a>
+
+    - Với Docker Swarm, ta có thể dễ dàng public port để có thể truy cập tới services từ bên ngoài. Tất cả các node đều được sử dụng `routing mesh`. `routing mesh` cho phép mỗi node trong swarm có thể chấp nhận các kết nối trên published port cho các service đang chạy trong swarm, ngay cả khi không có task nào đang chạy trên node. `routing mesh` sẽ định tuyến tất cả các request tới một node có container đang chạy.
+
+    > ![docker-swarm-docker-ingress.png](../../images/docker-swarm-docker-ingress.png)
+
+    Như vậy, ta có thể truy cập tới service theo bất kỳ địa chỉ IP của node nào.
+
+# Tài liệu tham khảo
+
 - https://docs.docker.com/engine/swarm/swarm-tutorial/
 - http://trumhemcut.net/2016/06/26/gioi-thieu-cac-tinh-nang-moi-trong-docker1-12/
+
+____
+
+# <a name="content-others">Các nội dung khác</a>
+
+
