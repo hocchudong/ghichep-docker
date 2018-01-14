@@ -4,19 +4,23 @@
 
 [Các ghi chép cần chú ý về docker](ghichep-docker.md)
 
-[Các lệnh hay sử dụng trong docker](lenh-docker.md)
+[Các lệnh hay sử dụng trong docker](ghichep-lenh-docker.md)
 
 [Docker image](ghichep-docker-images.md)
 
 [Viết dockerfile để build image](dockerfile.md)
 
-[Volume trong docker](volume.md)
+[Volume trong docker](docker-volume.md)
 
 [Network trong docker](docker-network.md)
 
 [Viết docker-compose để khởi chạy multi container](docker-compose.md)
 
-[Docker swarm - tạo, quản lý cluster trong Docker](docker-swarm.md)
+[Docker swarm - vai trò, chức năng trong Docker](docker-swarm-about.md)
+
+[Docker swarm - tạo, quản lý cluster trong Docker](docker-swarm-create.md)
+
+[Docker Hub - Backup và Recovery Docker Containers](docker-compose.md)
 
 ### Thực hành
 
@@ -32,7 +36,10 @@
 
 [Thực hành với docker network](docker-thuchanh-network.md)
 
-[Thực hành với docker hub (docker registry)](docker-thuchanh-registry.md)
+[Thực hành cài đặt Docker Swarm](docker-thuchanh-caidat-dockerswarm.md)
+
+[Thực hành cài đặt Kubernetes](docker-thuchanh-caidat-kubernetes.md)
+
 
 ### Demo Docker
 
