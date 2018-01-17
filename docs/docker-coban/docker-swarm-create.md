@@ -1,25 +1,25 @@
-# 2. Tạo và quản lý cluster swarm trong Docker
+# 6. Tạo và quản lý cluster swarm trong Docker
 
 ____
 
 # Mục lục
 
 
-- [2.1 Các yêu cầu cần có để thực hiện](#requirement)
-- [2.2 Tạo ra Swarm Docker](#swarm-init)
-- [2.3 Thêm Docker node tới Docker Swarm](#add-nodde)
-- [2.4 Triển khai một dịch vụ](#deploy-service)
-- [2.5 Inspect service](#inspect-service)
-- [2.6 Scale service](#scale-service)
-- [2.7 Drain node](#drain-node)
-- [2.8 Định tuyến trong Docker Swarm](#routing-mesh)
+- [6.1 Các yêu cầu cần có để thực hiện](#requirement)
+- [6.2 Tạo ra Swarm Docker](#swarm-init)
+- [6.3 Thêm Docker node tới Docker Swarm](#add-nodde)
+- [6.4 Triển khai một dịch vụ](#deploy-service)
+- [6.5 Inspect service](#inspect-service)
+- [6.6 Scale service](#scale-service)
+- [6.7 Drain node](#drain-node)
+- [6.8 Định tuyến trong Docker Swarm](#routing-mesh)
 - [Các nội dung khác](#content-others)
 
 ____
 
 # <a name="content">Nội dung</a>
 
-- ### <a name="requirement">2.1 Các yêu cầu cần có để thực hiện</a>
+- ### <a name="requirement">6.1 Các yêu cầu cần có để thực hiện</a>
 
     - Việc thực hiện cấu hình sử dụng ít nhất 3 node lần lượt đáp ứng yêu cầu theo bảng sau:
 
@@ -49,7 +49,7 @@ ____
             firewall-cmd --reload
         
 
-- ### <a name="swarm-init">2.2 Tạo ra Swarm Docker</a>
+- ### <a name="swarm-init">6.2 Tạo ra Swarm Docker</a>
 
     - Thực hiện chạy câu lệnh sau trên node `dockers` để khởi tạo Swarm:
 
@@ -97,7 +97,7 @@ ____
         Dấu ` * ` trong phần ID thể hiện rằng bạn đang kết nối tại node đó.
 
 
-- ### <a name="add-nodde">2.3 Thêm Docker node tới Docker Swarm</a>
+- ### <a name="add-nodde">6.3 Thêm Docker node tới Docker Swarm</a>
 
     - Thực hiện chạy câu lệnh theo chỉ dẫn khi ta chạy câu lệnh khởi tạo Swarm trên node `dockers` lần lượt trên cả hai node `docker01` và `docker02`. Ví dụ:
 
@@ -137,7 +137,7 @@ ____
             dxn1zf6l61qsb1josjja83ngz *  dockers    Ready   Active        Leader
 
 
-- ### <a name="deploy-service">2.4 Triển khai một dịch vụ</a>
+- ### <a name="deploy-service">6.4 Triển khai một dịch vụ</a>
 
     - Để deploy một dịch vụ, ta thực hiện sử dụng câu lệnh sau trên node `dockers`:
 
@@ -166,7 +166,7 @@ ____
             dktyt4ml5qq7        docker-nginx        replicated          1/1                 nginx:latest        *:8080->80/tcp
 
         
-- ### <a name="inspect-service">2.5 Inspect service</a>
+- ### <a name="inspect-service">6.5 Inspect service</a>
 
     - Để biết chi tiết về service `docker-nginx`. Ta sử dụng câu lệnh sau trên node `dockers`:
 
@@ -207,7 +207,7 @@ ____
             1zmpj3x713sw  docker-nginx.1  nginx:latest  docker02  Running        Running 4 minutes ago      
 
 
-- ### <a name="scale-service">2.6 Scale service</a>
+- ### <a name="scale-service">6.6 Scale service</a>
 
     - Để scale service, ta thực hiện sử dụng câu lệnh sau trên node `dockers`:
 
@@ -225,7 +225,7 @@ ____
             dktyt4ml5qq7        docker-nginx        replicated          2/2                 nginx:latest        *:8080->80/tcp
 
 
-- ### <a name="drain-node">2.7 Drain node</a>
+- ### <a name="drain-node">6.7 Drain node</a>
 
     - Trong Docker Swarm, các worker có thể được gán chỉ định là `ACTIVE` khi muốn node đó có thể nhận tasks hoặc `DRAIN` khi muốn node đó dừng chạy các task và thôi nhận tasks mới (được sử dụng khi có kế hoạch bảo trì node.)
 
@@ -243,7 +243,7 @@ ____
 
         trong đó `docker-nginx` là tên của service
 
-- ### <a name="routing-mesh">2.8 Định tuyến trong Docker Swarm</a>
+- ### <a name="routing-mesh">6.8 Định tuyến trong Docker Swarm</a>
 
     - Với Docker Swarm, ta có thể dễ dàng public port để có thể truy cập tới services từ bên ngoài. Tất cả các node đều được sử dụng `routing mesh`. `routing mesh` cho phép mỗi node trong swarm có thể chấp nhận các kết nối trên published port cho các service đang chạy trong swarm, ngay cả khi không có task nào đang chạy trên node. `routing mesh` sẽ định tuyến tất cả các request tới một node có container đang chạy.
 
@@ -251,6 +251,13 @@ ____
 
     Như vậy, ta có thể truy cập tới service theo bất kỳ địa chỉ IP của node nào.
 
+# Tài liệu tham khảo
+
+- https://docs.docker.com/engine/swarm/swarm-tutorial/
+- http://trumhemcut.net/2016/06/26/gioi-thieu-cac-tinh-nang-moi-trong-docker1-12/
+
 ____
 
 # <a name="content-others">Các nội dung khác</a>
+
+
