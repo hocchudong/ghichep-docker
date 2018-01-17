@@ -7,9 +7,9 @@ ____
 
 - [5.1 Docker Swarm là gì?](#docker-swarm)
 - [5.2 Các khái niệm cần biết khi làm việc với Swarm](#concepts)
-      - [5.2.1 Khái niệm nodes](#concepts-nodes)
-      - [5.2.2 Khái niệm services and tasks](#concepts-services-tasks)
-      - [5.2.3 Load Balancing](#concepts-load-balancing)
+    - [5.2.1 Khái niệm nodes](#concepts-nodes)
+    - [5.2.2 Khái niệm services and tasks](#concepts-services-tasks)
+    - [5.2.3 Load Balancing](#concepts-load-balancing)
 - [Các nội dung khác](#content-others)
 
 ____
@@ -31,11 +31,11 @@ ____
 
         + `Quản lý Cluster được tích hợp với Docker Engine`: Sử dụng Docker CLI để tạo ra swarm để triển khai các dịch vụ. Không cần thiết phải có thêm các phần mềm khác để tạo và quản lý swarm.
 
-        > [docker-swarm-today.png](../../images/docker-swarm-today.png)
+        > ![docker-swarm-today.png](../../images/docker-swarm-today.png)
 
         với Docker Swarm, ta có thể:
 
-        > [docker-swarm-today-with-swarm.png](../../images/docker-swarm-today-with-swarm.png)
+        > ![docker-swarm-today-with-swarm.png](../../images/docker-swarm-today-with-swarm.png)
 
         + `Triển khai phân tán`: Thay vì xử lý các khác biệt giữa vai trò của các node trong thời gian triển khai, Docker Engine sẽ xử lý bất kỳ tác vụ nào đang chạy. Ta có thể triển khai cả hai loại node là `manager` và `workers` sử dụng Docker Engine. Điều này có nghĩa ta có thể tạo ra một Docker Swarm hoàn chỉnh chỉ từ một image duy nhất.
 
@@ -43,11 +43,11 @@ ____
 
         + `Đảm bảo tính ổn định`: Docker Swarm sẽ liên tục giám sát trạng thái của cluster và giải quyết bất kỳ sự thay đổi nào giữa trạng thái thực tế và trạng thái mong muốn dựa trên các quyết định của bạn. Ví dụ: Ta thiết lập một dịch vụ với 5 bản sao containers và worker node có lưu trữ 2 bản sao containers. Manager node sẽ tự động tạo ra 2 bản sao containers khác nếu như 2 bản sao containers trong worker node bị lỗi, ... Manager Node sẽ luôn luôn đảm bảo các bản sao containers mới cho worker đang chạy hoặc được cung cấp.
 
-        > [docker-swarm-containers-crash.png](../../images/docker-swarm-containers-crash.png)
+        > ![docker-swarm-containers-crash.png](../../images/docker-swarm-containers-crash.png)
 
         Manager node sẽ thực hiện:
 
-        > [docker-swarm-containers-crash-config.png](../../images/docker-swarm-containers-crash-config.png)
+        > ![docker-swarm-containers-crash-config.png](../../images/docker-swarm-containers-crash-config.png)
 
         + `Multi-host networking`: Có thể khai báo overlay network cho các dịch vụ trong Swarm. Docker Swarm sẽ tự động quản lý và gán địa chỉ IP cho mỗi container trên overlay network khi nó khởi tạo hoặc update ứng dụng.
 
@@ -61,25 +61,25 @@ ____
 
             + Đầu tiên, ta có mô hình như sau:
 
-                > [docker-swarm-ha-1.png](../../images/docker-swarm-ha-1.png)
+                > ![docker-swarm-ha-1.png](../../images/docker-swarm-ha-1.png)
 
             mô hình này chưa thực sự đảm bảo về tính năng vì `manager node` có thể bị lỗi khiến Swarm không được cung cấp:
 
-                > [docker-swarm-ha-2.png](../../images/docker-swarm-ha-2.png)
+                > ![docker-swarm-ha-2.png](../../images/docker-swarm-ha-2.png)
 
-                > [docker-swarm-ha-3.png](../../images/docker-swarm-ha-3.png)
+                > ![docker-swarm-ha-3.png](../../images/docker-swarm-ha-3.png)
 
             Với Docker Swarm, ta có thể triển khai nhiều `manager node` cùng một lúc:
 
-                > [docker-swarm-ha-4.png](../../images/docker-swarm-ha-4.png)
+                > ![docker-swarm-ha-4.png](../../images/docker-swarm-ha-4.png)
 
             Khi một `manager node` đang hoạt động bị crash:
 
-                > [docker-swarm-ha-5.png](../../images/docker-swarm-ha-5.png)
+                > ![docker-swarm-ha-5.png](../../images/docker-swarm-ha-5.png)
 
             `manager node` sẽ được tự động chuyển chức năng quản lý sang một node khác (node backup):
 
-                > [docker-swarm-ha-6.png](../../images/docker-swarm-ha-6.png)
+                > ![docker-swarm-ha-6.png](../../images/docker-swarm-ha-6.png)
 
 
 - ### <a name="concepts">5.2 Các khái niệm cần biết khi làm việc với Swarm</a>
@@ -87,7 +87,7 @@ ____
         
         + `node` là một biểu hiện của Docker Engine tham gia vào swarm. Bạn cũng có thể nghĩ nó như một Docker node. Bạn có thể chạy một hoặc nhiều nodes trên duy nhất một máy tính vật lý hay cloud server nhưng việc triển khai swarm thường bao gồm các Docker node được phân phối trên nhiều máy tính và cloud machine.
 
-            > [docker-swarm-multi-physical.png](../../images/docker-swarm-multi-physical.png)
+            > ![docker-swarm-multi-physical.png](../../images/docker-swarm-multi-physical.png)
 
         + Để có thể triển khai ứng dụng của bạn trong swarm, bạn cần phải khai báo service thông qua `manager node`. Manager node sẽ thực hiện gửi các task (đơn vị công việc) tới `worker node`.
 
@@ -118,7 +118,7 @@ ____
 
         - Các thành phần bên ngoài, chẳng hạn như cân bằng tải trên cloud server có thể truy cập service thông qua `PublishedPort` của bất kỳ node nào trong cluster swarm cho dù node đó hiện đang không có task vụ nào của dịch vụ truy cập được chạy.
 
-        > ![docker-swarm-docker-ingress.png](../../images/docker-swarm-docker-ingress.png)
+        > !![docker-swarm-docker-ingress.png](../../images/docker-swarm-docker-ingress.png)
 
         - Swarm mode có một thành phần là DNS nội bộ tự động gán mỗi service trong Swarm với một DNS name. Swarm manager sử dụng `internal load balancing` để phân phối các request giữa các service trong cluster dựa trên tên DNS của service.
 
