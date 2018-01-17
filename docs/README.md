@@ -22,7 +22,7 @@
 
 [Docker swarm - tạo, quản lý cluster trong Docker](/docs/docker-coban/docker-swarm-create.md)
 
-[Docker Hub - Backup và Recovery Docker Containers](/docs/docker-coban/docker-compose.md)
+[Docker Hub - Backup và Recovery Docker Containers](/docs/docker-coban/docker-coban-backup-and-recovery-containers.md)
 
 ### Thực hành
 
