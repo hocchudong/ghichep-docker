@@ -61,25 +61,25 @@ ____
 
             + Đầu tiên, ta có mô hình như sau:
 
-                > ![docker-swarm-ha-1.png](../../images/docker-swarm-ha-1.png)
+            > ![docker-swarm-ha-1.png](../../images/docker-swarm-ha-1.png)
 
             mô hình này chưa thực sự đảm bảo về tính năng vì `manager node` có thể bị lỗi khiến Swarm không được cung cấp:
 
-                > ![docker-swarm-ha-2.png](../../images/docker-swarm-ha-2.png)
+            > ![docker-swarm-ha-2.png](../../images/docker-swarm-ha-2.png)
 
-                > ![docker-swarm-ha-3.png](../../images/docker-swarm-ha-3.png)
+            > ![docker-swarm-ha-3.png](../../images/docker-swarm-ha-3.png)
 
             Với Docker Swarm, ta có thể triển khai nhiều `manager node` cùng một lúc:
 
-                > ![docker-swarm-ha-4.png](../../images/docker-swarm-ha-4.png)
+            > ![docker-swarm-ha-4.png](../../images/docker-swarm-ha-4.png)
 
             Khi một `manager node` đang hoạt động bị crash:
 
-                > ![docker-swarm-ha-5.png](../../images/docker-swarm-ha-5.png)
+            > ![docker-swarm-ha-5.png](../../images/docker-swarm-ha-5.png)
 
             `manager node` sẽ được tự động chuyển chức năng quản lý sang một node khác (node backup):
 
-                > ![docker-swarm-ha-6.png](../../images/docker-swarm-ha-6.png)
+            > ![docker-swarm-ha-6.png](../../images/docker-swarm-ha-6.png)
 
 
 - ### <a name="concepts">5.2 Các khái niệm cần biết khi làm việc với Swarm</a>
