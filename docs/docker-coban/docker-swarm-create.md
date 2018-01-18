@@ -21,6 +21,10 @@ ____
 
 - ### <a name="requirement">6.1 Các yêu cầu cần có để thực hiện</a>
 
+    - Mô hình đơn giản như sau:
+
+    > ![docker-swarm-sample-model.png](../../images/docker-swarm-sample-model.png)
+
     - Việc thực hiện cấu hình sử dụng ít nhất 3 node lần lượt đáp ứng yêu cầu theo bảng sau:
 
         | STT | Hostname |   IP Address  |   OS   |
@@ -48,7 +52,8 @@ ____
 
             firewall-cmd --reload
         
-
+    - Việc thực hiện được tiến hành sử dụng ảo hóa VMWare.
+    
 - ### <a name="swarm-init">6.2 Tạo ra Swarm Docker</a>
 
     - Thực hiện chạy câu lệnh sau trên node `dockers` để khởi tạo Swarm:
