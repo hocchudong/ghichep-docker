@@ -149,12 +149,12 @@ ____
 
         trong đó:
 
-            | Chỉ dẫn | Mô tả |
-            | ------------- | ------------- |
-            | docker service create | Câu lệnh để tạo ra một service |
-            | --name | flag khai báo tên của service. Ở đây là docker-nginx |
-            | --replicas | flag khai báo số lượng mong muốn của service chạy là 1 |
-            | --publish | flag khai báo publish port |
+        | Chỉ dẫn | Mô tả |
+        | ------------- | ------------- |
+        | docker service create | Câu lệnh để tạo ra một service |
+        | --name | flag khai báo tên của service. Ở đây là docker-nginx |
+        | --replicas | flag khai báo số lượng mong muốn của service chạy là 1 |
+        | --publish | flag khai báo publish port |
 
     - Để kiểm tra kết quả, ta sử dụng câu lệnh sau trên node `dockers`:
 

@@ -76,11 +76,11 @@ ____
 
         + Container Image là một gói phần mềm thực thi lightweight, độc lập và có thể thực thi được bao gồm mọi thứ cần thiết để chạy được nó: code, runtime, system tools, system libraries, settings. Các ứng dụng có sẵn cho cả Linux và Windows, các container sẽ luôn chạy ổn định bất kể môi trường.
 
-            > ![docker-container-images](../images/docker-container-images.png)
+            > ![docker-container-images](../../images/docker-container-images.png)
 
         + Containers and virtual machines có sự cách ly và phân bổ tài nguyên tương tự, nhưng có chức năng khác vì các container ảo hóa hệ điều hành thay vì phần cứng. Các container có tính portable và hiệu quả hơn.
 
-            > ![docker-container-vms](../images/docker-container-vms.png)
+            > ![docker-container-vms](../../images/docker-container-vms.png)
 
             - Container là một sự trừu tượng hóa ở lớp ứng dụng và code phụ thuộc vào nhau. Nhiều container có thể chạy trên cùng một máy và chia sẻ kernel của hệ điều hành với các container khác, mỗi máy đều chạy như các quá trình bị cô lập trong không gian người dùng. Các container chiếm ít không gian hơn các máy ảo (container image thường có vài trăm thậm chí là vài MB), và start gần như ngay lập tức.
 
@@ -96,7 +96,7 @@ ____
 
 - ### <a name="compose">1.4 Các thành phần, kiến trúc trong Docker</a>
 
-    > ![engine-components-flow.png](../images/docker-engine-components-flow.png)
+    > ![engine-components-flow.png](../../images/docker-engine-components-flow.png)
 
     - Hình ảnh bên trên là mô tả về `Docker Engine`. Theo đó, `Docker Engine` là một ứng dụng client-server với các thành phần chính:
 
@@ -106,7 +106,7 @@ ____
 
     - CLI sẽ sử dụng Docker REST API để kiểm soát hoặc tương tác với Docker daemon thông qua kịch bản hoặc lệnh CLI trực tiếp.
 
-        > ![architecture.png](../images/docker-architecture.png)
+        > ![architecture.png](../../images/docker-architecture.png)
 
     - Docker sử dụng kiến trúc client-server. Docker client sẽ giao tiếp với Docker daemon các công việc building, running và distributing các Docker Container.
 
@@ -120,13 +120,13 @@ ____
 
     Hình ảnh dưới đây mô tả cho một vòng đời của container trong Docker cùng với các trạng thái hoạt động:
 
-    > ![docker-state](../images/docker-state.png)
+    > ![docker-state](../../images/docker-state.png)
 
 - ### <a name="network">1.6 Network trong Docker</a>
 
     Dưới đây là hình ảnh mô tả kiến trúc Network của Container hay còn gọi là Container Networking Model (CNM).
 
-    > ![docker-network-models](../images/docker-network-models.png)
+    > ![docker-network-models](../../images/docker-network-models.png)
 
     Đây là cấu trúc mức độ cao trong CNM. Theo đó, ta có:
 
@@ -148,7 +148,7 @@ ____
 
     - Giao tiếp giữa docker engine - libnetwork - driver
 
-        > ![docker-ipam-network](../images/docker-ipam-network.png)
+        > ![docker-ipam-network](../../images/docker-ipam-network.png)
 
     - `Docker Native Network Drivers` - là một phần của Docker Engine và không yêu cầu cần phải có nhiều modules. Được gọi và sử dụng thông qua các câu lệnh `docker network`. Dưới đây là native network hiện có:
 
@@ -164,15 +164,15 @@ ____
 
         + Chiều outbound khi các container sử dụng trong container 
 
-            > ![docker-native-network-out.png](../images/docker-native-network-out.png)
+            > ![docker-native-network-out.png](../../images/docker-native-network-out.png)
 
         + Chiều inbound khi các container sử dụng trong container 
 
-            > ![docker-native-network-in.png](../images/docker-native-network-in.png)
+            > ![docker-native-network-in.png](../../images/docker-native-network-in.png)
 
         + Container kết nối với network thông quan docker0 interface:
 
-            > ![docker-native-network-inhost](../images/docker-native-network-inhost.png)
+            > ![docker-native-network-inhost](../../images/docker-native-network-inhost.png)
     
 
 - ### <a name="volume">1.7 Volume trong Docker</a>
