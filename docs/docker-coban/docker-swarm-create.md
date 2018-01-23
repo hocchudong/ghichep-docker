@@ -43,7 +43,7 @@ ____
         |  2  | 7946 |  tcp/udp  | for communication among nodes         |
         |  3  | 4789 |    tcp    | for overlay network traffic           |
         
-    - Để thực hiện pushlish các port trên CentOS ta có thể chạy các câu lệnh sau:
+    - Để thực hiện publish các port trên CentOS ta có thể chạy các câu lệnh sau:
 
             firewall-cmd --add-port=2377/tcp --permanent
             firewall-cmd --add-port=7946/tcp --permanent
