@@ -103,7 +103,7 @@ ____
 
         + RUN được thực thi trong quá trình build. Khi ta build một Docker image, Docker sẽ đọc các câu lệnh trong chỉ dẫn RUN và build tới một layer mới trong image sử dụng.
 
-        + CMD được thi trong quá trình run. Điều này cho phép gọi tới một vài quá trình như bash, nginx hay bất cứ quá trình nào mà Docker image runs. Việc thực thi chỉ dẫn nằm ngay trong layer hiện tại của images.
+        + CMD được thực thi trong quá trình run. Điều này cho phép gọi tới một vài quá trình như bash, nginx hay bất cứ quá trình nào mà Docker image runs. Việc thực thi chỉ dẫn nằm ngay trong layer hiện tại của images.
 
         + Trong Dockerfile có thể có nhiều chỉ dẫn RUN được thực thi nhưng chỉ có duy nhất một chỉ dẫn CMD được thi.
 
