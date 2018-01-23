@@ -5,7 +5,9 @@ ____
 
 # <a name="content">Nội dung</a>
 
-- > Mọi thứ bạn thực hiện trong Dockerfile khi build Docker image có thể làm cho kích thước của image trở lên cồng kềnh. Đây sẽ là một gọi ý nhỏ để giảm bớt kích thước của Image lại.
+![https://nickjanetakis.com/assets/blog/cards/docker-tips-and-tricks-56b5452dc709c8861641d9011d55ed5e6f5138b7d1e76a5e258160077c903076.jpg](https://nickjanetakis.com/assets/blog/cards/docker-tips-and-tricks-56b5452dc709c8861641d9011d55ed5e6f5138b7d1e76a5e258160077c903076.jpg)
+
+> Mọi thứ bạn thực hiện trong Dockerfile khi build Docker image có thể làm cho kích thước của image trở lên cồng kềnh. Đây sẽ là một gọi ý nhỏ để giảm bớt kích thước của Image lại.
 
 - Có rất nhiều cách để làm giảm kích thước của một image nhưng cách dễ nhất để thực hiện đó là tận dụng cơ chế caching trong khi building image của Docker.
 

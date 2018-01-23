@@ -5,7 +5,7 @@ ____
 
 # <a name="content">Nội dung</a>
 
-- ![https://nickjanetakis.com/assets/blog/cards/docker-tips-and-tricks-56b5452dc709c8861641d9011d55ed5e6f5138b7d1e76a5e258160077c903076.jpg](https://nickjanetakis.com/assets/blog/cards/docker-tips-and-tricks-56b5452dc709c8861641d9011d55ed5e6f5138b7d1e76a5e258160077c903076.jpg)
+![https://nickjanetakis.com/assets/blog/cards/docker-tips-and-tricks-56b5452dc709c8861641d9011d55ed5e6f5138b7d1e76a5e258160077c903076.jpg](https://nickjanetakis.com/assets/blog/cards/docker-tips-and-tricks-56b5452dc709c8861641d9011d55ed5e6f5138b7d1e76a5e258160077c903076.jpg)
 
 - > Đôi khi bạn sẽ thấy có cả 2 chỉ dẫn lệnh COPY và ADD được sử dụng trong cùng một Dockerfile. Nhưng sẽ tới 99% bạn nên sử dụng COPY thay vì ADD. Tại sao lại như vậy?
 
