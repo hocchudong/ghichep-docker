@@ -242,6 +242,9 @@ ____
                 docker login myhub.docker.io
                 docker push myhub.docker.io/centos:my-os
 
+        - Tóm lại, việc cài đặt có thể sử dụng scripts sau đây:
+
+                wget 
 - ### <a name="web-gui">1.3 Cài đặt Web GUI cho Private Registry</a>
 - ### <a name=""></a>
 - ### <a name=""></a>
