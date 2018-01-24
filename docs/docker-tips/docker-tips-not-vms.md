@@ -1,4 +1,4 @@
-# Docker Containers là một tiến trình cô lập, không phải máy ảo.
+# 1. Docker Containers là một tiến trình cô lập, không phải máy ảo.
 
 ____
 ____
@@ -13,7 +13,7 @@ ____
 
 - Không cần phải có mặt của bất kỳ máy ảo nào nếu như nền tảng của bạn có thể chạy Docker một cách tự nhiên. Docker daemon sẽ có trách nhiệm giữ tất cả các container của bạn chạy một cách an toàn trong việc bị cô lập.
 
-- Một [Virtual Machin](https://nickjanetakis.com/blog/comparing-virtual-machines-vs-docker-containers) thường được sử dụng để cô lập toàn bộ một hệ thống. Nếu bạn sử dụng nhiều VMs để cô lập nhiều dịch vụ, bạn sẽ lãng phí nhiều tài nguyên hơn thay vì sử dụng Docker.
+- Một [Virtual Machine](https://nickjanetakis.com/blog/comparing-virtual-machines-vs-docker-containers) thường được sử dụng để cô lập toàn bộ một hệ thống. Nếu bạn sử dụng nhiều VMs để cô lập nhiều dịch vụ, bạn sẽ lãng phí nhiều tài nguyên hơn thay vì sử dụng Docker.
 
 
 ____

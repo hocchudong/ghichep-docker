@@ -1,4 +1,4 @@
-# 1. Sự khác nhau giữa RUN và CMD trong Dockerfile
+# 34. Sự khác nhau giữa RUN và CMD trong Dockerfile
 
 ____
 

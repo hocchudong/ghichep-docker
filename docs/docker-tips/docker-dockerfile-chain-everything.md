@@ -1,4 +1,4 @@
-# Gộp các chỉ dẫn lệnh RUN để có thể giảm kích thước của Docker Image
+# 3. Gộp các chỉ dẫn lệnh RUN để có thể giảm kích thước của Docker Image
 
 ____
 ____

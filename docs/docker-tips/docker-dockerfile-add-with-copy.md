@@ -1,4 +1,4 @@
-# Sự khác nhau giữa COPY và ADD trong Dockerfile
+# 2. Sự khác nhau giữa COPY và ADD trong Dockerfile
 
 ____
 ____
