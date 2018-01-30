@@ -245,8 +245,11 @@ ____
                 curl https://raw.githubusercontent.com/BoTranVan/ghichep-docker/\
                 master/scripts/install-private-registry.sh \
                 -o ipr.sh
-                
                 chmod a+x ipr.sh
+                
+                curl https://raw.githubusercontent.com/hocchudong/ghichep-docker/master/scripts/gen-cer\
+                -o gen-cer
+                chmod a+x gen-cer
                 
                 ./ipr.sh
 
