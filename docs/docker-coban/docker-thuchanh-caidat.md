@@ -182,7 +182,7 @@ Chạy một container tức là khởi chạy một ứng dụng nào đó tron
 - Ta cũng để ý, khi thực hiện lệnh `docker run` thì máy sẽ tiến hành tìm kiếm images được chỉ định trong localhost, nếu không có thì mặc nó sẽ thực hiện `pulled` từ registry Docker Hub về máy cài docker. Registry Docker Hub là một `kho` lưu trữ các images. Ta cũng có thể sử dụng một registry local - tức là một registry offline trong nội bộ mạng LAN.
 
 
-##### Thao tác với một container với chế độ tương tác, sử dụng tùy chọn `-it`
+#### Thao tác với một container với chế độ tương tác, sử dụng tùy chọn `-it`
 - Trong các ví dụ trước ta mới thao tác để thực thi nhanh với các container, trong phần này ta sẽ sử dụng cách tương tác với một container. Có nghĩa là tạo ra các container và thao tác trực tiếp với chúng. Hãy chạy lệnh dưới.
 
   ```sh
@@ -207,7 +207,7 @@ Trong lệnh trên ta sử dụng tùy chọn `-it` - đây chính là tùy ch�
 
 Trong phần trên ta đã sử dụng tùy chọn `-it`, trong đó `-i` là tùy chọn sử dụng để tạo container với chế độ tương tác, tùy chọn `-t` là tùy chọn mở ra một phiên làm việc. Nếu chỉ sử dụng tùy chọn `-i` thì chúng ta sẽ mở ra một section và đóng lại luôn. Nếu sử dụng chỉ tùy chọn `-t` thì sẽ mở ra một section và không thao tác được.
 
-##### Tạo một container với chế độ deamon, sử dụng tùy chọn `-d`
+#### Tạo một container với chế độ deamon, sử dụng tùy chọn `-d`
 Thông thường, khi tạo một container với các tùy chọn trước thì sau khi tạo xong hoặc thoát container thì ngay lập tức container đó sẽ dừng hoạt động. Trong một số trường hợp ta sẽ cần các container chạy ngầm, trong trường hợp này ta sử dụng tùy chọn `-d`.
 
   ```sh
@@ -237,7 +237,7 @@ Sau khi chạy lệnh trên xong, ta có thể sử dụng lệnh `docker ps` đ
   46fe544a7d20        httpd               "httpd-foreground"      About an hour ago   Exited (0) About a minute ago                        compassionate_hugle
   ```
   
-##### Tạo một container với port chỉ định, sử dụng tùy chọn `-p`
+#### Tạo một container với port chỉ định, sử dụng tùy chọn `-p`
 Nếu không chỉ định tùy chọn `-p` cho container thì thường container sinh ra sẽ có một port mặc định nào đó, lúc đó ta muốn sử dụng container đó thì phải đứng ở máy chứa container và thao tác, ví dụ như ta có một container chạy ứng dụng web, lúc đó ta có thể truy cập tới ứng dụng web trên máy cài đặt container với port của container được sinh ra mặc định.
 
 Do vậy, để `phơi` một port của container ra bên ngoài - giúp các máy ngoài container có thể sử dụng được thì ta cần dùng tùy chọn `-p`. Ở ví dụ dưới ta sẽ tạo ra một container chạy web và ánh xạ port 4000 của máy host tới port 80 của container được sinh ra.
