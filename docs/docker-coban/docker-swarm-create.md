@@ -21,6 +21,10 @@ ____
 
 - ### <a name="requirement">6.1 Các yêu cầu cần có để thực hiện</a>
 
+    - Mô hình đơn giản như sau:
+
+    > ![docker-swarm-sample-model.png](../../images/docker-swarm-sample-model.png)
+
     - Việc thực hiện cấu hình sử dụng ít nhất 3 node lần lượt đáp ứng yêu cầu theo bảng sau:
 
         | STT | Hostname |   IP Address  |   OS   |
@@ -39,7 +43,7 @@ ____
         |  2  | 7946 |  tcp/udp  | for communication among nodes         |
         |  3  | 4789 |    tcp    | for overlay network traffic           |
         
-    - Để thực hiện pushlish các port trên CentOS ta có thể chạy các câu lệnh sau:
+    - Để thực hiện publish các port trên CentOS ta có thể chạy các câu lệnh sau:
 
             firewall-cmd --add-port=2377/tcp --permanent
             firewall-cmd --add-port=7946/tcp --permanent
@@ -48,7 +52,8 @@ ____
 
             firewall-cmd --reload
         
-
+    - Việc thực hiện được tiến hành sử dụng ảo hóa VMWare.
+    
 - ### <a name="swarm-init">6.2 Tạo ra Swarm Docker</a>
 
     - Thực hiện chạy câu lệnh sau trên node `dockers` để khởi tạo Swarm:
@@ -149,12 +154,12 @@ ____
 
         trong đó:
 
-            | Chỉ dẫn | Mô tả |
-            | ------------- | ------------- |
-            | docker service create | Câu lệnh để tạo ra một service |
-            | --name | flag khai báo tên của service. Ở đây là docker-nginx |
-            | --replicas | flag khai báo số lượng mong muốn của service chạy là 1 |
-            | --publish | flag khai báo publish port |
+        | Chỉ dẫn | Mô tả |
+        | ------------- | ------------- |
+        | docker service create | Câu lệnh để tạo ra một service |
+        | --name | flag khai báo tên của service. Ở đây là docker-nginx |
+        | --replicas | flag khai báo số lượng mong muốn của service chạy là 1 |
+        | --publish | flag khai báo publish port |
 
     - Để kiểm tra kết quả, ta sử dụng câu lệnh sau trên node `dockers`:
 
