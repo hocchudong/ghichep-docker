@@ -245,7 +245,9 @@ Do vậy, để `phơi` một port của container ra bên ngoài - giúp các m
   ```sh
   docker run -d -p 4000:80 httpd
   ```
+  
   - Sử dụng lệnh `docker ps`, ta có thể quan sát cột `PORTS` để thấy thông số ánh xạ port giữa host (Máy cái docker) và container 
+  
     ```sh
     CONTAINER ID        IMAGE               COMMAND              CREATED             STATUS              PORTS                  NAMES
     4594542ec71b        httpd               "httpd-foreground"   40 seconds ago      Up 39 seconds       0.0.0.0:4000->80/tcp   goofy_euler
@@ -254,6 +256,7 @@ Do vậy, để `phơi` một port của container ra bên ngoài - giúp các m
 
 
   Khi đó ta có thể đứng ở các máy bên ngoài và truy cập web với địa chỉ http://ip_may_cai_docker:4000`, kết quả là ta sẽ thấy nội dung của web. Hoặc ta có thể đứng trên máy cài docker và sử dụng lệnh `ss -lan | grep 4000`, kết quả ta sẽ thấy port 4000 trên host cài docker.
+  
     ```sh
     root@devstack01:~# ss -lan | grep 4000
     tcp    LISTEN     0      128      :::4000                 :::*
