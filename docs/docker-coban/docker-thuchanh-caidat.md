@@ -1,4 +1,13 @@
 # Hướng dẫn cài đặt Docker
+## MỤC LỤC
+
+- Cài đặt docker engine
+- Các thao tác cơ bản sau khi cài đặt docker.
+  - Thực thi một container.
+  - Thao tác với một container với chế độ tương tác, sử dụng tùy chọn `-it`.
+  - Tạo một container với chế độ deamon, sử dụng tùy chọn `-d`
+  - Tạo một container với port chỉ định, sử dụng tùy chọn `-p`
+  
 ## Cài đặt docker engine
 ### Cài bản stable mới nhất
 - Các OS áp dụng: CentOS 7.3 64bit, Ubuntu 14.04 64bit, Ubuntu 16.04 64bit
@@ -170,10 +179,10 @@ Chạy một container tức là khởi chạy một ứng dụng nào đó tron
   - `busybox`: là tên images dùng để tạo các container.
   - `echo, whoami, route`: là các lệnh sẽ được truyền vào trong container thực hiện.
   
-- Ta cũng để ý, khi thực hiện lệnh `docker run` thì máy sẽ tiến hành tìm kiếm images được chỉ định trong localhost, nếu không có thì mặc nó sẽ thực hiện `pulled` từ registry Docker Hub về máy cài docker. Registry Docker Hub là một `kho` lưu trữ các images. Ta cũng có thể sử dụng một registry local.
+- Ta cũng để ý, khi thực hiện lệnh `docker run` thì máy sẽ tiến hành tìm kiếm images được chỉ định trong localhost, nếu không có thì mặc nó sẽ thực hiện `pulled` từ registry Docker Hub về máy cài docker. Registry Docker Hub là một `kho` lưu trữ các images. Ta cũng có thể sử dụng một registry local - tức là một registry offline trong nội bộ mạng LAN.
 
 
-##### Thực hiện tương tác với container 
+##### Thao tác với một container với chế độ tương tác, sử dụng tùy chọn `-it`
 - Trong các ví dụ trước ta mới thao tác để thực thi nhanh với các container, trong phần này ta sẽ sử dụng cách tương tác với một container. Có nghĩa là tạo ra các container và thao tác trực tiếp với chúng. Hãy chạy lệnh dưới.
 
   ```sh
@@ -196,4 +205,34 @@ Trong lệnh trên ta sử dụng tùy chọn `-it` - đây chính là tùy ch�
     / # exit
     ```
 
+Trong phần trên ta đã sử dụng tùy chọn `-it`, trong đó `-i` là tùy chọn sử dụng để tạo container với chế độ tương tác, tùy chọn `-t` là tùy chọn mở ra một phiên làm việc. Nếu chỉ sử dụng tùy chọn `-i` thì chúng ta sẽ mở ra một section và đóng lại luôn. Nếu sử dụng chỉ tùy chọn `-t` thì sẽ mở ra một section và không thao tác được.
 
+##### Tạo một container với chế độ deamon, sử dụng tùy chọn `-d`
+Thông thường, khi tạo một container với các tùy chọn trước thì sau khi tạo xong hoặc thoát container thì ngay lập tức container đó sẽ dừng hoạt động. Trong một số trường hợp ta sẽ cần các container chạy ngầm, trong trường hợp này ta sử dụng tùy chọn `-d`.
+
+  ```sh
+  docker run -d httpd
+  ```
+
+Sau khi chạy lệnh trên xong, ta có thể sử dụng lệnh `docker ps` để xem container này còn hoạt động hay không (nếu để quan sát cả container đã dừng thì dùng lệnh `docker ps -a`).
+
+- Kết quả lệnh `docker ps`. Chú ý quan sát cột `STATUS`
+
+  ```sh
+  CONTAINER ID        IMAGE               COMMAND              CREATED             STATUS              PORTS               NAMES
+  4522587672e0        httpd               "httpd-foreground"   4 seconds ago       Up 3 seconds        80/tcp              modest_perlman
+  root@devstack01:~#
+  ```
+
+- Kết quả lệnh `docker ps -a`.Chú ý quan sát cột `STATUS`. Ta thấy trước đó có các container đã được tạo mà không có tùy chọn `-d` đang có status là `Exited`
+
+  ```sh
+  root@devstack01:~# docker ps -a
+  CONTAINER ID        IMAGE               COMMAND                 CREATED             STATUS                           PORTS               NAMES
+  4522587672e0        httpd               "httpd-foreground"      58 seconds ago      Up 57 seconds                    80/tcp              modest_perlman
+  30b7e0f132af        busybox             "sh"                    33 minutes ago      Exited (0) 32 minutes ago                            cocky_leakey
+  a0075342c64f        busybox             "route"                 41 minutes ago      Exited (0) 41 minutes ago                            youthful_lovelace
+  ab55d78fa2c9        httpd               "httpd-foreground"      About an hour ago   Exited (0) About a minute ago                        elated_brahmagupta
+  6bf88da1f473        httpd               "httpd-foreground"      About an hour ago   Exited (0) About a minute ago                        loving_curie
+  46fe544a7d20        httpd               "httpd-foreground"      About an hour ago   Exited (0) About a minute ago                        compassionate_hugle
+  ```
