@@ -255,7 +255,7 @@ Do vậy, để `phơi` một port của container ra bên ngoài - giúp các m
     ```
 
 
-  Khi đó ta có thể đứng ở các máy bên ngoài và truy cập web với địa chỉ http://ip_may_cai_docker:4000`, kết quả là ta sẽ thấy nội dung của web. Hoặc ta có thể đứng trên máy cài docker và sử dụng lệnh `ss -lan | grep 4000`, kết quả ta sẽ thấy port 4000 trên host cài docker.
+  Khi đó ta có thể đứng ở các máy bên ngoài và truy cập web với địa chỉ `http://ip_may_cai_docker:4000`, kết quả là ta sẽ thấy nội dung của web. Hoặc ta có thể đứng trên máy cài docker và sử dụng lệnh `ss -lan | grep 4000`, kết quả ta sẽ thấy port 4000 trên host cài docker.
   
     ```sh
     root@devstack01:~# ss -lan | grep 4000
