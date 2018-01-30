@@ -129,3 +129,71 @@
 
 - Kết thúc việc cài đặt, nếu kết quả ổn thì bạn đã có thể bắt đầu tìm hiểu về docker.
 
+### Một số thao tác để trải nghiệm docker sau khi cài đặt
+Sau khi cài đặt docker xong, bạn nên trải nghiệm cách sử dụng docker với các thao tác cơ bản trước khi đi vào chi tiết của từng thành phần.
+
+#### Chạy một container
+Chạy một container tức là khởi chạy một ứng dụng nào đó trong container. Hãy thực hiện các lệnh dưới và cùng đối chiếu kết kết quả.
+
+  ```sh
+  docker run busybox echo 'Xin chao'
+  ```
+  
+  - Kết quả: Màn hình sẽ trả về dòng thông báo ở trên. 
+    ```sh
+    Xin chao
+    ```
+    
+  ```sh
+  docker run busybox whoami
+  ```
+  - Kết quả: Lệnh `whoami` sẽ được thực hiện trong container và đưa thông báo ra bên ngoài.
+    ```sh
+    root
+    ```
+    
+  ```sh
+  docker run busybox route
+  ```
+  - Kết quả:
+    ```sh
+    Kernel IP routing table
+    Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+    default         172.17.0.1      0.0.0.0         UG    0      0        0 eth0
+    172.17.0.0      *               255.255.0.0     U     0      0        0 eth0
+    root@devstack01:~#
+    ```
+    
+- Chúng ta có thể thấy cú pháp của 03 lệnh trên là `docker run <ten_image> <cau_lenh_duoc_thuc_hien>`. Trong đó:
+  - `docker`: là tên lệnh để máy cài docker thực hiện thao tác với docker bằng CLI.
+  - `run`: là tùy chọn để thực hiện, ngoài `run` còn nhất nhiều các tùy chọn khác như `images, pull, rmi ...`, chúng ta sẽ khám phá sau.
+  - `busybox`: là tên images dùng để tạo các container.
+  - `echo, whoami, route`: là các lệnh sẽ được truyền vào trong container thực hiện.
+  
+- Ta cũng để ý, khi thực hiện lệnh `docker run` thì máy sẽ tiến hành tìm kiếm images được chỉ định trong localhost, nếu không có thì mặc nó sẽ thực hiện `pulled` từ registry Docker Hub về máy cài docker. Registry Docker Hub là một `kho` lưu trữ các images. Ta cũng có thể sử dụng một registry local.
+
+
+##### Thực hiện tương tác với container 
+- Trong các ví dụ trước ta mới thao tác để thực thi nhanh với các container, trong phần này ta sẽ sử dụng cách tương tác với một container. Có nghĩa là tạo ra các container và thao tác trực tiếp với chúng. Hãy chạy lệnh dưới.
+
+  ```sh
+  docker run -it busybox
+  ```
+
+Trong lệnh trên ta sử dụng tùy chọn `-it` - đây chính là tùy chọn cho phép tương tác trực tiếp trong container, kết quả ta sẽ nhận được cửa sổ thao tác trong container như sau.
+
+  ```sh
+  root@devstack01:~# docker run -it busybox
+  / # echo "Chao cac ban"
+  Chao cac ban
+  / #
+  ```
+  - Trong mục trên các bạn có thể thấy ta đã thực hiện lệnh `echo "Chao cac ban"` và kết quả hiển thị ra màn hình. Để thoát khỏi chế độ tương tác với container ta dùng lệnh `exit`/
+    ```sh
+    root@devstack01:~# docker run -it busybox
+    / # echo "Chao cac ban"
+    Chao cac ban
+    / # exit
+    ```
+
+
