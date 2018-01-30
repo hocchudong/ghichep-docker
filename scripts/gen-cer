@@ -1,0 +1,60 @@
+#!/bin/bash
+ 
+#Required
+domain=$1
+commonname=$domain
+ 
+#Change to your company details
+country=VN
+state=HaNoi
+locality=HaNoi
+organization=VNPT
+organizationalunit=IT
+email=administrator@vnpt.vn
+ 
+#Optional
+password=dummypassword
+devdocker=devdockerCA
+
+if [ -z "$domain" ]
+then
+    echo "Argument not present."
+    echo "Useage $0 [common name]"
+ 
+    exit 99
+fi
+ 
+echo "Generating key request for $domain"
+ 
+#Generate a key
+openssl genrsa -passout pass:$password -out $devdocker.key 2048 -noout
+openssl genrsa -passout pass:$password -out $domain.key 2048 -noout
+ 
+#Remove passphrase from the key. Comment the line out to keep the passphrase
+echo "Removing passphrase from key"
+openssl req -x509 -new -nodes -key $devdocker.key -passin pass:$password -days 10000 -out $devdocker.crt \
+    -subj "/C=$country/ST=$state/L=$locality/O=$organization/OU=$organizationalunit/CN=$commonname/emailAddress=$email"
+
+# openssl x509 rsa -in $domain.key -passin pass:$password -out $domain.key
+ 
+#Create the request
+echo "Creating CSR"
+openssl req -new -key $domain.key -out $domain.csr -passin pass:$password \
+    -subj "/C=$country/ST=$state/L=$locality/O=$organization/OU=$organizationalunit/CN=$commonname/emailAddress=$email"
+ 
+openssl x509 -req -in $domain.csr -CA $devdocker.crt -CAkey $devdocker.key -CAcreateserial -out $domain.crt -days 10000
+# echo "---------------------------"
+# echo "-----Below is your CSR-----"
+# echo "---------------------------"
+# echo
+# cat $domain.csr
+ 
+# echo
+# echo "---------------------------"
+# echo "-----Below is your Key-----"
+# echo "---------------------------"
+# echo
+# cat $domain.key
+
+cp $domain.csr $domain.key /docker-registry/nginx
+rm -rf $domain.* $devdocker.*
