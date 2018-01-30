@@ -5,8 +5,12 @@
 - Các thao tác cơ bản sau khi cài đặt docker.
   - Thực thi một container.
   - Thao tác với một container với chế độ tương tác, sử dụng tùy chọn `-it`.
-  - Tạo một container với chế độ deamon, sử dụng tùy chọn `-d`
-  - Tạo một container với port chỉ định, sử dụng tùy chọn `-p`
+  - Tạo một container với chế độ deamon, sử dụng tùy chọn `-d`.
+  - Tạo một container với port chỉ định, sử dụng tùy chọn `-p`.
+  - Thao tác với một container đã tồn tại.
+  - Chỉ định RAM và CPU cho một container.
+  - Các lệnh xóa các container.
+  
   
 ## Cài đặt docker engine
 ### Cài bản stable mới nhất
@@ -255,7 +259,7 @@ Do vậy, để `phơi` một port của container ra bên ngoài - giúp các m
     ```
 
 
-  Khi đó ta có thể đứng ở các máy bên ngoài và truy cập web với địa chỉ `http://ip_may_cai_docker:4000`, kết quả là ta sẽ thấy nội dung của web. Hoặc ta có thể đứng trên máy cài docker và sử dụng lệnh `ss -lan | grep 4000`, kết quả ta sẽ thấy port 4000 trên host cài docker.
+Khi đó ta có thể đứng ở các máy bên ngoài và truy cập web với địa chỉ `http://ip_may_cai_docker:4000`, kết quả là ta sẽ thấy nội dung của web. Hoặc ta có thể đứng trên máy cài docker và sử dụng lệnh `ss -lan | grep 4000`, kết quả ta sẽ thấy port 4000 trên host cài docker.
   
     ```sh
     root@devstack01:~# ss -lan | grep 4000
@@ -263,5 +267,53 @@ Do vậy, để `phơi` một port của container ra bên ngoài - giúp các m
     root@devstack01:~#
     ```
 
-    
+Ngoài cách mở trình duyệt vào địa chỉ, ta có thể sử dụng lệnh `curl localhost:4000` trên ngay máy cài docker, ta sẽ có kết quả trả về như bên dưới.
+
+  ```sh
+  root@devstack01:~# curl localhost:4000
+  <html><body><h1>It works!</h1></body></html>
+  ```
+
+- Trong trường hợp một container có nhiều port, ta cần sử dụng nhiều port thì có thể sử dùng tùy chọn `-p 4000:80 8081:3306`.
+
+- Trong trường hợp ta muốn ánh xạ port ngẫu nhiên cho toàn bộ các port có sẵn trong container, ta sử dụng tùy chọn `-P`, ví dụ
+
+```sh
+docker run -d -P nginx
+```
+
+- Sử dụng lệnh `docker ps` để xem container đang được ánh xạ port nào.
+  ```sh
+  root@devstack01:~# docker ps
+  CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                   NAMES
+  8be19991391d        nginx               "nginx -g 'daemon of…"   29 seconds ago      Up 27 seconds       0.0.0.0:32769->80/tcp   suspicious_bhaskara
+  ```
+
+
   
+#### Thao tác với một container đã tồn tại
+
+- Khi một container đang ở trạng thái `UP` thì ta có thể truy cập vào để thao thác, giả sử như ta có container với ID là `8be19991391d`, để truy cập vào trong container đó ta dùng lệnh `docker exec -it <ID_Container> /bin/bash`
+
+  ```sh
+  docker exec -it 8be19991391d /bin/bash
+  ```
+  - Kết quả: lưu ý ta có thể quan sát cửa sổ nhắc lệnh `root@8be19991391d`
+    ```sh
+    root@8be19991391d:/#
+    ```
+    Để thoát khỏi container ta sử dụng lệnh `exit`
+ 
+ 
+#### Chỉ định RAM và CPU cho một container
+- Một container có thể chỉ định lượng RAM và CPU khi tạo.
+  ```sh
+  docker run -d -p 4000:80 --name webserver --memory 400m --cpus 0.5 httpd
+  ```
+
+Trong ví dụ trên:
+  - `--memory`: là giá trị RAM gán cho container.
+  - `--cpus`: là giá trị CPU gán cho container.
+  - `--name`: tên của container. 
+
+#### Các lệnh xóa các container.
