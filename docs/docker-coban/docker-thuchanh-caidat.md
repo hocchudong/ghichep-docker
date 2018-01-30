@@ -9,6 +9,7 @@
   - Tạo một container với port chỉ định, sử dụng tùy chọn `-p`.
   - Thao tác với một container đã tồn tại.
   - Chỉ định RAM và CPU cho một container.
+  - Lệnh xem nội dung của một container, xem log và kiểm tra port
   - Các lệnh xóa các container.
   
   
@@ -316,4 +317,41 @@ Trong ví dụ trên:
   - `--cpus`: là giá trị CPU gán cho container.
   - `--name`: tên của container. 
 
+  
+#### Lệnh xem nội dung của một container, xem log và kiểm tra port
+- Container có thông tin có thể xem được, trong đó chứa rất nhiều tham số có thể khai thác được, để xem nội dung của container ta kiểm tra bằng lệnh `docker inspect <ten_hoac_ID_Container>`, ví dụ 
+
+  ```sh
+  docker inspect 459c2c5f8d32
+  ```
+  
+- Để xem log của một container ta sử dụng lệnh `docker logs -f <ten_hoac_ID_Container>`  
+
+  ```sh
+  docker logs -f 459c2c5f8d32
+  ```
+
+- Kiểm tra port của một container 
+
+  ```sh
+  docker port 459c2c5f8d32 
+  ```
+
 #### Các lệnh xóa các container.
+
+- Để xóa các container ta sử dụng lệnh `docker rm <ten_hoac_ID_Container>` hoặc `docker rm -f <ten_hoac_ID_Container>`
+
+  ```sh
+  docker rm 459c2c5f8d32
+  ```
+hoặc 
+
+  ```sh
+  docker rm 459c2c5f8d32
+  ```
+  
+- Có thể sử dụng thủ thuật dưới để xóa toàn bộ các container 
+
+  ```sh
+  docker rm -f `docker ps -aq`
+  ```
