@@ -236,3 +236,29 @@ Sau khi chạy lệnh trên xong, ta có thể sử dụng lệnh `docker ps` đ
   6bf88da1f473        httpd               "httpd-foreground"      About an hour ago   Exited (0) About a minute ago                        loving_curie
   46fe544a7d20        httpd               "httpd-foreground"      About an hour ago   Exited (0) About a minute ago                        compassionate_hugle
   ```
+  
+##### Tạo một container với port chỉ định, sử dụng tùy chọn `-p`
+Nếu không chỉ định tùy chọn `-p` cho container thì thường container sinh ra sẽ có một port mặc định nào đó, lúc đó ta muốn sử dụng container đó thì phải đứng ở máy chứa container và thao tác, ví dụ như ta có một container chạy ứng dụng web, lúc đó ta có thể truy cập tới ứng dụng web trên máy cài đặt container với port của container được sinh ra mặc định.
+
+Do vậy, để `phơi` một port của container ra bên ngoài - giúp các máy ngoài container có thể sử dụng được thì ta cần dùng tùy chọn `-p`. Ở ví dụ dưới ta sẽ tạo ra một container chạy web và ánh xạ port 4000 của máy host tới port 80 của container được sinh ra.
+
+  ```sh
+  docker run -d -p 4000:80 httpd
+  ```
+  - Sử dụng lệnh `docker ps`, ta có thể quan sát cột `PORTS` để thấy thông số ánh xạ port giữa host (Máy cái docker) và container 
+    ```sh
+    CONTAINER ID        IMAGE               COMMAND              CREATED             STATUS              PORTS                  NAMES
+    4594542ec71b        httpd               "httpd-foreground"   40 seconds ago      Up 39 seconds       0.0.0.0:4000->80/tcp   goofy_euler
+    4522587672e0        httpd               "httpd-foreground"   8 minutes ago       Up 8 minutes        80/tcp                 modest_perlman
+    ```
+
+
+  Khi đó ta có thể đứng ở các máy bên ngoài và truy cập web với địa chỉ http://ip_may_cai_docker:4000`, kết quả là ta sẽ thấy nội dung của web. Hoặc ta có thể đứng trên máy cài docker và sử dụng lệnh `ss -lan | grep 4000`, kết quả ta sẽ thấy port 4000 trên host cài docker.
+    ```sh
+    root@devstack01:~# ss -lan | grep 4000
+    tcp    LISTEN     0      128      :::4000                 :::*
+    root@devstack01:~#
+    ```
+
+    
+  
