@@ -30,7 +30,7 @@ Tài liệu cài đặt docker để chuẩn bị môi trường tìm hiểu lý
 
 ### Thực hành
 
-[Cài đặt docker engine cơ bản](/docs/docker-coban/docker-thuchanh-caidat.md)
+[Cài đặt docker engine cơ bản](../docs/docker-coban/docker-thuchanh-caidat.md)
 
 [Thao tác với images](/docs/docker-coban/docker-thuchanh-images.md)
 
