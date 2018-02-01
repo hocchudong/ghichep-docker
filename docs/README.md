@@ -42,7 +42,7 @@ Tài liệu cài đặt docker để chuẩn bị môi trường tìm hiểu lý
 
 [Thực hành với docker network](/docs/docker-coban/docker-thuchanh-network.md)
 
-[Thực hành với docker hub (docker registry)](/docs/docker-coban/docker-thuchanh-registry.md)
+[Thực hành với docker hub (docker registry)](/docs/docker-coban/docker-deploy-private-registry.md)
 
 ### Demo Docker
 
