@@ -115,6 +115,53 @@ ENV <key>=<value> ...
 ```
 - Khai báo cáo biến giá trị môi trường. Khi run container từ image, các biến môi trường này vẫn có hiệu lực.
 
+- Biến môi trường có thể được sử dụng trong các chỉ dẫn lệnh sau:
+
+  - ADD
+  - COPY
+  - ENV
+  - EXPOSE
+  - FROM
+  - LABEL
+  - STOPSIGNAL
+  - USER
+  - VOLUME
+  - WORKDIR
+
+- Ta có thể sử dụng các khai báo trong file `.dockerfileignore` để phớt lờ đi sự có mặt của các file đang có trong đường dẫn thực hiện build Docker. `.dockerfileignore` sử dụng `filepath.Math rules`. Ví dụ:
+
+  */temp* có nghĩa là loại trừ các file và đường dẫn bắt đầu bằng temp hoặc sub-directory của root. Ví dụ sau đều có thể hiểu là một:
+
+      - /subdir/temp
+
+  hoặc 
+
+      - /sbdir/temp.dump
+
+  các file hoặc đường dẫn xuất hiện cụm từ `temp` đều được ignore.
+
+        pattern:
+        { term }
+    term:
+        '*'         matches any sequence of non-Separator characters
+        '?'         matches any single non-Separator character
+        '[' [ '^' ] { character-range } ']'
+                    character class (must be non-empty)
+        c           matches character c (c != '*', '?', '\\', '[')
+        '\\' c      matches character c
+
+    character-range:
+        c           matches character c (c != '\\', '-', ']')
+        '\\' c      matches character c
+        lo '-' hi   matches character c for lo <= c <= hi
+
+  dòng bắt đầu bằng ! có thể hiểu là tạo ra một ngoại lệ trong file. Ví dụ:
+
+    *.md
+    !README.md
+    
+  có thể hiểu là tất cả các file .md `đều không được sử dụng ngoại trừ file README.md`
+
 ## 3.8 ADD
 ```sh
 ADD has two forms:

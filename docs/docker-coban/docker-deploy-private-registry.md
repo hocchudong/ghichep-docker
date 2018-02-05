@@ -7,7 +7,6 @@ ____
 
 - [1.1 Giới thiệu về Private Docker Registry](#about)
 - [1.2 Cài đặt và cấu hình Docker Registry](#deploy)
-- [1.3 Cài đặt Web GUI cho Private Registry](#web-gui)
 - [Các nội dung khác](#content-others)
 
 ____
@@ -253,18 +252,6 @@ ____
                 
                 ./ipr.sh
 
-- ### <a name="web-gui">1.3 Cài đặt Web GUI cho Private Registry</a>
-
-    - Sản phẩm này là một mã nguồn mở, cung cấp các tính năng sau:
-
-        + Liệt kê tất cả tag cho repository/image của bạn
-        + Liệt kê tất cả repository/image của bạn
-        + Sắp xếp danh sách tag
-        + Một interface dùng cho nhiều registry
-        + Sử dụng Docker Registry an toàn
-        + Có thể chia sẻ docker registry của bạn.
-
-    - Sẽ cập nhật sau
 ____
 
 # <a name="content-others">Các nội dung khác</a>
