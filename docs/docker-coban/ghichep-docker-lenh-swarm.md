@@ -13,15 +13,15 @@ ____
     - [10.1.4 Câu lệnh docker swarm leave](#docker-swarm-leave)
     - [10.1.5 Câu lệnh docker swarm update](#docker-swarm-update)
 - [10.2 Câu lệnh docker service](#docker-service)
-    - [10.2. Câu lệnh docker service create](#docker-service-create)
-    - [10.2. Câu lệnh docker service inspect](#docker-service-inspect)
-    - [10.2. Câu lệnh docker service logs](#docker-service-logs)
-    - [10.2. Câu lệnh docker service ls](#docker-service-ls)
-    - [10.2. Câu lệnh docker service ps](#docker-service-ps)
-    - [10.2. Câu lệnh docker service rm](#docker-service-rm)
-    - [10.2. Câu lệnh docker service rollback](#docker-service-rollback)
-    - [10.2. Câu lệnh docker service scale](#docker-service-scale)
-    - [10.2. Câu lệnh docker service update](#docker-service-update)
+    - [10.2.1 Câu lệnh docker service create](#docker-service-create)
+    - [10.2.2 Câu lệnh docker service inspect](#docker-service-inspect)
+    - [10.2.3 Câu lệnh docker service logs](#docker-service-logs)
+    - [10.2.4 Câu lệnh docker service ls](#docker-service-ls)
+    - [10.2.5 Câu lệnh docker service ps](#docker-service-ps)
+    - [10.2.6 Câu lệnh docker service rm](#docker-service-rm)
+    - [10.2.7 Câu lệnh docker service rollback](#docker-service-rollback)
+    - [10.2.8 Câu lệnh docker service scale](#docker-service-scale)
+    - [10.2.9 Câu lệnh docker service update](#docker-service-update)
 - [Các nội dung khác](#content-others)
 
 ____
@@ -128,7 +128,7 @@ ____
     - Được xem là parent-command bao gồm các câu lệnh thao tác với service trong Swarm Mode.
     - Các câu lệnh bao gồm:
 
-- ### <a name="docker-service-create">10.2. Câu lệnh docker service create</a>
+- ### <a name="docker-service-create">10.2.1 Câu lệnh docker service create</a>
     - Sử dụng để tạo services
     - Cú pháp:
 
@@ -224,7 +224,7 @@ ____
                 --publish published=8080,target=80 \
                 nginx
 
-- ### <a name="docker-service-inspect">10.2. Câu lệnh docker service inspect</a>
+- ### <a name="docker-service-inspect">10.2.2 Câu lệnh docker service inspect</a>
     - Sử dụng để hiển thị thông tin chi tiết về một hay nhiều service.
     - Cú pháp:
 
@@ -241,7 +241,7 @@ ____
 
             docker service inspect my_web
 
-- ### <a name="docker-service-logs">10.2. Câu lệnh docker service logs</a>
+- ### <a name="docker-service-logs">10.2.3 Câu lệnh docker service logs</a>
     - Sử dụng để lấy logs từ service hay task
     - Cú pháp:
 
@@ -261,7 +261,7 @@ ____
 
             docker service logs my_web
 
-- ### <a name="docker-service-ls">10.2. Câu lệnh docker service ls</a>
+- ### <a name="docker-service-ls">10.2.4 Câu lệnh docker service ls</a>
     - Sử dụng để liệt kê services
     - Cú pháp:
 
@@ -275,7 +275,7 @@ ____
         | --format |  | Pretty-print services using a Go template |
         | --quiet , -q |  | Only display IDs |
 
-- ### <a name="docker-service-ps">10.2. Câu lệnh docker service ps</a>
+- ### <a name="docker-service-ps">10.2.5 Câu lệnh docker service ps</a>
     - Sử dụng để đưa ra tasks của một hay nhiều service.
     - Cú pháp:
 
@@ -289,7 +289,7 @@ ____
         | --format |  | Pretty-print services using a Go template |
         | --quiet , -q |  | Only display IDs |
 
-- ### <a name="docker-service-rm">10.2. Câu lệnh docker service rm</a>
+- ### <a name="docker-service-rm">10.2.6 Câu lệnh docker service rm</a>
     - Sử dụng để xóa đi một hay nhiều services
     - Cú pháp:
 
@@ -299,7 +299,7 @@ ____
 
             docker service rm my_web
 
-- ### <a name="docker-service-rollback">10.2. Câu lệnh docker service rollback</a>
+- ### <a name="docker-service-rollback">10.2.7 Câu lệnh docker service rollback</a>
     - Sử dụng để hoàn nguyên các thay đổi đối với cấu hình của service.
     - Cú pháp:
 
@@ -312,7 +312,7 @@ ____
         | --detach , -d |  | Exit immediately instead of waiting for the service to converge |
         | --quiet , -q |  | Suppress progress output |
 
-- ### <a name="docker-service-scale">10.2. Câu lệnh docker service scale</a>
+- ### <a name="docker-service-scale">10.2.8 Câu lệnh docker service scale</a>
     - Sử dụng để Scale một hay nhiều replicated services
     - Cú pháp:
 
@@ -333,7 +333,7 @@ ____
             backend scaled to 3
             frontend scaled to 5
 
-- ### <a name="docker-service-update">10.2. Câu lệnh docker service update</a>
+- ### <a name="docker-service-update">10.2.9 Câu lệnh docker service update</a>
     - Cập nhật các thông tin liên quan đến service
     - Cú pháp:
 

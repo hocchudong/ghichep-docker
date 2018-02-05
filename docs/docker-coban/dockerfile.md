@@ -79,15 +79,17 @@ that label-values can span multiple lines."
 ```
 
 - Để xem các **label** của images, dùng lệnh `docker inspect`.
-"Labels": {
-    "com.example.vendor": "ACME Incorporated"
-    "com.example.label-with-value": "foo",
-    "version": "1.0",
-    "description": "This text illustrates that label-values can span multiple lines.",
-    "multi.label1": "value1",
-    "multi.label2": "value2",
-    "other": "value3"
-},
+```sh
+  "Labels": {
+      "com.example.vendor": "ACME Incorporated"
+      "com.example.label-with-value": "foo",
+      "version": "1.0",
+      "description": "This text illustrates that label-values can span multiple lines.",
+      "multi.label1": "value1",
+      "multi.label2": "value2",
+      "other": "value3"
+  },
+```
 
 ## 3.5 MAINTAINER
 ```sh
@@ -142,7 +144,9 @@ ENV <key>=<value> ...
 
         pattern:
         { term }
+
     term:
+
         '*'         matches any sequence of non-Separator characters
         '?'         matches any single non-Separator character
         '[' [ '^' ] { character-range } ']'
@@ -151,14 +155,15 @@ ENV <key>=<value> ...
         '\\' c      matches character c
 
     character-range:
+    
         c           matches character c (c != '\\', '-', ']')
         '\\' c      matches character c
         lo '-' hi   matches character c for lo <= c <= hi
 
   dòng bắt đầu bằng ! có thể hiểu là tạo ra một ngoại lệ trong file. Ví dụ:
 
-    *.md
-    !README.md
+        *.md
+        !README.md
     
   có thể hiểu là tất cả các file .md `đều không được sử dụng ngoại trừ file README.md`
 
@@ -207,7 +212,7 @@ VOLUME ["/data"]
 - Thư mục chưa volumes là `/var/lib/docker/volumes/`. Ứng với mỗi container sẽ có các thư mục con nằm trong thư mục này. Tìm thư mục chưa Volumes của container `sad_euclid`: 
 ```sh
 root@adk:/var/lib/docker/volumes# docker inspect sad_euclid | grep /var/lib/docker/volumes
-                "Source": "/var/lib/docker/volumes/491a2a775a4cf02bbaca105ec25995008cc7adbc5511e054bb9c6a691a2681ee/_data",
+"Source": "/var/lib/docker/volumes/491a2a775a4cf02bbaca105ec25995008cc7adbc5511e054bb9c6a691a2681ee/_data",
 ```
 
 
@@ -269,4 +274,4 @@ ONBUILD [INSTRUCTION]
 ```
 
 - Chỉ thị ONBUILD được khai báo trong base image. Và khi child image build image từ  base image thì lệnh ONBUILD mới được thực thi.
-- Ví dụ + ref: http://container42.com/2014/02/06/docker-quicktip-3-onbuild/
+- Ví dụ: http://container42.com/2014/02/06/docker-quicktip-3-onbuild/
