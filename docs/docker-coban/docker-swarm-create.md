@@ -13,6 +13,7 @@ ____
 - [6.6 Scale service](#scale-service)
 - [6.7 Drain node](#drain-node)
 - [6.8 Định tuyến trong Docker Swarm](#routing-mesh)
+- [6.9 Dựng Docker Swarm Visualizer để theo dõi services](#docker-swarm-visualizer)
 - [Các nội dung khác](#content-others)
 
 ____
@@ -256,6 +257,23 @@ ____
 
     Như vậy, ta có thể truy cập tới service theo bất kỳ địa chỉ IP của node nào.
 
+
+- ### <a name="docker-swarm-visualizer">6.9 Dựng Docker Swarm Visualizer để theo dõi service</a>
+
+    - Khi sử dụng Docker Swarm, ta nên cài đặt thêm `Swarm Visualizer` để dễ dàng theo dõi các services có trong `Swarm Cluster`. Để thực hiện cài đặt, ta sử dụng câu lệnh:
+
+            docker service create \
+            --name=viz \
+            --publish=8080:8080/tcp \
+            --constraint=node.role==manager \
+            --mount=type=bind,src=/var/run/docker.sock,dst=/var/run/docker.sock \
+            dockersamples/visualizer
+
+    - Sau khi chạy xong, ta có thể truy cập đến đường dẫn với port `ip_address:8080` để kiểm tra kết quả. Nếu cài đặt thành công, kết quả sẽ hiển thị tương tự như sau:
+
+        ![docker-visualizer.png](../../images/docker-visualizer.png)
+
+        
 # Tài liệu tham khảo
 
 - https://docs.docker.com/engine/swarm/swarm-tutorial/

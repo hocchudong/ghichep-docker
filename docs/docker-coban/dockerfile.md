@@ -79,15 +79,17 @@ that label-values can span multiple lines."
 ```
 
 - Để xem các **label** của images, dùng lệnh `docker inspect`.
-"Labels": {
-    "com.example.vendor": "ACME Incorporated"
-    "com.example.label-with-value": "foo",
-    "version": "1.0",
-    "description": "This text illustrates that label-values can span multiple lines.",
-    "multi.label1": "value1",
-    "multi.label2": "value2",
-    "other": "value3"
-},
+```sh
+  "Labels": {
+      "com.example.vendor": "ACME Incorporated"
+      "com.example.label-with-value": "foo",
+      "version": "1.0",
+      "description": "This text illustrates that label-values can span multiple lines.",
+      "multi.label1": "value1",
+      "multi.label2": "value2",
+      "other": "value3"
+  },
+```
 
 ## 3.5 MAINTAINER
 ```sh
@@ -114,6 +116,56 @@ ENV <key> <value>
 ENV <key>=<value> ...
 ```
 - Khai báo cáo biến giá trị môi trường. Khi run container từ image, các biến môi trường này vẫn có hiệu lực.
+
+- Biến môi trường có thể được sử dụng trong các chỉ dẫn lệnh sau:
+
+  - ADD
+  - COPY
+  - ENV
+  - EXPOSE
+  - FROM
+  - LABEL
+  - STOPSIGNAL
+  - USER
+  - VOLUME
+  - WORKDIR
+
+- Ta có thể sử dụng các khai báo trong file `.dockerfileignore` để phớt lờ đi sự có mặt của các file đang có trong đường dẫn thực hiện build Docker. `.dockerfileignore` sử dụng `filepath.Math rules`. Ví dụ:
+
+  */temp* có nghĩa là loại trừ các file và đường dẫn bắt đầu bằng temp hoặc sub-directory của root. Ví dụ sau đều có thể hiểu là một:
+
+      - /subdir/temp
+
+  hoặc 
+
+      - /sbdir/temp.dump
+
+  các file hoặc đường dẫn xuất hiện cụm từ `temp` đều được ignore.
+
+        pattern:
+        { term }
+
+    term:
+
+        '*'         matches any sequence of non-Separator characters
+        '?'         matches any single non-Separator character
+        '[' [ '^' ] { character-range } ']'
+                    character class (must be non-empty)
+        c           matches character c (c != '*', '?', '\\', '[')
+        '\\' c      matches character c
+
+    character-range:
+    
+        c           matches character c (c != '\\', '-', ']')
+        '\\' c      matches character c
+        lo '-' hi   matches character c for lo <= c <= hi
+
+  dòng bắt đầu bằng ! có thể hiểu là tạo ra một ngoại lệ trong file. Ví dụ:
+
+        *.md
+        !README.md
+    
+  có thể hiểu là tất cả các file .md `đều không được sử dụng ngoại trừ file README.md`
 
 ## 3.8 ADD
 ```sh
@@ -160,7 +212,7 @@ VOLUME ["/data"]
 - Thư mục chưa volumes là `/var/lib/docker/volumes/`. Ứng với mỗi container sẽ có các thư mục con nằm trong thư mục này. Tìm thư mục chưa Volumes của container `sad_euclid`: 
 ```sh
 root@adk:/var/lib/docker/volumes# docker inspect sad_euclid | grep /var/lib/docker/volumes
-                "Source": "/var/lib/docker/volumes/491a2a775a4cf02bbaca105ec25995008cc7adbc5511e054bb9c6a691a2681ee/_data",
+"Source": "/var/lib/docker/volumes/491a2a775a4cf02bbaca105ec25995008cc7adbc5511e054bb9c6a691a2681ee/_data",
 ```
 
 
@@ -222,4 +274,4 @@ ONBUILD [INSTRUCTION]
 ```
 
 - Chỉ thị ONBUILD được khai báo trong base image. Và khi child image build image từ  base image thì lệnh ONBUILD mới được thực thi.
-- Ví dụ + ref: http://container42.com/2014/02/06/docker-quicktip-3-onbuild/
+- Ví dụ: http://container42.com/2014/02/06/docker-quicktip-3-onbuild/
