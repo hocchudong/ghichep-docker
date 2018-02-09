@@ -445,96 +445,93 @@ systemctl restart docker
 
 - Đặt IP cho máy master `cicd1`. Node này đóng vai trò master
 
-```sh
-cat << EOF > /etc/network/interfaces
+  ```sh
+  cat << EOF > /etc/network/interfaces
 
-# This file describes the network interfaces available on your system
-# and how to activate them. For more information, see interfaces(5).
+  # This file describes the network interfaces available on your system
+  # and how to activate them. For more information, see interfaces(5).
 
-source /etc/network/interfaces.d/*
+  source /etc/network/interfaces.d/*
 
-# The loopback network interface
-auto lo
-iface lo inet loopback
+  # The loopback network interface
+  auto lo
+  iface lo inet loopback
 
-# The primary network interface
-# The primary network interface
-auto ens3
-iface ens3 inet static
-address 123.30.212.232
-netmask 255.255.255.128
-gateway 123.30.212.129
-dns-nameserver 8.8.8.8
+  # The primary network interface
+  # The primary network interface
+  auto ens3
+  iface ens3 inet static
+  address 123.30.212.232
+  netmask 255.255.255.128
+  gateway 123.30.212.129
+  dns-nameserver 8.8.8.8
 
-auto ens4
-iface ens4 inet static
-address 172.16.68.152
-netmask 255.255.255.0
-EOF
-```
-
+  auto ens4
+  iface ens4 inet static
+  address 172.16.68.152
+  netmask 255.255.255.0
+  EOF
+  ```
 
 - Đặt IP cho máy master `cicd2`. Node này đóng vai trò worker
 
-```sh
-cat << EOF > /etc/network/interfaces
+  ```sh
+  cat << EOF > /etc/network/interfaces
 
-# This file describes the network interfaces available on your system
-# and how to activate them. For more information, see interfaces(5).
+  # This file describes the network interfaces available on your system
+  # and how to activate them. For more information, see interfaces(5).
 
-source /etc/network/interfaces.d/*
+  source /etc/network/interfaces.d/*
 
-# The loopback network interface
-auto lo
-iface lo inet loopback
+  # The loopback network interface
+  auto lo
+  iface lo inet loopback
 
-# The primary network interface
-# The primary network interface
-auto ens3
-iface ens3 inet static
-address 123.30.212.233
-netmask 255.255.255.128
-gateway 123.30.212.129
-dns-nameserver 8.8.8.8
+  # The primary network interface
+  # The primary network interface
+  auto ens3
+  iface ens3 inet static
+  address 123.30.212.233
+  netmask 255.255.255.128
+  gateway 123.30.212.129
+  dns-nameserver 8.8.8.8
 
-auto ens4
-iface ens4 inet static
-address 172.16.68.153
-netmask 255.255.255.0
-EOF
-```
-
-
+  auto ens4
+  iface ens4 inet static
+  address 172.16.68.153
+  netmask 255.255.255.0
+  EOF
+  ```
 
 - Đặt IP cho máy master `cicd3`. Node này đóng vai trò worker
 
-```sh
-cat << EOF > /etc/network/interfaces
+  ```sh
+  cat << EOF > /etc/network/interfaces
 
-# This file describes the network interfaces available on your system
-# and how to activate them. For more information, see interfaces(5).
+  # This file describes the network interfaces available on your system
+  # and how to activate them. For more information, see interfaces(5).
 
-source /etc/network/interfaces.d/*
+  source /etc/network/interfaces.d/*
 
-# The loopback network interface
-auto lo
-iface lo inet loopback
+  # The loopback network interface
+  auto lo
+  iface lo inet loopback
 
-# The primary network interface
-# The primary network interface
-auto ens3
-iface ens3 inet static
-address 123.30.212.234
-netmask 255.255.255.128
-gateway 123.30.212.129
-dns-nameserver 8.8.8.8
+  # The primary network interface
+  # The primary network interface
+  auto ens3
+  iface ens3 inet static
+  address 123.30.212.234
+  netmask 255.255.255.128
+  gateway 123.30.212.129
+  dns-nameserver 8.8.8.8
 
-auto ens4
-iface ens4 inet static
-address 172.16.68.154
-netmask 255.255.255.0
-EOF
-```
+  auto ens4
+  iface ens4 inet static
+  address 172.16.68.154
+  netmask 255.255.255.0
+  EOF
+  ```
 
 ### Cài đặt các thành phần của docker 
 Lưu ý: cài lên tất cả các node
@@ -571,6 +568,7 @@ Lưu ý: cài lên tất cả các node
   ```  
 
 #### Cài đặt `docker compose`  
+Lưu ý: cài lên tất cả các node
 
 - Cài đặt `docker compose`
   ```sh
