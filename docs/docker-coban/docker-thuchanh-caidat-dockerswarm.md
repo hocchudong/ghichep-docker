@@ -1,5 +1,9 @@
 # Hướng dẫn cài đặt Docker Swarm
 
+- [Cài đặt Docker Swarm trên CentOS 7](#1)
+- [Cài đặt Docker Swarm trên Ubuntu Server 16.04 64](#2)
+
+<a name="1">Cài đặt Docker Swarm trên CentOS 7</a>
 ## Môi trường LAB
 - 03 node cài CentOS7: 01 node master và 02 node worker
 ### Mô hình
@@ -434,6 +438,7 @@ systemctl restart docker
   - Kiểm tra lại bằng lệnh `docker service ps swarm_cluster`
   - Khi tắt thử các container trên một trong các node, sẽ có container mới được sinh ra để đảm bảo số container đúng với thiết lập.
 
+<a name="2">Cài đặt Docker Swarm trên Ubuntu Server 16.04 64</a>
 # Hướng dẫn cài đặt docker swarm trên Ubuntu Server 16.04 64 bit 
 ## Chuẩn bị
 - 03 máy server 
