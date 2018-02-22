@@ -1,5 +1,8 @@
 ## Thực hành với docker swarm 
 
+## MỤC LỤC
+
+- Sử dụng docker swarm để triển khai wordpress
 
 
 ### Yêu cầu
@@ -67,7 +70,7 @@ Cần lưu ý rằng khi mỗi service được tạo ở trên có thể có 1 
 
 ##### Tạo các container để chạy wordpress.
 
-- Tạo container chạy mysql.
+- Tạo service chạy mysql.
 
   ```sh
   docker service create \
@@ -84,7 +87,7 @@ Cần lưu ý rằng khi mỗi service được tạo ở trên có thể có 1 
 
 Ở trên ta lưu ý:
   - `--name` là tùy chọn chỉ định tên của container, trong trường hợp này là `mysql`
-  - `--network` là tên của network overlay vừa tạo ở bên trên, cần nhập đúng tên đã đặt ở bên trên.
+  - `--network` là tên của network overlay vừa tạo ở bên trên, cần nhập đúng tên đã đặt ở bên trên, trong trường hợp này là `mysql_private`
   - `--secret` là tùy chọn khai báo cho mật khẩu của database đã tạo ở bước trên.
   - `-e MYSQL_ROOT_PASSWORD_FILE` và `-e MYSQL_PASSWORD_FILE` là tùy chọn khai báo truyền vào trong images, trong trường hợp này là nơi mã hóa các mật khẩu đã được tạo ra ở trước đó.
   - `-e MYSQL_USER` là tùy chọn truyền vào tên của user cho mysql, có thể tùy ý nhập vào lựa chọn này.
@@ -93,7 +96,28 @@ Cần lưu ý rằng khi mỗi service được tạo ở trên có thể có 1 
 
 
 
-
+- Tạo service để chạy wordpress
+  ```sh
+  docker service create \
+       --name wordpress \
+       --network mysql_private \
+       --publish 30000:80 \
+       --secret source=mysql_password,target=wp_db_password \
+       -e WORDPRESS_DB_HOST="mysql:3306" \
+       -e WORDPRESS_DB_NAME="wordpress" \
+       -e WORDPRESS_DB_USER="wordpress" \
+       -e WORDPRESS_DB_PASSWORD_FILE="/run/secrets/wp_db_password" \
+       wordpress:latest
+  ```
+  
+Các tùy chọn gần tương tự như ta tạo service cho mysql ở trên, tuy nhiên cần lưu ý một số tùy chọn sau:
+  - `--publish` là tùy chọn khai báo cho port để truy cập sau này từ bên ngoài vào trang wordpress.
+  - `-e WORDPRESS_DB_HOST` là tùy chọn khai báo tên của service chạy mysql đã khai báo ở trước đó, trong trường hợp này tên là `mysql` và kèm theo port của mysql là `3306`.
+  - `-e WORDPRESS_DB_NAME` và `-e WORDPRESS_DB_USER` là tên của database và user dành cho database đã được tạo trong service trước đó.
+  - `wordpress:latest` tên của images để tạo ra container `wordpress`.
+  
+  
+  
 
 
 
