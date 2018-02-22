@@ -463,13 +463,6 @@ systemctl restart docker
   iface lo inet loopback
 
   # The primary network interface
-  # The primary network interface
-  auto ens3
-  iface ens3 inet static
-  address 123.30.212.232
-  netmask 255.255.255.128
-  gateway 123.30.212.129
-  dns-nameserver 8.8.8.8
 
   auto ens4
   iface ens4 inet static
@@ -493,13 +486,6 @@ systemctl restart docker
   iface lo inet loopback
 
   # The primary network interface
-  # The primary network interface
-  auto ens3
-  iface ens3 inet static
-  address 123.30.212.233
-  netmask 255.255.255.128
-  gateway 123.30.212.129
-  dns-nameserver 8.8.8.8
 
   auto ens4
   iface ens4 inet static
@@ -523,13 +509,6 @@ systemctl restart docker
   iface lo inet loopback
 
   # The primary network interface
-  # The primary network interface
-  auto ens3
-  iface ens3 inet static
-  address 123.30.212.234
-  netmask 255.255.255.128
-  gateway 123.30.212.129
-  dns-nameserver 8.8.8.8
 
   auto ens4
   iface ens4 inet static
