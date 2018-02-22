@@ -10,10 +10,12 @@
 
 - Tham khảo: http://www.cnblogs.com/CloudMan6/p/8098761.html
 
-Chúng ta sẽ sử dụng docker swarm để triển khai wordpress trong các container. Kết quả sau khi triển khai ta sẽ có ứng dụng wordpress được triển khai trên docker swarm. Trong hướng dẫn này ta sẽ sử dụng 02 container để phục vụ triển khai wordpress, đó làm
-  - Container tên là `mysql`: Chạy database.
-  - Container tên là `wordpress`: Chạy mã nguồn của wordpress.
+Chúng ta sẽ sử dụng docker swarm để triển khai wordpress trong các container. Kết quả sau khi triển khai ta sẽ có ứng dụng wordpress được triển khai trên docker swarm. Trong hướng dẫn này ta sẽ sử dụng 02 service để phục vụ triển khai wordpress, đó là
+  - service có tên là `mysql`: Chạy database.
+  - service có tên là `wordpress`: Chạy mã nguồn của wordpress.
 
+Cần lưu ý rằng khi mỗi service được tạo ở trên có thể có 1 hoặc nhiều container, việc này vụ thuộc vào nhu cầu mà bạn triển khai sau này. Trong hướng dẫn này chúng tôi sẽ sử dụng mỗi service là một container. 
+  
 ##### Tạo mật khẩu cho các container bằng kỹ thuật `secret` trong docker.
 
 - Sử dụng lệnh dưới để sinh ra chuỗi ngẫu nhiên để làm mật khẩu của tài khoản `root` cho container chạy mysql ở tương lai.
