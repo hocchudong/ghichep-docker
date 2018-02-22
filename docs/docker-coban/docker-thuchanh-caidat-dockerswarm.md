@@ -554,7 +554,7 @@ Lưu ý: cài lên tất cả các node
 - Kiểm tra lại phiên bản của docker 
 
   ```sh
-  docker verison
+  docker version
   ```  
 
 #### Cài đặt `docker compose`  
