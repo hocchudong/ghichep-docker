@@ -10,9 +10,11 @@
 
 - Tham khảo: http://www.cnblogs.com/CloudMan6/p/8098761.html
 
-Chúng ta sẽ sử dụng docker swarm để triển khai wordpress trong các container. Kết quả sau khi triển khai ta sẽ có ứng dụng wordpress được triển khai trên docker swarm.
+Chúng ta sẽ sử dụng docker swarm để triển khai wordpress trong các container. Kết quả sau khi triển khai ta sẽ có ứng dụng wordpress được triển khai trên docker swarm. Trong hướng dẫn này ta sẽ sử dụng 02 container để phục vụ triển khai wordpress, đó làm
+  - Container tên là `mysql`: Chạy database.
+  - Container tên là `wordpress`: Chạy mã nguồn của wordpress.
 
-##### Tạo mật khẩu cho container bằng kỹ thuật `secret` trong docker.
+##### Tạo mật khẩu cho các container bằng kỹ thuật `secret` trong docker.
 
 - Sử dụng lệnh dưới để sinh ra chuỗi ngẫu nhiên để làm mật khẩu của tài khoản `root` cho container chạy mysql ở tương lai.
 
@@ -51,6 +53,41 @@ Chúng ta sẽ sử dụng docker swarm để triển khai wordpress trong các 
     v7uz3bwjvy497q9b869qm649h   mysql_password                            About a minute ago   About a minute ago
     y90v0zf2k8i9yooyp6vfug03p   mysql_root_password                       8 minutes ago        8 minutes ago
     ````
+
+##### Tạo overlay network
+
+- Mục tiêu tạo ra `overlay network` là để cho các container có thể nói chuyện với nhau thông qua tên của các container (Tên đã được liệt kê ở trên). Lệnh dưới sẽ tạo một overlay network có tên là `mysql_private`.
+  ```sh
+  docker network create -d overlay mysql_private
+  ```
+
+- Sau khi tạo xong network overlay, ta kiểm tra lại bằng lệnh `docker network ls`, kết quả ta sẽ nhìn thấy tên của network vừa tạo ở trên là thành công.
+
+##### Tạo các container để chạy wordpress.
+
+- Tạo container chạy mysql.
+
+  ```sh
+  docker service create \
+       --name mysql \
+       --network mysql_private \
+       --secret source=mysql_root_password,target=mysql_root_password \
+       --secret source=mysql_password,target=mysql_password \
+       -e MYSQL_ROOT_PASSWORD_FILE="/run/secrets/mysql_root_password" \
+       -e MYSQL_PASSWORD_FILE="/run/secrets/mysql_password" \
+       -e MYSQL_USER="wordpress" \
+       -e MYSQL_DATABASE="wordpress" \
+       mysql:latest
+  ```
+
+Ở trên ta lưu ý:
+  - `--name` là tùy chọn chỉ định tên của container, trong trường hợp này là `mysql`
+  - `--network` là tên của network overlay vừa tạo ở bên trên, cần nhập đúng tên đã đặt ở bên trên.
+  - `--secret` là tùy chọn khai báo cho mật khẩu của database đã tạo ở bước trên.
+  - `-e MYSQL_ROOT_PASSWORD_FILE` và `-e MYSQL_PASSWORD_FILE` là tùy chọn khai báo truyền vào trong images, trong trường hợp này là nơi mã hóa các mật khẩu đã được tạo ra ở trước đó.
+  - `-e MYSQL_USER` là tùy chọn truyền vào tên của user cho mysql, có thể tùy ý nhập vào lựa chọn này.
+  - `-e MYSQL_DATABASE` là trùy chọn truyền vào tên của database, có thể tùy ý nhập vào lựa chọn này.
+  - `mysql:latest` là tên của images sẽ tạo ra container này.
 
 
 
