@@ -13,8 +13,7 @@ sudo curl -L https://github.com/docker/compose/releases/download/1.18.0/docker-c
 sudo chmod +x /usr/local/bin/docker-compose
 
 sleep 3
-echo "Kiem tra trang thai docker va docker compose"
-systemctl status | grep docker*
+echo "Kiem tra phien ban docker va docker compose"
 docker version 
 docker-compose --version
 ##############
