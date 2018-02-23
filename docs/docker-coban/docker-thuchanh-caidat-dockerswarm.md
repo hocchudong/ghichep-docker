@@ -463,18 +463,13 @@ systemctl restart docker
   iface lo inet loopback
 
   # The primary network interface
-  # The primary network interface
-  auto ens3
-  iface ens3 inet static
-  address 123.30.212.232
-  netmask 255.255.255.128
-  gateway 123.30.212.129
-  dns-nameserver 8.8.8.8
 
   auto ens4
   iface ens4 inet static
   address 172.16.68.152
   netmask 255.255.255.0
+  gateway 172.16.68.1
+  dns-nameservers 8.8.8.8
   EOF
   ```
 
@@ -493,18 +488,13 @@ systemctl restart docker
   iface lo inet loopback
 
   # The primary network interface
-  # The primary network interface
-  auto ens3
-  iface ens3 inet static
-  address 123.30.212.233
-  netmask 255.255.255.128
-  gateway 123.30.212.129
-  dns-nameserver 8.8.8.8
 
   auto ens4
   iface ens4 inet static
   address 172.16.68.153
   netmask 255.255.255.0
+  gateway 172.16.68.1
+  dns-nameservers 8.8.8.8
   EOF
   ```
 
@@ -523,18 +513,13 @@ systemctl restart docker
   iface lo inet loopback
 
   # The primary network interface
-  # The primary network interface
-  auto ens3
-  iface ens3 inet static
-  address 123.30.212.234
-  netmask 255.255.255.128
-  gateway 123.30.212.129
-  dns-nameserver 8.8.8.8
 
   auto ens4
   iface ens4 inet static
   address 172.16.68.154
   netmask 255.255.255.0
+  gateway 172.16.68.1
+  dns-nameservers 8.8.8.8
   EOF
   ```
 
@@ -569,7 +554,7 @@ Lưu ý: cài lên tất cả các node
 - Kiểm tra lại phiên bản của docker 
 
   ```sh
-  docker verison
+  docker version
   ```  
 
 #### Cài đặt `docker compose`  
