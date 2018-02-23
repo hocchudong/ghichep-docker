@@ -2,14 +2,16 @@
 
 ## MỤC LỤC
 
-- Sử dụng docker swarm để triển khai wordpress
+- Sử dụng docker swarm để triển khai wordpress theo kiểu manual
+- Sử dụng docker swarm để triển khai wordpress có kết hợp docker-compose
+
 
 
 ### Yêu cầu
 - Cần có môi trường cài đặt theo tài liệu [Cài đặt docker swarm](./docker-thuchanh-caidat-dockerswarm.md)
 - Đảm bảo theo mô hình và kiểm tra hoạt động của docker swarm cơ bản thành công trước khi tiến hành các bài thực hành bên dưới.
 
-#### Sử dụng docker swarm để triển khai wordpress
+#### Sử dụng docker swarm để triển khai wordpress theo kiểu manual
 
 - Tham khảo: http://www.cnblogs.com/CloudMan6/p/8098761.html
 
@@ -117,16 +119,132 @@ Các tùy chọn gần tương tự như ta tạo service cho mysql ở trên, t
   - `wordpress:latest` tên của images để tạo ra container `wordpress`.
   
   
+#### Sử dụng docker swarm để triển khai wordpress có kết hợp docker-compose
+- Kiểu triển khai này sẽ sử dụng một file template theo kiểu `yaml` mà docker hỗ trợ, có nghĩa là thay vì việc phải chạy lệnh hoặc script rời rạc thì ra sẽ biên soạn một file `yaml` theo quy ước để triển khai `wordpress` hoặc các ứng dụng của chúng ta.
+- Trong ví dụ này sẽ sử dụng file `wordpress.yaml` để triển khai wordpress.
+- Nếu trước đó đã tồn tại các service của `wordpress` mà docker-swarm tạo ra trước đó thì hãy dùng lệnh `docker service rm ten_service` để xóa trước khi thực hiện.
+
+##### Bước 1: Tạo secret để cho các service sử dụng.
+
+- Đứng tại node manager thực hiện các lệnh dưới để tạo file chứa mật khẩu của database 
+
+  ```sh
+  openssl rand -base64 20 > db_password.txt
+  openssl rand -base64 20 > db_root_password.txt
+  ```
+
+- Lưu ý: File `db_password.txt` và `db_root_password.txt` sẽ được sử dụng trong file yaml bên dưới.
+
+##### Bước 2: Tạo file có tên là `wordpress.yaml` chứa nội dung bên dưới.
+
+- File dưới được soạn theo cú pháp của yaml, mục tiêu là tạo ra nội dung để docker-compose sử dụng. Nếu chưa rõ về cú pháp yaml và docker-compose thì hãy tìm hiểu thêm và đọc lại các tài liệu khác.
+
+  ```sh
+  version: '3.1'
+
+  services:
+
+    db:
+      image: mysql:latest
+      volumes:
+        - db_data:/var/lib/mysql
+      environment:
+        MYSQL_ROOT_PASSWORD_FILE: /run/secrets/db_root_password
+        MYSQL_DATABASE: wordpress
+        MYSQL_USER: wordpress
+        MYSQL_PASSWORD_FILE: /run/secrets/db_password
+      secrets:
+        - db_root_password
+        - db_password
+
+    wordpress:
+      depends_on:
+        - db
+      image: wordpress:latest
+      ports:
+        - "8000:80"
+
+      environment:
+        WORDPRESS_DB_HOST: db:3306
+        WORDPRESS_DB_USER: wordpress
+        WORDPRESS_DB_PASSWORD_FILE: /run/secrets/db_password
+
+      secrets:
+      - db_password
+
+  secrets:
+    db_password:
+      file: db_password.txt
+    db_root_password:
+      file: db_root_password.txt
+
+  volumes:
+    db_data:
+  ```
+
+Cấu trúc và nội dung của file `wordpress.yaml` như sau: 
+
   
+##### Bước 3: Tạo stack (docker-compose) để 
+- Sử dụng lệnh dưới để thực thi file `wordpress.yaml` để tạo ra stack có tên là `wpapp`
+
+  ```sh
+  docker stack deploy -c wordpress.yaml wpapp
+  ```
+  - Kết quả của lệnh trên sẽ trả về
+    ```
+    Creating network wpapp_default
+    Creating secret wpapp_db_password
+    Creating secret wpapp_db_root_password
+    Creating service wpapp_db
+    Creating service wpapp_wordpress
+    ```
+    
+ Các service sẽ được tạo ra và kiểm tra bằng các lệnh dưới
+
+- Kiểm tra xem stack có các service nào, trong ví dụ này sẽ là 02 service của `mysql` và `wordpress` như định nghĩa trong file `wordpress.yaml`
+  ```sh
+  docker stack ls
+  ```
+
+- Kiểm tra service đã được tạo 
+  ```sh
+  docker service ls
+  ```
+  
+  hoặc
+  
+  ```sh
+  docker stack services wpapp
+  ```
+
+  - Kết quả của lệnh `docker stack services wpapp`, trong đó `wpapp` là tên của stack được tạo ở bước 3.
+
+    ```sh
+    ID                  NAME                MODE                REPLICAS            IMAGE               PORTS
+    e9mhqq124syo        wpapp_db            replicated          1/1                 mysql:latest
+    s9fiw47mvoxf        wpapp_wordpress     replicated          1/1                 wordpress:latest    *:8000->80/tcp
+    ```
+    - Trong kết quả này ta sẽ nhìn thấy port `8000` là port sẽ được sử dụng để truy cập vào wordpress.
+    
+- Kiểm tra trạng thái và thông tin cơ bản của các container trong service.
+
+  ```sh
+  docker stack ps wpapp
+  ```
+  - Trong đó `wpapp` là tên của stack được tạo ở bước 3
+
+  - Kết quả
+    ```
+    ID                  NAME                    IMAGE               NODE                DESIRED STATE       CURRENT STATE           ERROR                       PORTS
+    kq16n15kxd5v        wpapp_wordpress.1       wordpress:latest    srv3                Running             Running 2 minutes ago
+    z7ujvhfl9b9w        wpapp_db.1              mysql:latest        srv2                Running             Running 2 minutes ago
+    ```
+    
+- Tới bước này nếu các container đang hoạt động thì ta có thể truy câp với địa chỉ: `http://IP_node_bat_ky:8000` để bắt đầu sử dụng wordpress. 
 
 
-
-
-
-
-
-
-
+- Để xóa stack vừa tạo ở trên ta sử dụng lệnh `docker stack rm wpapp`
 
 
 
