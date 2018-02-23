@@ -2,8 +2,8 @@
 
 ## MỤC LỤC
 
-- Sử dụng docker swarm để triển khai wordpress theo kiểu manual
-- Sử dụng docker swarm để triển khai wordpress có kết hợp docker-compose
+- 1. Sử dụng docker swarm để triển khai wordpress theo kiểu manual
+- 2. Sử dụng docker swarm để triển khai wordpress có kết hợp docker-compose
 
 
 
@@ -11,7 +11,7 @@
 - Cần có môi trường cài đặt theo tài liệu [Cài đặt docker swarm](./docker-thuchanh-caidat-dockerswarm.md)
 - Đảm bảo theo mô hình và kiểm tra hoạt động của docker swarm cơ bản thành công trước khi tiến hành các bài thực hành bên dưới.
 
-#### Sử dụng docker swarm để triển khai wordpress theo kiểu manual
+#### 1. Sử dụng docker swarm để triển khai wordpress theo kiểu manual
 
 - Tham khảo: http://www.cnblogs.com/CloudMan6/p/8098761.html
 
@@ -117,9 +117,32 @@ Các tùy chọn gần tương tự như ta tạo service cho mysql ở trên, t
   - `-e WORDPRESS_DB_HOST` là tùy chọn khai báo tên của service chạy mysql đã khai báo ở trước đó, trong trường hợp này tên là `mysql` và kèm theo port của mysql là `3306`.
   - `-e WORDPRESS_DB_NAME` và `-e WORDPRESS_DB_USER` là tên của database và user dành cho database đã được tạo trong service trước đó.
   - `wordpress:latest` tên của images để tạo ra container `wordpress`.
+
+
+
+- Kiểm tra các service vừa tạo
+  ```sh
+  docker service ls
+  ````
+  - Kết quả sẽ liệt kê ra tên của các service vừa tạo ở trên.
+
+- Kiểm tra chi tiết hơn về các service vừa tạo ở trên bằng lệnh `docker service ps ten_cua_service`
+
+  ```sh
+  docker service ps wordpress
+  ```
+
+  hoặc 
+
+  ```sh
+  docker service ps mysql
+  ```
+
+- Tới bước này đã có thể truy cập vào địa chỉ `http://ip_may_manager:30000` để tiếp tục sử dụng wordpress.
+
   
   
-#### Sử dụng docker swarm để triển khai wordpress có kết hợp docker-compose
+#### 2. Sử dụng docker swarm để triển khai wordpress có kết hợp docker-compose
 - Kiểu triển khai này sẽ sử dụng một file template theo kiểu `yaml` mà docker hỗ trợ, có nghĩa là thay vì việc phải chạy lệnh hoặc script rời rạc thì ra sẽ biên soạn một file `yaml` theo quy ước để triển khai `wordpress` hoặc các ứng dụng của chúng ta.
 - Trong ví dụ này sẽ sử dụng file `wordpress.yaml` để triển khai wordpress.
 - Nếu trước đó đã tồn tại các service của `wordpress` mà docker-swarm tạo ra trước đó thì hãy dùng lệnh `docker service rm ten_service` để xóa trước khi thực hiện.
