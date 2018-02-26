@@ -208,12 +208,13 @@ ____
         - Tạo container registry sử dụng câu lệnh:
 
                 docker run -d \
+                --restart=always \
                 --name registry \
                 --publish 127.0.0.1:5000:5000 \
                 --mount type=bind,source=/docker-registry/data,target=/data \
-                --env REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY=/docker-registry/data \
-                --privileged \
                 --restart=always \
+                --env REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY=/data \
+                --privileged \
                 registry:2
 
         - Tạo container NGINX sử dụng câu lệnh sau:
