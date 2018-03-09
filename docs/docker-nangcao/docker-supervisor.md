@@ -57,4 +57,5 @@ docker run -itd --name nginx-ssh-test manhdv/supervisor-nginx-ssh
 ```
 
 Kết quả như sau : 
+
 ![docker](/images/docker-supervisor.png)
