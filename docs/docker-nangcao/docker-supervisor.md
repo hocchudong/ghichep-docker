@@ -55,7 +55,12 @@ docker build -t manhdv/supervisor-nginx-ssh .
 ```sh
 docker run -itd --name nginx-ssh-test manhdv/supervisor-nginx-ssh
 ```
-
+ - Login vào container để kiểm tra IP :
+```sh
+docker exec -it $container_id bash
+```
+ - SSH vào container và kiểm tra dịch vụ 
+ 
 Kết quả như sau : 
 
 ![docker](/images/docker-supervisor.png)
