@@ -1,4 +1,9 @@
 # Hướng dẫn cài đặt Docker Swarm
+
+- [Cài đặt Docker Swarm trên CentOS 7](#1)
+- [Cài đặt Docker Swarm trên Ubuntu Server 16.04 64](#2)
+
+<a name="1">Cài đặt Docker Swarm trên CentOS 7</a>
 ## Môi trường LAB
 - 03 node cài CentOS7: 01 node master và 02 node worker
 ### Mô hình
@@ -432,4 +437,258 @@ systemctl restart docker
   
   - Kiểm tra lại bằng lệnh `docker service ps swarm_cluster`
   - Khi tắt thử các container trên một trong các node, sẽ có container mới được sinh ra để đảm bảo số container đúng với thiết lập.
+
+<a name="2">Cài đặt Docker Swarm trên Ubuntu Server 16.04 64</a>
+# Hướng dẫn cài đặt docker swarm trên Ubuntu Server 16.04 64 bit 
+## Chuẩn bị
+- 03 máy server 
+
+
+## Các bước cài đặt   
+
+### Đặt IP cho từng máy 
+
+- Đặt IP cho máy master `cicd1`. Node này đóng vai trò master
+
+  ```sh
+  cat << EOF > /etc/network/interfaces
+
+  # This file describes the network interfaces available on your system
+  # and how to activate them. For more information, see interfaces(5).
+
+  source /etc/network/interfaces.d/*
+
+  # The loopback network interface
+  auto lo
+  iface lo inet loopback
+
+  # The primary network interface
+
+  auto ens4
+  iface ens4 inet static
+  address 172.16.68.152
+  netmask 255.255.255.0
+  gateway 172.16.68.1
+  dns-nameservers 8.8.8.8
+  EOF
+  ```
+
+- Đặt IP cho máy master `cicd2`. Node này đóng vai trò worker
+
+  ```sh
+  cat << EOF > /etc/network/interfaces
+
+  # This file describes the network interfaces available on your system
+  # and how to activate them. For more information, see interfaces(5).
+
+  source /etc/network/interfaces.d/*
+
+  # The loopback network interface
+  auto lo
+  iface lo inet loopback
+
+  # The primary network interface
+
+  auto ens4
+  iface ens4 inet static
+  address 172.16.68.153
+  netmask 255.255.255.0
+  gateway 172.16.68.1
+  dns-nameservers 8.8.8.8
+  EOF
+  ```
+
+- Đặt IP cho máy master `cicd3`. Node này đóng vai trò worker
+
+  ```sh
+  cat << EOF > /etc/network/interfaces
+
+  # This file describes the network interfaces available on your system
+  # and how to activate them. For more information, see interfaces(5).
+
+  source /etc/network/interfaces.d/*
+
+  # The loopback network interface
+  auto lo
+  iface lo inet loopback
+
+  # The primary network interface
+
+  auto ens4
+  iface ens4 inet static
+  address 172.16.68.154
+  netmask 255.255.255.0
+  gateway 172.16.68.1
+  dns-nameservers 8.8.8.8
+  EOF
+  ```
+
+### Cài đặt các thành phần của docker 
+Lưu ý: cài lên tất cả các node
+
+#### Cài đặt docker engine
+- Cài đặt docker engine
+  ```sh
+  su - 
+
+  curl -sSL https://get.docker.com/ | sudo sh
+  ```
+ 
+- Phân quyền  
+  ```sh
+  sudo usermod -aG docker `whoami`
+  ```
+
+- Khởi động lại service 
+  ```sh 
+  systemctl start docker.service
+
+  systemctl enable docker.service
+  ```
   
+- Kiểm tra trạng thái của docker 
+  ```sh
+  systemctl status docker.service
+  ```
+  
+- Kiểm tra lại phiên bản của docker 
+
+  ```sh
+  docker version
+  ```  
+
+#### Cài đặt `docker compose`  
+Lưu ý: cài lên tất cả các node
+
+- Cài đặt `docker compose`
+  ```sh
+  sudo curl -L https://github.com/docker/compose/releases/download/1.18.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
+  ```
+
+  ```sh
+  sudo chmod +x /usr/local/bin/docker-compose
+  ```
+
+- Kiểm tra phiên bản của `docker-compose`  
+  ```sh
+  docker-compose --version
+  ```
+
+## Thực hiện cài đặt docker swarm_cluster
+
+### Thiết lập docker swarm
+- Đứng trên node có vai trò là master (manager) để thiết lập swarm, trong ví dụ này là node có tên `cicd1`
+
+
+```sh
+docker swarm init --advertise-addr 172.16.68.152
+```
+
+- Trong đó:
+  - `172.16.68.152`: là IP của node `master` (chính là node `cicd1`)
+  
+Sau khi chạy lệnh trên, màn hình sẽ trả về kết quả và hướng dẫn các thao tác để join các node còn lại vào cụm docker swarm. Sử dụng lệnh trên màn hình trả về để thao tác trên 02 node `cicd2` và `cicd3` còn lại.
+
+Join các node `cicd2` và `cicd3` vào cụm cluster.
+
+- Đứng trên các node `cicd2`
+  ```sh
+  docker swarm join --token SWMTKN-1-3ibshsl050pg7op2i6ychyeoiqlv4qnvqcdvrpfiis9tiw5qb1-3lheft3zx76q68oj3n3dp20kn 172.16.68.152:2377
+  ```
+  
+- Đứng trên các node `cicd3`
+  ```sh
+  docker swarm join --token SWMTKN-1-3ibshsl050pg7op2i6ychyeoiqlv4qnvqcdvrpfiis9tiw5qb1-3lheft3zx76q68oj3n3dp20kn 172.16.68.152:2377
+  ```
+
+- Kết quả trả về như dưới là ok:
+  ```sh
+  This node joined a swarm as a worker.
+  ```
+
+- Quay trở lại node master và thực hiện lệnh dưới để kiểm tra xem các node đã join vào cluster hay chưa
+
+  ```sh
+  docker node ls
+  ```
+  - Kết quả trả về như dưới là thành công  
+    ```sh  
+    ID                            HOSTNAME            STATUS              AVAILABILITY        MANAGER STATUS
+    paicdiqjm1yxv2jr0wqg5vcqq *   cicd1               Ready               Active              Leader
+    ep01sgz4qsasnctzc7hmmwzzs     cicd2               Ready               Active
+    olovbr7afm8bc24sl95rwdika     cicd3               Ready               Active
+    root@cicd1:~#
+    root@cicd1:~#
+    ```
+    
+    
+### Kiểm tra hoạt động của docker swarm cluster.
+
+Sau khi cài đặt docker swarm xong, chúng ta cần kiểm tra hoạt động cơ bản của chúng. Các bước thực hiện này sẽ làm tại node master. Có các thao tác kiểm tra như sau:
+
+- Kiểm tra xem các service đang hoạt động trong cụm cluster docker swarm, kết quả trả về sẽ thông tin các service trong cụm cluster. Trong lần cài đặt đầu tiên, chúng ta sẽ không thấy service nào hoạt động cả.
+
+  ```sh
+  docker service ls
+  ```
+  
+- Tạo service chạy web nginx với số lượng nhân bản là 02.
+
+  ```sh
+  docker service create --name my-web --publish 8080:80 --replicas 2 nginx
+  ```
+
+  - Kết quả của lệnh trên như sau:
+
+    ```sh
+    zr9md8qlu5ynie3wlez3qe2uy
+    overall progress: 2 out of 2 tasks
+    1/2: running   [==================================================>]
+    2/2: running   [==================================================>]
+    verify: Service converged
+    ```
+
+- Trong lệnh trên, ta đứng trên node master và ra lệnh cho cụm cluster docker swarn tạo ra 02 container chạy dịch vụ là nginx và phân phối chúng lên các node slave. Số bản replicas này mục tiêu là để dự phòng cho service nginx.
+
+- Tham số `--publish 8080:80` có nghĩa là ta sẽ sử dụng port 8080 để truy câp vào web, docker sẽ forward vào port 80 bên trong container.
+
+  ```sh 
+  http://172.16.68.152:8080
+  http://172.16.68.153:8080
+  http://172.16.68.154:8080
+  ```
+
+- Tới bước này ta có thể sử dụng IP của các máy `cicd1` hoặc `cicd2` hoặc `cicd3` với port 8080 để truy cập vào container vừa được tạo ở trên.
+
+- Ta có thể kiểm tra lại service bằng lệnh 
+
+  ```sh
+  docker service ls
+  ```
+  
+  - Kết quả như sau
+      
+    ```sh
+    root@cicd1:~# docker service ls
+    ID                  NAME                MODE                REPLICAS            IMAGE               PORTS
+    zr9md8qlu5yn        my-web              replicated          2/2                 nginx:latest        *:8080->80/tcp
+    root@cicd1:~#
+    ```
+
+- Sử dụng lệnh ` docker service ps <ten_service>` để kiểm tra service đang chạy.
+
+  ```sh
+  docker service ps my-web
+  ```
+  - Kết quả như dưới (quan sát kết quả để biết thêm các tham số)
+  
+    ```sh
+    root@cicd1:~#  docker service ps my-web
+    ID                  NAME                IMAGE               NODE                DESIRED STATE       CURRENT STATE           ERROR               PO                   RTS
+    uo4o9xdi3y3z        my-web.1            nginx:latest        cicd2               Running             Running 7 minutes ago
+    dqh0e6w2y7kz        my-web.2            nginx:latest        cicd1               Running             Running 7 minutes ago
+    ```
+
+
+
+
