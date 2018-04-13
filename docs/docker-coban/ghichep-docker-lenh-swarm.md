@@ -4,7 +4,7 @@ ____
 
 # Mục lục
 
-    Nội dung của bài viết này là sẽ nói về cách sử dụng các câu lệnh thường xuyên trong Docker Swarm. Cùng với một vài ví dụ về cách sử dụng câu lệnh.
+Nội dung của bài viết này là sẽ nói về cách sử dụng các câu lệnh thường xuyên trong Docker Swarm. Cùng với một vài ví dụ về cách sử dụng câu lệnh.
 
 - [10.1 Câu lệnh docker swarm](#docker-swarm)
     - [10.1.1 Câu lệnh docker swarm init](#docker-swarm-init)
@@ -49,10 +49,10 @@ ____
         | ------------- | ------------- | ------------- |
         | --advertise-addr | | Khai báo `ddvertised address`. Có thể là IP, Interface kèm theo PORT |
         | --availability | active | Quy định tình trạng của node. Bao gồm `active`, `pause` và `drain` |
-        | --data-path-addr | | Address or interface to use for data path traffic (format: <ip|interface>) |
-        | --dispatcher-heartbeat | 5s | Dispatcher heartbeat period (ns|us|ms|s|m|h) |
+        | --data-path-addr | | Address or interface to use for data path traffic (format: <ip\|interface>) |
+        | --dispatcher-heartbeat | 5s | Dispatcher heartbeat period (ns\|us\|ms\|s\|m\|h) |
         | --force-new-cluster |  | Force create a new cluster from current state |
-        | --listen-addr | 0.0.0.0:2377 | Listen address (format: <ip|interface>[:port]) |
+        | --listen-addr | 0.0.0.0:2377 | Listen address (format: <ip\|interface>[:port]) |
         | --task-history-limit | 5 | Task history retention limit |
 
     - Ví dụ:
@@ -71,10 +71,10 @@ ____
 
         | Name, shorthand | Default | Mô tả |
         | ------------- | ------------- | ------------- |
-        | --advertise-addr   || Advertised address (format: <ip|interface>[:port]) |
+        | --advertise-addr   || Advertised address (format: <ip\|interface>[:port]) |
         | --availability | active | Quy định tình trạng của node. Bao gồm `active`, `pause` và `drain` |
-        | --data-path-addr | | Address or interface to use for data path traffic (format: <ip|interface>) |
-        | --listen-addr | 0.0.0.0:2377 | Listen address (format: <ip|interface>[:port]) |
+        | --data-path-addr | | Address or interface to use for data path traffic (format: <ip\|interface>) |
+        | --listen-addr | 0.0.0.0:2377 | Listen address (format: <ip\|interface>[:port]) |
         | --token | | Token for entry into the swarm. Đây là giá trị khi ta chạy câu lệnh `docker swarm init` hoặc `docker swarm join-token` để có thể nhận được |
         
     - Ví dụ:
@@ -121,7 +121,7 @@ ____
         | Name, shorthand | Default | Mô tả|
         | ------------- | ------------- |  ------------- |
         | --force , -f | | Buộc node rời khỏi swarm và phớt lờ các cảnh báo |
-        | --dispatcher-heartbeat | 5s | Dispatcher heartbeat period (ns|us|ms|s|m|h) |
+        | --dispatcher-heartbeat | 5s | Dispatcher heartbeat period (ns\|us\|ms\|s\|m\|h) |
         | --task-history-limit | 5 | Task history retention limit |
 
 - ### <a name="docker-service">10.2 Câu lệnh docker service</a>
@@ -166,19 +166,19 @@ ____
         | --replicas |  | Quy định số lượng tasks |
         | --reserve-cpu |  | Reserve CPUs |
         | --reserve-memory |  | Reserve Memory |
-        | --restart-condition | any | Restart khi gặp phải điều kiện “none”|”on-failure”|”any” |
-        | --restart-delay | 5s | Delay between restart attempts (ns|us|ms|s|m|h) |
+        | --restart-condition | any | Restart khi gặp phải điều kiện “none”\|”on-failure”\|”any” |
+        | --restart-delay | 5s | Delay between restart attempts (ns\|us\|ms\|s\|m\|h) |
         | --restart-max-attempts |  | Maximum number of restarts before giving up |
-        | --rollback-delay | 0s | Delay between task rollbacks (ns|us|ms|s|m|h) |
-        | --rollback-failure-action | pause | Action on rollback failure (“pause”|”continue”)  |
-        | --rollback-monitor | 5s | Duration after each task rollback to monitor for failure (ns|us|ms|s|m|h) |
-        | --rollback-order | stop-first | Rollback order (“start-first”|”stop-first”) |
+        | --rollback-delay | 0s | Delay between task rollbacks (ns\|us\|ms\|s\|m\|h) |
+        | --rollback-failure-action | pause | Action on rollback failure (“pause”\|”continue”)  |
+        | --rollback-monitor | 5s | Duration after each task rollback to monitor for failure (ns\|us\|ms\|s\|m\|h) |
+        | --rollback-order | stop-first | Rollback order (“start-first”\|”stop-first”) |
         | --rollback-parallelism | 1 | Maximum number of tasks rolled back simultaneously (0 to roll back all at once) |
         | --tty , -t |  | Allocate a pseudo-TTY |
-        | --update-delay |  0s| Delay between updates (ns|us|ms|s|m|h) |
-        | --update-failure-action | pause | Action on update failure (“pause”|”continue”|”rollback”) |
-        | --update-monitor | 5s | Duration after each task update to monitor for failure (ns|us|ms|s|m|h) |
-        | --update-order | stop-first | Update order (“start-first”|”stop-first”) |
+        | --update-delay |  0s| Delay between updates (ns\|us\|ms\|s\|m\|h) |
+        | --update-failure-action | pause | Action on update failure (“pause”\|”continue”\|”rollback”) |
+        | --update-monitor | 5s | Duration after each task update to monitor for failure (ns\|us\|ms\|s\|m\|h) |
+        | --update-order | stop-first | Update order (“start-first”\|”stop-first”) |
         | --update-parallelism | 1 | Maximum number of tasks updated simultaneously (0 to update all at once) |
         | --with-registry-auth |  | Send registry authentication details to swarm agents |
         | --workdir , -w |  | Working directory inside the container |
@@ -376,7 +376,7 @@ ____
         | --replicas |  | Number of tasks |
         | --reserve-cpu |  | Reserve CPUs |
         | --reserve-memory |  | Reserve Memory |
-        | --restart-condition |  | Restart when condition is met (“none”|”on-failure”|”any”) |
+        | --restart-condition |  | Restart when condition is met (“none”\|”on-failure”\|”any”) |
 
     - Ví dụ:
 

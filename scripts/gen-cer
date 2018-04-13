@@ -56,5 +56,9 @@ openssl x509 -req -in $domain.csr -CA $devdocker.crt -CAkey $devdocker.key -CAcr
 # echo
 # cat $domain.key
 
-cp $domain.csr $domain.key /docker-registry/nginx
-rm -rf $domain.* $devdocker.*
+# cp $domain.csr $domain.key /docker-registry/nginx
+# <<<<<<< HEAD
+# rm -rf $domain.* $devdocker.*
+# =======
+# rm -rf $domain.* $devdocker.*
+# >>>>>>> patch-1
