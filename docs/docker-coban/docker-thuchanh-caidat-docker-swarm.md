@@ -448,7 +448,14 @@ systemctl restart docker
 
 ### Đặt IP cho từng máy 
 
-- Đặt IP cho máy master `cicd1`. Node này đóng vai trò master
+#### Thực hiện trên máy docker-swam master
+- Đặt hostname 
+
+	```sh
+	hostnamectl set-hostname swam-master
+	```
+
+- Đặt IP cho máy master `swam-master`. Node này đóng vai trò master
 
   ```sh
   cat << EOF > /etc/network/interfaces
@@ -473,7 +480,26 @@ systemctl restart docker
   EOF
   ```
 
-- Đặt IP cho máy master `cicd2`. Node này đóng vai trò worker
+- Khai báo file `/ect/hosts`
+
+	```sh
+	cat << EOF > /etc/hosts/
+	127.0.0.1       localhost swam-master
+	172.16.68.152 swam-master
+	172.16.68.153 swam-worker1
+	172.16.68.154 swam-worker2
+	EOF
+	```
+	
+#### Thực hiện trên máy `docker-swam worker1`
+
+- Đặt hostname 
+
+	```sh
+	hostnamectl set-hostname swam-worker1
+	```
+
+- Đặt IP cho máy master `swam-worker1`. Node này đóng vai trò worker
 
   ```sh
   cat << EOF > /etc/network/interfaces
@@ -498,7 +524,26 @@ systemctl restart docker
   EOF
   ```
 
-- Đặt IP cho máy master `cicd3`. Node này đóng vai trò worker
+- Khai báo file `/ect/hosts`
+
+	```sh
+	cat << EOF > /etc/hosts/
+	127.0.0.1       localhost swam-worker1
+	172.16.68.152 swam-master
+	172.16.68.153 swam-worker1
+	172.16.68.154 swam-worker2
+	EOF
+	```
+
+#### Thực hiện trên máy `docker-swam worker2`
+
+- Đặt hostname 
+
+	```sh
+	hostnamectl set-hostname swam-worker2
+	```
+	
+- Đặt IP cho máy master `swam-worker2`. Node này đóng vai trò worker
 
   ```sh
   cat << EOF > /etc/network/interfaces
@@ -522,7 +567,18 @@ systemctl restart docker
   dns-nameservers 8.8.8.8
   EOF
   ```
+	
+- Khai báo file `/ect/hosts`
 
+	```sh
+	cat << EOF > /etc/hosts/
+	127.0.0.1       localhost swam-worker2
+	172.16.68.152 swam-master
+	172.16.68.153 swam-worker1
+	172.16.68.154 swam-worker2
+	EOF
+	```
+	
 ### Cài đặt các thành phần của docker 
 Lưu ý: cài lên tất cả các node
 
