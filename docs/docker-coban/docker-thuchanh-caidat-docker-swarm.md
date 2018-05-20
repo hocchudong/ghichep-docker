@@ -678,8 +678,21 @@ Join các node `cicd2` và `cicd3` vào cụm cluster.
     root@cicd1:~#
     root@cicd1:~#
     ```
-    
-    
+
+#### Cấu hình để node master không chứa các container khi thực hiện tạo các ứng dụng.
+
+Mặc định thì tất cả các node trong cụm cluster khi tham gia vào docker-swarm sẽ có khả năng tạo các container, kể cả node master. Do vậy, nếu muốn node master chỉ thực hiện chức năng chuyên điều khiển cụm cluster thì ta thực hiện lệnh dưới để không cho phép tạo container khi triển khai các ứng dụng trên node master.
+
+	```sh
+	docker node update --availability drain swarm-master
+	```
+
+- Kiểm tra lại trạng thái bằng lệnh, ta sẽ thấy cột `AVAILABILITY` là `Drain` đối với node master. Tham khảo kết quả trước và sau: http://prntscr.com/jk86i3
+
+	```sh
+	docker node ls
+	```
+   
 ### Kiểm tra hoạt động của docker swarm cluster.
 
 Sau khi cài đặt docker swarm xong, chúng ta cần kiểm tra hoạt động cơ bản của chúng. Các bước thực hiện này sẽ làm tại node master. Có các thao tác kiểm tra như sau:
