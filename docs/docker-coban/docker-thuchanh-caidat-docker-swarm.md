@@ -448,14 +448,14 @@ systemctl restart docker
 
 ### Đặt IP cho từng máy 
 
-#### Thực hiện trên máy docker-swam master
+#### Thực hiện trên máy docker-swarm master
 - Đặt hostname 
 
 	```sh
-	hostnamectl set-hostname swam-master
+	hostnamectl set-hostname swarm-master
 	```
 
-- Đặt IP cho máy master `swam-master`. Node này đóng vai trò master
+- Đặt IP cho máy master `swarm-master`. Node này đóng vai trò master
 
   ```sh
   cat << EOF > /etc/network/interfaces
@@ -484,22 +484,22 @@ systemctl restart docker
 
 	```sh
 	cat << EOF > /etc/hosts/
-	127.0.0.1       localhost swam-master
-	172.16.68.152 swam-master
-	172.16.68.153 swam-worker1
-	172.16.68.154 swam-worker2
+	127.0.0.1       localhost swarm-master
+	172.16.68.152 swarm-master
+	172.16.68.153 swarm-worker1
+	172.16.68.154 swarm-worker2
 	EOF
 	```
 	
-#### Thực hiện trên máy `docker-swam worker1`
+#### Thực hiện trên máy `docker-swarm worker1`
 
 - Đặt hostname 
 
 	```sh
-	hostnamectl set-hostname swam-worker1
+	hostnamectl set-hostname swarm-worker1
 	```
 
-- Đặt IP cho máy master `swam-worker1`. Node này đóng vai trò worker
+- Đặt IP cho máy master `swarm-worker1`. Node này đóng vai trò worker
 
   ```sh
   cat << EOF > /etc/network/interfaces
@@ -528,22 +528,22 @@ systemctl restart docker
 
 	```sh
 	cat << EOF > /etc/hosts/
-	127.0.0.1       localhost swam-worker1
-	172.16.68.152 swam-master
-	172.16.68.153 swam-worker1
-	172.16.68.154 swam-worker2
+	127.0.0.1       localhost swarm-worker1
+	172.16.68.152 swarm-master
+	172.16.68.153 swarm-worker1
+	172.16.68.154 swarm-worker2
 	EOF
 	```
 
-#### Thực hiện trên máy `docker-swam worker2`
+#### Thực hiện trên máy `docker-swarm worker2`
 
 - Đặt hostname 
 
 	```sh
-	hostnamectl set-hostname swam-worker2
+	hostnamectl set-hostname swarm-worker2
 	```
 	
-- Đặt IP cho máy master `swam-worker2`. Node này đóng vai trò worker
+- Đặt IP cho máy master `swarm-worker2`. Node này đóng vai trò worker
 
   ```sh
   cat << EOF > /etc/network/interfaces
@@ -572,10 +572,10 @@ systemctl restart docker
 
 	```sh
 	cat << EOF > /etc/hosts/
-	127.0.0.1       localhost swam-worker2
-	172.16.68.152 swam-master
-	172.16.68.153 swam-worker1
-	172.16.68.154 swam-worker2
+	127.0.0.1       localhost swarm-worker2
+	172.16.68.152 swarm-master
+	172.16.68.153 swarm-worker1
+	172.16.68.154 swarm-worker2
 	EOF
 	```
 	
@@ -586,6 +586,8 @@ Lưu ý: cài lên tất cả các node
 - Cài đặt docker engine
   ```sh
   su - 
+	
+	apt-get  -y update
 
   curl -sSL https://get.docker.com/ | sudo sh
   ```
