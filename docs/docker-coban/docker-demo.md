@@ -8,12 +8,7 @@
 
 - Bước 1: Tạo 1 container để chạy môi trường mysql
   ```sh
-	docker run --name demo_mysql \
-			   -e MYSQL_ROOT_PASSWORD=root \
-			   -e MYSQL_DATABASE=dbwordpress \
-			   -e MYSQL_USER=userwordpress \
-			   -e MYSQL_PASSWORD=vnptdata2017 \
-			   -d mysql
+	docker run --name demo_mysql -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=dbwordpress -e MYSQL_USER=userwordpress -e MYSQL_PASSWORD=paic2018 -d mysql
 	```
 
 - Bước 2: Tạo một container chạy wordpress và liên kết với container có tên là `demo_mysql`
