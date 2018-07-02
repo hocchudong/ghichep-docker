@@ -42,19 +42,19 @@ ____
         | --- | ---- | --------- | --------------------------------------|
         |  1  | 2377 |    tcp    | for cluster management communications |
         |  2  | 7946 |  tcp/udp  | for communication among nodes         |
-        |  3  | 4789 |    tcp    | for overlay network traffic           |
-        
+        |  3  | 4789 |    udp    | for overlay network traffic           |
+
     - Để thực hiện publish các port trên CentOS ta có thể chạy các câu lệnh sau:
 
             firewall-cmd --add-port=2377/tcp --permanent
             firewall-cmd --add-port=7946/tcp --permanent
             firewall-cmd --add-port=7946/udp --permanent
-            firewall-cmd --add-port=4789/tcp --permanent
+            firewall-cmd --add-port=4789/udp --permanent
 
             firewall-cmd --reload
-        
+
     - Việc thực hiện được tiến hành sử dụng ảo hóa VMWare.
-    
+
 - ### <a name="swarm-init">6.2 Tạo ra Swarm Docker</a>
 
     - Thực hiện chạy câu lệnh sau trên node `dockers` để khởi tạo Swarm:
@@ -171,7 +171,7 @@ ____
             ID                  NAME                MODE                REPLICAS            IMAGE               PORTS
             dktyt4ml5qq7        docker-nginx        replicated          1/1                 nginx:latest        *:8080->80/tcp
 
-        
+
 - ### <a name="inspect-service">6.5 Inspect service</a>
 
     - Để biết chi tiết về service `docker-nginx`. Ta sử dụng câu lệnh sau trên node `dockers`:
@@ -210,7 +210,7 @@ ____
         hoặc câu lệnh `docker service ps docker-nginx` cũng trên node `dockers`. Kết quả sẽ hiển thị tương tự như sau:
 
             ID            NAME            IMAGE         NODE      DESIRED STATE  CURRENT STATE          ERROR  PORTS
-            1zmpj3x713sw  docker-nginx.1  nginx:latest  docker02  Running        Running 4 minutes ago      
+            1zmpj3x713sw  docker-nginx.1  nginx:latest  docker02  Running        Running 4 minutes ago
 
 
 - ### <a name="scale-service">6.6 Scale service</a>
@@ -273,7 +273,7 @@ ____
 
         ![docker-visualizer.png](../../images/docker-visualizer.png)
 
-        
+
 # Tài liệu tham khảo
 
 - https://docs.docker.com/engine/swarm/swarm-tutorial/
