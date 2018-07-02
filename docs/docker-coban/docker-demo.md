@@ -8,17 +8,23 @@
 
 - Bước 1: Tạo 1 container để chạy môi trường mysql
   ```sh
-	docker run --name demo_mysql \
-			   -e MYSQL_ROOT_PASSWORD=root \
-			   -e MYSQL_DATABASE=dbwordpress \
-			   -e MYSQL_USER=userwordpress \
-			   -e MYSQL_PASSWORD=vnptdata2017 \
-			   -d mysql
+	docker run \
+	-e MYSQL_ROOT_PASSWORD=root \
+	-e MYSQL_USER=wpuser \
+	-e MYSQL_PASSWORD=vnptdata2017 \
+	-e MYSQL_DATABASE=wordpress_db \
+	--name wordpressdb -d mariadb
 	```
 
 - Bước 2: Tạo một container chạy wordpress và liên kết với container có tên là `demo_mysql`
 	```sh
-	docker run --name demo_wordpress --link demo_mysql:mysql -p 8080:80 -d wordpress
+	docker run \
+	-e WORDPRESS_DB_USER=wpuser \
+	-e WORDPRESS_DB_PASSWORD=vnptdata2017 \
+	-e WORDPRESS_DB_NAME=wordpress_db \
+	-p 8080:80 \
+	--link wordpressdb:mysql \
+	--name wpcontainer1 -d wordpress
 	```
 
 - Giải thích các tùy chọn
@@ -38,12 +44,12 @@
 
 - Bước 1: Tạo một container chạy DB cho zabbix
 	```sh
-	docker run \
-		-d \
-		--name zabbix-db \
-		--env="MARIADB_USER=zabbix" \
-		--env="MARIADB_PASS=my_password" \
-		monitoringartist/zabbix-db-mariadb
+docker run \
+	-d \
+	--name zabbix-db \
+	--env="MARIADB_USER=zabbix" \
+	--env="MARIADB_PASS=my_password" \
+	monitoringartist/zabbix-db-mariadb
 	```
 
 - Bước 2: Tạo một container chạy zabbix và liên kết với container có tên là `zabbix-db` vừa tạo ở bên trên
