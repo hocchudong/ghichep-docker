@@ -23,8 +23,6 @@ ____
 
 - Việc thực hiện `break long line` được sử dụng bởi dấu `\` - backslash. Ta có thể sử dụng cách này cùng với nhiều chỉ dẫn lệnh khác trong Docker.
 
-
-
 ____
 
 # <a name="content-others">Các nội dung khác</a>
